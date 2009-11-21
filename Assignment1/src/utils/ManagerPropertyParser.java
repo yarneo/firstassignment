@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
+
+import actors.Project;
 import actors.ProjectImpl;
 import resources.Resource;
 
@@ -18,7 +20,7 @@ public class ManagerPropertyParser extends PropertyParser {
 
 	private String type;
 	private List<String> projectIds;
-	private ArrayList<ProjectImpl> projects = new ArrayList();
+	private List<Project> projects;
 	private String nameOfManager;
 	
 	/**
@@ -47,7 +49,7 @@ public class ManagerPropertyParser extends PropertyParser {
 			List<String> programmmers = new ArrayList<String>();
 			String name1 = projectIds.get(i);
 			Integer size = new Integer(prop.getProperty("size" + name1));
-			ProjectImpl projy = new ProjectImpl(projectIds.get(i),
+			Project projy = new ProjectImpl(projectIds.get(i),
 			nameOfManager,type,size.intValue(),
 			Arrays.asList(prop.getProperty("prerequisiteProjects" + name1).split(",")),
 			Arrays.asList(prop.getProperty("resourcesNeeded" + name1).split(",")),programmmers);
@@ -63,11 +65,11 @@ public class ManagerPropertyParser extends PropertyParser {
 	//	for(Iterator<String> i = projectTypes.iterator(); i.hasNext(); ) {
 
 	}
-	public ArrayList<ProjectImpl> getProjects() {
+	public List<Project> getProjects() {
 		return projects;
 	}
 
-	public void setProjects(ArrayList<ProjectImpl> projects) {
+	public void setProjects(List<Project> projects) {
 		this.projects = projects;
 	}
 	public String getType() {

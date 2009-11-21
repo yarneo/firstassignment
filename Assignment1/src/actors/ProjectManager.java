@@ -1,7 +1,9 @@
 package actors;
 
+import java.util.List;
+
 public interface ProjectManager {
-	public String publishProjects();
-	public String updateProjs(String finishedProject);
+	public List<Project> publishProjects();
+	public void updateProjs(String finishedProject);
 	public void Publish();
 }
