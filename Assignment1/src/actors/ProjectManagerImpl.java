@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package actors;
 
@@ -16,7 +16,7 @@ import utils.ManagerPropertyParser;
  *
  */
 public class ProjectManagerImpl implements Runnable {
-	
+
 	//members
 	private String name;
 	private List<Project> projects;
@@ -26,7 +26,7 @@ public class ProjectManagerImpl implements Runnable {
 	private BlockingQueue<String> mailBox;
 
 	/**
-	 * 
+	 *
 	 */
 	public ProjectManagerImpl(String _name) {
 		this.name = _name;
@@ -38,19 +38,19 @@ public class ProjectManagerImpl implements Runnable {
 	}
 	public void run() {
 		publish();
-		
+
 	}
-	
-	
-	
+
+
+
 	private synchronized String getFromMailBox() {
 		while(mailBox.isEmpty()) {
 		try {
 		    this.wait();
-			 } catch (InterruptedException ignored) {}	 
+			 } catch (InterruptedException ignored) {}
 		}
-		return mailBox.remove();
 		this.notifyAll();
+		return mailBox.remove();
 	}
 	public String publishProjectsTemp() {
 		String rdyProj = "";
@@ -79,9 +79,9 @@ public class ProjectManagerImpl implements Runnable {
 	}
 	public void publish() {
 		//board will be used although it hasn't been implemented yet
-		b.add(this.publishProjects());
-		
+		//b.add(this.publishProjects());
+
 	}
-	
+
 
 }

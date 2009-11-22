@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package utils;
 
@@ -13,7 +13,7 @@ import java.util.Properties;
  *
  */
 public abstract class PropertyParser {
-	
+
 	protected Properties prop;
 
 	/**
@@ -26,7 +26,7 @@ public abstract class PropertyParser {
 			this.prop.load(new FileInputStream(name));
 		}catch(IOException e){}
 	}
-	
+
 	/**
 	 * Parse the config file given.
 	 */

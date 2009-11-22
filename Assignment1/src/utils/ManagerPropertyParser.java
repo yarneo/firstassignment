@@ -1,16 +1,14 @@
 /**
- * 
+ *
  */
 package utils;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 
 import actors.Project;
 import actors.ProjectImpl;
-import resources.Resource;
 
 /**
  * @author Alon Segal
@@ -22,14 +20,14 @@ public class ManagerPropertyParser extends PropertyParser {
 	private List<String> projectIds;
 	private List<Project> projects;
 	private String nameOfManager;
-	
+
 	/**
 	 * @param name
 	 */
 	public ManagerPropertyParser(String name) {
 		super(name);
 		nameOfManager = name;
-		parse();
+		this.parse();
 	}
 
 	/* (non-Javadoc)
@@ -39,9 +37,9 @@ public class ManagerPropertyParser extends PropertyParser {
 	public void parse() {
 		parseManager();
 	}
-	
+
 	// private functions
-	
+
 	private void parseManager() {
 		type = prop.getProperty("type");
 		projectIds= Arrays.asList(prop.getProperty("projectIds").split(","));
@@ -55,7 +53,7 @@ public class ManagerPropertyParser extends PropertyParser {
 			Arrays.asList(prop.getProperty("resourcesNeeded" + name1).split(",")),programmmers);
 			projects.add(projy);
 		}
-			
+
 	//	System.out.print(type);
 	//	System.out.print(projectIds);
 	//	System.out.print(projectIds.size());
