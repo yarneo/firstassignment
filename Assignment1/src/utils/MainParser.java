@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package utils;
 
@@ -20,7 +20,7 @@ import actors.ProgrammerImpl;
  *
  */
 public class MainParser extends PropertyParser {
-	
+
 	private List<String> projectTypes;
 	private List<String> resourcesTypes;
 	private List<Programmer> programmers;
@@ -33,9 +33,8 @@ public class MainParser extends PropertyParser {
 	 */
 	public MainParser(String name) {
 		super(name);
-		this.parse();
 	}
-	
+
 	/**
 	 * Parse the file into workable vars.
 	 */
@@ -46,13 +45,13 @@ public class MainParser extends PropertyParser {
 		this.parseProgrammers();
 		this.parseSimulationHour();
 	}
-	
+
 	// private functions
-	
+
 	private void parseProjectTypes() {
 		this.projectTypes = Arrays.asList(prop.getProperty("projectTypes").split(", "));
 	}
-	
+
 	private void parseResources() {
 		this.resources = new ArrayList<Resource>();
 		this.resourcesTypes = Arrays.asList(prop.getProperty("resourceTypes").split(","));
@@ -63,7 +62,7 @@ public class MainParser extends PropertyParser {
 			this.resources.add(r);
 		}
 	}
-	
+
 	private void parseProjectMangers() {
 		this.projMangers = new ArrayList<String>();
 		int amount = Integer.parseInt(prop.getProperty("numOfProjectManagers"));
@@ -71,10 +70,10 @@ public class MainParser extends PropertyParser {
 			this.projMangers.add(prop.getProperty("projectManager"+(i+1)+"Name"));
 		}
 	}
-	
+
 	private void parseProgrammers() {
 		ProgrammerResourceHandler prh = new ProgrammerResourceHandler(this.getResources());
-		
+
 		this.programmers = new ArrayList<Programmer>();
 		int amount = Integer.parseInt(prop.getProperty("numOfProgrammers"));
 		for(int i=0; i<amount; i++) {
@@ -87,14 +86,14 @@ public class MainParser extends PropertyParser {
 			this.programmers.add(p);
 		}
 	}
-	
+
 	private void parseSimulationHour() {
 		this.simulationHour = Double.parseDouble(prop.getProperty("simulationHour"));
 	}
-	
+
 	//Setters getters
 
-	
+
 	/**
 	 * @return the projectTypes
 	 */
@@ -108,28 +107,28 @@ public class MainParser extends PropertyParser {
 	public double getSimulationHour() {
 		return this.simulationHour;
 	}
-	
+
 	/**
 	 * @return the resourcesTypes
 	 */
 	public List<String> getResourcesTypes() {
 		return this.resourcesTypes;
 	}
-	
+
 	/**
 	 * @return the programmers
 	 */
 	public List<Programmer> getProgrammers() {
 		return this.programmers;
 	}
-	
+
 	/**
 	 * @return the resources
 	 */
 	public List<Resource> getResources() {
 		return this.resources;
 	}
-	
+
 	/**
 	 * @return the projectManagers
 	 */

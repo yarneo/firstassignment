@@ -22,12 +22,10 @@ public class ManagerPropertyParser extends PropertyParser {
 	private String nameOfManager;
 
 	/**
-	 * @param name
+	 * @param name Name od file to be parsed.
 	 */
 	public ManagerPropertyParser(String name) {
 		super(name);
-		nameOfManager = name;
-		this.parse();
 	}
 
 	/* (non-Javadoc)
