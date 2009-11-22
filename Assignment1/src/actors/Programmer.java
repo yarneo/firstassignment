@@ -42,4 +42,21 @@ public interface Programmer {
 	 * @return the specializations
 	 */
 	public List<String> getSpecializations();
+	
+	/**
+	 * Trying to stop the thread
+	 */
+	public void stop();
+	
+	/**
+	 * @param type Type of the project
+	 * @return is the programmer capable with this type of work
+	 */
+	public boolean isCapable(String type);
+	
+	/**
+	 * Putting a new project in the programmer mailbox
+	 * @param p Project applied
+	 */
+	public void sendNewProject(Project p);
 }

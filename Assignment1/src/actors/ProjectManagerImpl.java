@@ -1,5 +1,5 @@
 /**
- *
+ * 
  */
 package actors;
 
@@ -16,7 +16,7 @@ import utils.ManagerPropertyParser;
  *
  */
 public class ProjectManagerImpl implements Runnable {
-
+	
 	//members
 	private String name;
 	private List<Project> projects;
@@ -24,11 +24,13 @@ public class ProjectManagerImpl implements Runnable {
 	private List<String> projectIds;
 	private DependencyResolver myProjects;
 	private BlockingQueue<String> mailBox;
-
+	private boolean shouldStop_ = false;
+	private Board b;
 	/**
-	 *
+	 * 
 	 */
-	public ProjectManagerImpl(String _name) {
+	public ProjectManagerImpl(String _name, Board board) {
+		b = board;
 		this.name = _name;
 		ManagerPropertyParser parseIt = new ManagerPropertyParser(name + ".txt");
 		type = parseIt.getType();
@@ -37,22 +39,31 @@ public class ProjectManagerImpl implements Runnable {
 		myProjects = new DependencyResolverImpl(projects);
 	}
 	public void run() {
+		while(!myProjects.getAllProjects().isEmpty()) {
+		String temp= "";
 		publish();
-
+		temp = this.getFromMailBox();
+		updateProjs(temp); 
+		synchronized(this){
+			if (shouldStop_)
+			break;
+			 }
+		}
+		
 	}
-
-
-
+	public synchronized void stop() { shouldStop_ = true; }
+	
+	
 	private synchronized String getFromMailBox() {
 		while(mailBox.isEmpty()) {
 		try {
 		    this.wait();
-			 } catch (InterruptedException ignored) {}
+			 } catch (InterruptedException ignored) {}	 
 		}
-		this.notifyAll();
 		return mailBox.remove();
 	}
-	public String publishProjectsTemp() {
+	
+	private String publishProjectsTemp() {
 		String rdyProj = "";
 		for(int i=0;i<projects.size();i++) {
 			if(projects.get(i).getPrequesiteProjects().isEmpty()) {
@@ -61,10 +72,10 @@ public class ProjectManagerImpl implements Runnable {
 		}
 		return rdyProj;
 	}
-	public List<Project> publishProjects() {
+	private List<Project> publishProjects() {
 		return myProjects.getReadyProjects();
 	}
-	public String updateProjsTemp(String finishedProject) {
+	private String updateProjsTemp(String finishedProject) {
 		String preqRemoved = "";
 		for(int i=0;i<projects.size();i++) {
 			if(projects.get(i).getPrequesiteProjects().contains(finishedProject)) {
@@ -74,14 +85,14 @@ public class ProjectManagerImpl implements Runnable {
 		}
 		return preqRemoved;
 	}
-	public void updateProjs(String preqId) {
+	private void updateProjs(String preqId) {
 		myProjects.updateCompProj(preqId);
 	}
-	public void publish() {
+	private void publish() {
 		//board will be used although it hasn't been implemented yet
-		//b.add(this.publishProjects());
-
+		//b.addAnnouncement(this.publishProjects());
+		
 	}
-
+	
 
 }

@@ -20,13 +20,14 @@ import actors.ProgrammerImpl;
  *
  */
 public class MainParser extends PropertyParser {
-
+	
 	private List<String> projectTypes;
 	private List<String> resourcesTypes;
 	private List<Programmer> programmers;
 	private List<Resource> resources;
 	private List<String> projMangers;
-	private double simulationHour;
+	
+	public static double SIMULATION_HOUR;
 
 	/**
 	 * @param name Name od file to be parsed.
@@ -88,7 +89,7 @@ public class MainParser extends PropertyParser {
 	}
 
 	private void parseSimulationHour() {
-		this.simulationHour = Double.parseDouble(prop.getProperty("simulationHour"));
+		MainParser.SIMULATION_HOUR = Double.parseDouble(prop.getProperty("simulationHour"));
 	}
 
 	//Setters getters
@@ -105,7 +106,7 @@ public class MainParser extends PropertyParser {
 	 * @return the simulationHour
 	 */
 	public double getSimulationHour() {
-		return this.simulationHour;
+		return MainParser.SIMULATION_HOUR;
 	}
 
 	/**
