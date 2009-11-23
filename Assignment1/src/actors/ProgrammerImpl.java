@@ -10,6 +10,7 @@ import java.util.concurrent.BlockingQueue;
 
 import resources.ProgrammerResourceHandler;
 import resources.Resource;
+import utils.LogHelper;
 import utils.MainParser;
 import utils.ManagerPropertyParser;
 
@@ -58,7 +59,10 @@ public class ProgrammerImpl implements Programmer, Runnable {
 		
 		this.prh = _prh;
 		
-		this.mailbox = new ArrayBlockingQueue<Project>(ManagerPropertyParser.NUM_OF_PROJECTS, true);
+		//TODO Get to the original state
+		this.mailbox = new ArrayBlockingQueue<Project>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/10, true);
+		
+		LogHelper.log(this.getName()+" started working");
 	}
 	
 	/**
@@ -81,20 +85,20 @@ public class ProgrammerImpl implements Programmer, Runnable {
 					} catch(InterruptedException e) {}
 					projectToDo.setSize(projectToDo.getSize()-(int)(this.workPhaseHours/this.productivityRate));
 					this.releaseResources(projectToDo.getResources());
+					//handles budget
+					this.budget = this.getBudget() - this.getWorkPhaseHours();
+					if(this.getBudget()<this.getWorkPhaseHours())
+						LogHelper.log(this.getName()+"'s budget run out");
+					
+					//logging
+					LogHelper.log(this.getName()+" is done with commitement on project "+
+							projectToDo.getId());
 				}
 			}	catch(InterruptedException e) {}
 		}
+		LogHelper.log(this.getName()+" finished working");
 	}
 	
-	/**
-	 * 
-	 * @param p Project to test if ready for assignment.
-	 * @return true if project fits and false otherwise.
-	 */
-	public boolean isProjectFits(Project p) {
-		return false;
-	}
-
 	/**
 	 * @return the name
 	 */
@@ -157,6 +161,7 @@ public class ProgrammerImpl implements Programmer, Runnable {
 		for(Iterator<Resource> i = listRes.iterator(); i.hasNext();) {
 			Resource r = i.next();
 			r.acquire();
+			LogHelper.log(this.getName()+" acquired "+r.getType());
 		}
 		
 		//TODO Finish and test this method.
@@ -167,6 +172,7 @@ public class ProgrammerImpl implements Programmer, Runnable {
 		for(Iterator<Resource> i = listRes.iterator(); i.hasNext();) {
 			Resource r = i.next();
 			r.realese();
+			LogHelper.log(this.getName()+" released "+r.getType());
 		}
 		
 		//TODO Finish and test this method.

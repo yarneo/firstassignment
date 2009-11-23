@@ -10,9 +10,10 @@ public class SimStarter {
 
 	/**
 	 * Run and initiate the whole system.
-	 * @param args
+	 * @param args main arguments
 	 */
 	public static void main(String[] args) {
+		//TODO VERY IMPORTANT!!! Count the total projects.
 		//getting the arguments
 		confFile = args[0];
 		logFile = args[1];
