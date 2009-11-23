@@ -34,7 +34,7 @@ public class ProgrammerTest {
 	 */
 	@Test
 	public final void testIsCapable() {
-		fail("Not yet implemented"); // TODO
+		fail("Not yet implemented");
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class ProgrammerTest {
 	 */
 	@Test
 	public final void testSendNewProject() {
-		fail("Not yet implemented"); // TODO
+		fail("Not yet implemented");
 	}
 
 }
