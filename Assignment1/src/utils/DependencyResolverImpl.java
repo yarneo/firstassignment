@@ -74,7 +74,7 @@ public class DependencyResolverImpl implements DependencyResolver {
 		}
 		//Add a fiction project to update the queue
 		Project a = new ProjectImpl("", "", "", 0, new ArrayList<String>(),
-				new ArrayList<String>(), new ArrayList<String>());
+				new ArrayList<String>());
 		this.projects.add(a);
 		this.projects.remove(a);
 	}

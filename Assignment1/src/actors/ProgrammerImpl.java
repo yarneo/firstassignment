@@ -12,7 +12,6 @@ import resources.ProgrammerResourceHandler;
 import resources.Resource;
 import utils.LogHelper;
 import utils.MainParser;
-import utils.ManagerPropertyParser;
 
 /**
  * @author Alon Segal
@@ -61,8 +60,6 @@ public class ProgrammerImpl implements Programmer, Runnable {
 		
 		//TODO Get to the original state
 		this.mailbox = new ArrayBlockingQueue<Project>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/10, true);
-		
-		LogHelper.log(this.getName()+" started working");
 	}
 	
 	/**
@@ -74,25 +71,36 @@ public class ProgrammerImpl implements Programmer, Runnable {
 	
 	@Override
 	public void run() {
+		LogHelper.log(this.getName()+" started working");
 		while(!this.shouldStop) {
 			try {
 				Project projectToDo = this.mailbox.take();
-				if (this.isBudgetEnough(projectToDo)) {
+
+				if (this.isBudgetEnough(projectToDo) & projectToDo.isAnotherHandNeeded(this)) {
 					this.acquireResources(projectToDo.getResources());
+					
+					LogHelper.log(this.getName()+" committed to "+projectToDo.getId()+" for "+
+							(int)this.getWorkPhaseHours());
+					
+					this.budget = this.budget - this.workPhaseHours;
+					
+					projectToDo.commit(this);
 					try {
 						Thread.sleep((int)(this.getWorkPhaseHours()*MainParser.SIMULATION_HOUR)*
 								this.simulatedSecond);
 					} catch(InterruptedException e) {}
-					projectToDo.setSize(projectToDo.getSize()-(int)(this.workPhaseHours/this.productivityRate));
-					this.releaseResources(projectToDo.getResources());
-					//handles budget
-					this.budget = this.getBudget() - this.getWorkPhaseHours();
-					if(this.getBudget()<this.getWorkPhaseHours())
-						LogHelper.log(this.getName()+"'s budget run out");
 					
 					//logging
 					LogHelper.log(this.getName()+" is done with commitement on project "+
 							projectToDo.getId());
+					if(this.getBudget()<this.getWorkPhaseHours())
+						LogHelper.log(this.getName()+"'s budget run out");
+					
+					this.releaseResources(projectToDo.getResources());
+					projectToDo.done(this);
+					//handles budget
+					this.budget = this.getBudget() - this.getWorkPhaseHours();
+					
 				}
 			}	catch(InterruptedException e) {}
 		}
@@ -171,8 +179,8 @@ public class ProgrammerImpl implements Programmer, Runnable {
 		List<Resource> listRes = this.prh.parseStringToObjects(ls);
 		for(Iterator<Resource> i = listRes.iterator(); i.hasNext();) {
 			Resource r = i.next();
-			r.realese();
 			LogHelper.log(this.getName()+" released "+r.getType());
+			r.realese();
 		}
 		
 		//TODO Finish and test this method.

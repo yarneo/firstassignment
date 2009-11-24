@@ -4,19 +4,22 @@
 package utils;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
+
+import actors.Programmer;
 import actors.Project;
 import actors.ProjectImpl;
+import resources.Resource;
 
 /**
  * @author Alon Segal
  *
  */
 public class ManagerPropertyParser extends PropertyParser {
-	
-	public static int NUM_OF_PROJECTS;
 
+	public static int NUM_OF_PROJECTS;
 	private String type;
 	private List<String> projectIds;
 	private List<Project> projects;
@@ -29,7 +32,7 @@ public class ManagerPropertyParser extends PropertyParser {
 		super(name);
 		nameOfManager = name;
 		parse();
-		ManagerPropertyParser.NUM_OF_PROJECTS +=this.projects.size();
+		ManagerPropertyParser.NUM_OF_PROJECTS+=this.projects.size();
 	}
 
 	/* (non-Javadoc)
@@ -46,13 +49,12 @@ public class ManagerPropertyParser extends PropertyParser {
 		type = prop.getProperty("type");
 		projectIds= Arrays.asList(prop.getProperty("projectIds").split(","));
 		for(int i=0;i<projectIds.size();i++){
-			List<String> programmmers = new ArrayList<String>();
 			String name1 = projectIds.get(i);
 			Integer size = new Integer(prop.getProperty("size" + name1));
 			Project projy = new ProjectImpl(projectIds.get(i),
 			nameOfManager,type,size.intValue(),
 			Arrays.asList(prop.getProperty("prerequisiteProjects" + name1).split(",")),
-			Arrays.asList(prop.getProperty("resourcesNeeded" + name1).split(",")),programmmers);
+			Arrays.asList(prop.getProperty("resourcesNeeded" + name1).split(",")));
 			projects.add(projy);
 		}
 			

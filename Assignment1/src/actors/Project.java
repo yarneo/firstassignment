@@ -61,11 +61,30 @@ public interface Project {
 	/**
 	 * @param programmers the programmers to set
 	 */
-	public void setProgrammers(List<String> programmers);
+	public void setProgrammers(List<Programmer> programmers);
 
 	/**
 	 * @return the programmers
 	 */
-	public List<String> getProgrammers();
+	public List<Programmer> getProgrammers();
+	
+	/**
+	 * indicates if another working hand is needed in the project. if needed, updates the project size
+	 * @param p the programmer who called this method
+	 * @return true if another programmer can commit, false otherwise.
+	 */
+	public boolean isAnotherHandNeeded(Programmer p);
+	
+	/**
+	 * Called by a programmer who's commiting for the project
+	 * @param p Programmer who commits for the project
+	 */
+	public void commit(Programmer p);
+	
+	/**
+	 * Called by a programmer who's work phase is done
+	 * @param p Programmer who's done
+	 */
+	public void done(Programmer p);
 
 }

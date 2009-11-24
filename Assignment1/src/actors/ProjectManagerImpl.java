@@ -23,13 +23,13 @@ public class ProjectManagerImpl implements Runnable {
 	private String type;
 	private List<String> projectIds;
 	private DependencyResolver myProjects;
-	private BlockingQueue<String> mailBox;
+	private BlockingQueue<Project> mailBox;
 	private boolean shouldStop_ = false;
-	private Board b;
+	private BoardImpl b;
 	/**
 	 * 
 	 */
-	public ProjectManagerImpl(String _name, Board board) {
+	public ProjectManagerImpl(String _name, BoardImpl board) {
 		b = board;
 		this.name = _name;
 		ManagerPropertyParser parseIt = new ManagerPropertyParser(name + ".txt");
@@ -37,13 +37,14 @@ public class ProjectManagerImpl implements Runnable {
 		projects = parseIt.getProjects();
 		projectIds = parseIt.getProjectIds();
 		myProjects = new DependencyResolverImpl(projects);
+		b.myManagersLink.put(this.name, this.mailBox);
 	}
 	public void run() {
 		while(!myProjects.getAllProjects().isEmpty()) {
-		String temp= "";
+		Project temp;
 		publish();
 		temp = this.getFromMailBox();
-		updateProjs(temp); 
+		updateProjs(temp.getId()); 
 		synchronized(this){
 			if (shouldStop_)
 			break;
@@ -54,7 +55,7 @@ public class ProjectManagerImpl implements Runnable {
 	public synchronized void stop() { shouldStop_ = true; }
 	
 	
-	private synchronized String getFromMailBox() {
+	private synchronized Project getFromMailBox() {
 		while(mailBox.isEmpty()) {
 		try {
 		    this.wait();
@@ -62,7 +63,6 @@ public class ProjectManagerImpl implements Runnable {
 		}
 		return mailBox.remove();
 	}
-	
 	private String publishProjectsTemp() {
 		String rdyProj = "";
 		for(int i=0;i<projects.size();i++) {
@@ -90,7 +90,7 @@ public class ProjectManagerImpl implements Runnable {
 	}
 	private void publish() {
 		//board will be used although it hasn't been implemented yet
-		//b.addAnnouncement(this.publishProjects());
+		b.addAnnouncement(this.publishProjects());
 		
 	}
 	

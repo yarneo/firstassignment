@@ -46,11 +46,11 @@ public class DependencyResolverTest {
     	//Creating dummy data for the tested instance
     	List<Project> l = new ArrayList<Project>();
 		Project p1 = new ProjectImpl("1", "Project1", "gui", 3, new ArrayList<String>(),
-				new ArrayList<String>(), new ArrayList<String>());
+				new ArrayList<String>());
 		Project p2 = new ProjectImpl("2", "Project2", "qa", 10, new ArrayList<String>(),
-				new ArrayList<String>(), new ArrayList<String>());
+				new ArrayList<String>());
 		Project p3 = new ProjectImpl("3", "Project3", "qa", 44, new ArrayList<String>(),
-				new ArrayList<String>(), new ArrayList<String>());
+				new ArrayList<String>());
 		List<String> pp1 = new ArrayList<String>();
 		List<String> pp2 = new ArrayList<String>();
 		List<String> pp3 = new ArrayList<String>();
