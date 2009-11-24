@@ -3,6 +3,7 @@
  */
 package actors;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -11,6 +12,7 @@ import utils.DependencyResolver;
 import utils.DependencyResolverImpl;
 import utils.ManagerPropertyParser;
 import utils.ManagersInfo;
+import utils.LogHelper;
 
 /**
  * @author yarneo
@@ -27,6 +29,10 @@ public class ProjectManager implements Runnable {
 	private BlockingQueue<Project> mailBox;
 	private boolean shouldStop_ = false;
 	private Board b;
+	private LogHelper logger;
+	
+	
+	
 	/**
 	 * 
 	 * @param _name gets the name of the manager
@@ -45,11 +51,13 @@ public class ProjectManager implements Runnable {
 		tempList = this.b.getMyManagersLink();
 		tempList.add(tempInfo);
 		this.b.setMyManagersLink(tempList);
+		logger = new LogHelper(LogHelper.LOG_FILE_NAME);
 	}
 	/**
 	 * 
 	 */
 	public void run() {
+		this.logger.log(this.name + "started working at" + DateFormat.getTimeInstance(),false);
 		while(!this.myProjects.getAllProjects().isEmpty()) {
 		Project temp;
 		this.publish();
