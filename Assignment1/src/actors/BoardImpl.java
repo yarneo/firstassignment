@@ -14,37 +14,48 @@ import utils.ManagersInfo;
  *
  */
 public class BoardImpl implements Board {
-/**
- * fdfs
- */
-private List<Project> projectsBoard;
-/**
- *
- */
-private ConcurrentHashMap<String,Collection<BlockingQueue<Project>>> myProgrammersLink;
-/**
- *
- */
-private List<ManagersInfo> myManagersLink;
-/* (non-Javadoc)
-* @see actors.Board#addAnnouncement()
-* Have received a list of projects from the Program Manager
-* which are the projects
-* that have no prequesite dependencies and can
-* be worked on effective immediately.
-* the projects are then added to the
-* BlockingQueue of the board to be handled by the board
-* and then sent to the programmers.
-*/
-@Override
-public void addAnnouncement(List<Project> projects) {
-for(Iterator<Project> i = projects.iterator(); i.hasNext();){
-	Project p = i.next();
-	this.projectsBoard.add(p);
+	
+	private boolean _isToTerminate;
+	
+	/**
+	 * Default constructor
+	 */
+	public BoardImpl() {
+		this._isToTerminate = false;
 	}
-	this.doYourMagic();
-}
-	/*
+	
+	/**
+	 * fdfs
+	 */
+	private List<Project> projectsBoard;
+	/**
+	 *
+	 */
+	private ConcurrentHashMap<String,Collection<BlockingQueue<Project>>> myProgrammersLink;
+	/**
+	 *
+	 */
+	private List<ManagersInfo> myManagersLink;
+	/* (non-Javadoc)
+	* @see actors.Board#addAnnouncement()
+	* Have received a list of projects from the Program Manager
+	* which are the projects
+	* that have no prequesite dependencies and can
+	* be worked on effective immediately.
+	* the projects are then added to the
+	* BlockingQueue of the board to be handled by the board
+	* and then sent to the programmers.
+	*/
+	@Override
+	public void addAnnouncement(List<Project> projects) {
+	for(Iterator<Project> i = projects.iterator(); i.hasNext();){
+		Project p = i.next();
+		this.projectsBoard.add(p);
+		}
+		this.doYourMagic();
+	}
+	
+	/**
 	 * the method doYourMagic checks the projects
 	 * on the projectboard of the board object,
 	 * and looks at each one separately at this type,
@@ -60,9 +71,6 @@ for(Iterator<Project> i = projects.iterator(); i.hasNext();){
 	 * and check the Project to see if he can work
 	 * on it and/or what to do with it.
 	 */
-/**
- * 
- */
 	public void doYourMagic(){
 		for(Iterator<Project> j = this.projectsBoard.iterator(); j.hasNext();) {
 			
@@ -162,5 +170,20 @@ for(Iterator<Project> i = projects.iterator(); i.hasNext();){
 	 */
 	public void setMyManagersLink(List<ManagersInfo> _myManagersLink) {
 		this.myManagersLink = _myManagersLink;
+	}
+	
+	/**
+	 * Indicate if the progress is ready to be shut down.
+	 * @return True if the process is to be terminated, false otherwise.
+	 */
+	public boolean isToTerminate() {
+		return _isToTerminate;
+	}
+	
+	/**
+	 * Shuts down all the system as soon as possible.
+	 */
+	public void shutdown() {
+		this._isToTerminate = true;
 	}
 }

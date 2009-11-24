@@ -69,16 +69,9 @@ public class Programmer implements Runnable {
 		this.mailbox = new ArrayBlockingQueue<Project>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/10, true);
 	}
 	
-	/**
-	 * Trying to stop the thread
-	 */
-	public synchronized void stop() {
-		this.shouldStop = true; 
-	}
-	
 	@Override
 	public void run() {
-		logger.log(this.name+" started working");
+		this.logger.log(this.name+" started working");
 		while(!this.shouldStop) {
 			try {
 				Project projectToDo = this.mailbox.take();
@@ -87,7 +80,7 @@ public class Programmer implements Runnable {
 				if (this.isBudgetEnough(projectToDo) & projectToDo.isAnotherHandNeeded(this.workPhaseHours, this.productivityRate)) {
 					this.acquireResources(projectToDo.getResources());
 					
-					logger.log(this.name+" committed to "+projectToDo.getId()+" for "+
+					this.logger.log(this.name+" committed to "+projectToDo.getId()+" for "+
 							(int)this.workPhaseHours);
 					
 					this.budget = this.budget - this.workPhaseHours;
@@ -105,10 +98,10 @@ public class Programmer implements Runnable {
 						this.board.doneWithProject(projectToDo);
 					
 					//logging
-					logger.log(this.name+" is done with commitement on project "+
+					this.logger.log(this.name+" is done with commitement on project "+
 							projectToDo.getId());
 					if(this.budget<this.workPhaseHours)
-						logger.log(this.name+"'s budget run out");
+						this.logger.log(this.name+"'s budget run out");
 					
 					this.releaseResources(projectToDo.getResources());
 					projectToDo.done(this);
@@ -118,16 +111,23 @@ public class Programmer implements Runnable {
 				}
 			}	catch(InterruptedException e) {}
 		}
-		logger.log(this.name+" finished working");
+		this.logger.log(this.name+" finished working");
 	}
 	
 	//Private functions
+	
+	/**
+	 * Trying to stop the thread
+	 */
+	private void stop() {
+		this.shouldStop = true; 
+	}
 	
 	private void addInfoToBoard() {
         ConcurrentHashMap<String,Collection<BlockingQueue<Project>>> temp;
         temp = this.board.getMyProgrammersLink();
         Collection<BlockingQueue<Project>> c = new ArrayList<BlockingQueue<Project>>();
-        for(Iterator<String> i = specializations.iterator(); i.hasNext();) {
+        for(Iterator<String> i = this.specializations.iterator(); i.hasNext();) {
             String tempType = i.next();
             if(!temp.containsKey(tempType)) {
             temp.putIfAbsent(tempType, c);
@@ -145,7 +145,7 @@ public class Programmer implements Runnable {
 		for(Iterator<Resource> i = listRes.iterator(); i.hasNext();) {
 			Resource r = i.next();
 			r.acquire();
-			logger.log(this.name+" acquired "+r.getType());
+			this.logger.log(this.name+" acquired "+r.getType());
 		}
 		
 		//TODO Finish and test this method.
@@ -155,7 +155,7 @@ public class Programmer implements Runnable {
 		List<Resource> listRes = this.prh.parseStringToObjects(ls);
 		for(Iterator<Resource> i = listRes.iterator(); i.hasNext();) {
 			Resource r = i.next();
-			logger.log(this.name+" released "+r.getType());
+			this.logger.log(this.name+" released "+r.getType());
 			r.realese();
 		}
 		
@@ -173,11 +173,5 @@ public class Programmer implements Runnable {
 			this.budget+=this.pInfo.getNewBudget();
 		}
 	}
-	
-	//TODO Remove this testing method
-	public void sendNewProject(Project p) {
-		try {
-			this.mailbox.put(p);
-		} catch(InterruptedException e) {}
-	}
+
 }
