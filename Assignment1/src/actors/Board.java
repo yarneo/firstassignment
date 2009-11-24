@@ -1,6 +1,12 @@
 package actors;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+
+import utils.ManagersInfo;
 
 public interface Board {
 	/**
@@ -20,5 +26,23 @@ public void removeAnouncement(Project p1);
 /**
  * 
  */
-public void editAnouncement();
+public void setMyProgrammersLink(ConcurrentHashMap<String, Collection<BlockingQueue<Project>>> myProgrammersLink);
+public ConcurrentHashMap<String, Collection<BlockingQueue<Project>>> getMyProgrammersLink();
+public List<ManagersInfo> getMyManagersLink();
+public void setMyManagersLink(List<ManagersInfo> myManagersLink);
+/**
+ * the method doneWithProject gets a completed project from the programmers
+ * and now checks in a special object that contains references to the managers' 
+ * project list and inbox, the project list to see if the id of the completed
+ * project appears in the list or if it appears in the prerequisite list of 
+ * each one of the projects in the list. If it does, then it adds the project
+ * into that certain managers inbox, which then wakes him up
+ * this method is so that not all managers are woken up instantly 
+ * by a finished project, but only the managers who are supposed to wake up
+ * because waking up a thread is expensive cpu wise.
+ *
+*
+ * @param p1 project that is finished
+ */
+public void doneWithProject(Project p1);
 }

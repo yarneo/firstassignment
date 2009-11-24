@@ -29,6 +29,7 @@ public class ManagerPropertyParser extends PropertyParser {
 	 */
 	public ManagerPropertyParser(String name) {
 		super(name);
+		this.projects = new ArrayList<Project>();
 		this.nameOfManager = name;
 		this.parse();
 		ManagerPropertyParser.NUM_OF_PROJECTS+=this.projects.size();

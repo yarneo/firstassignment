@@ -21,11 +21,11 @@ private List<Project> projectsBoard;
 /**
  *
  */
-public ConcurrentHashMap<String,Collection<BlockingQueue<Project>>> myProgrammersLink;
+private ConcurrentHashMap<String,Collection<BlockingQueue<Project>>> myProgrammersLink;
 /**
  *
  */
-public List<ManagersInfo> myManagersLink;
+private List<ManagersInfo> myManagersLink;
 /* (non-Javadoc)
 * @see actors.Board#addAnnouncement()
 * Have received a list of projects from the Program Manager
@@ -89,7 +89,7 @@ for(Iterator<Project> i = projects.iterator(); i.hasNext();){
 	//	}
 		}	
 	}
-	/*
+	/**
 	 * the method doneWithProject gets a completed project from the programmers
 	 * and now checks in a special object that contains references to the managers' 
 	 * project list and inbox, the project list to see if the id of the completed
@@ -99,8 +99,8 @@ for(Iterator<Project> i = projects.iterator(); i.hasNext();){
 	 * this method is so that not all managers are woken up instantly 
 	 * by a finished project, but only the managers who are supposed to wake up
 	 * because waking up a thread is expensive cpu wise.
-	 */
-	/**
+	 *
+	*
 	 * @param p1 project that is finished
 	 */
 	public void doneWithProject(Project p1) {
@@ -117,14 +117,6 @@ for(Iterator<Project> i = projects.iterator(); i.hasNext();){
 			}
 			
 		}
-	}
-	/* (non-Javadoc)
-	 * @see actors.Board#editAnouncement()
-	 */
-	@Override
-	public void editAnouncement() {
-		// TODO Auto-generated method stub
-
 	}
 
 	/* (non-Javadoc)
@@ -145,5 +137,30 @@ for(Iterator<Project> i = projects.iterator(); i.hasNext();){
 			System.out.print(i.next().getId());
 		}
 
+	}
+/**
+ * @return my programmers link
+ */
+	public ConcurrentHashMap<String, Collection<BlockingQueue<Project>>> getMyProgrammersLink() {
+		return this.myProgrammersLink;
+	}
+	/**
+	 * @param _myProgrammersLink my programmers link
+	 */
+	public void setMyProgrammersLink(
+			ConcurrentHashMap<String, Collection<BlockingQueue<Project>>> _myProgrammersLink) {
+		this.myProgrammersLink = _myProgrammersLink;
+	}
+	/**
+	 * @return my managers link
+	 */
+	public List<ManagersInfo> getMyManagersLink() {
+		return this.myManagersLink;
+	}
+	/**
+	 * @param _myManagersLink my managers link
+	 */
+	public void setMyManagersLink(List<ManagersInfo> _myManagersLink) {
+		this.myManagersLink = _myManagersLink;
 	}
 }

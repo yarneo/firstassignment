@@ -15,14 +15,14 @@ public class SimStarter {
 	public static void main(String[] args) {
 		//TODO VERY IMPORTANT!!! Count the total projects.
 		//getting the arguments
-		confFile = args[0];
-		logFile = args[1];
+		SimStarter.confFile = args[0];
+		SimStarter.logFile = args[1];
 
 		//setting up a static logger which tracks the whole system. Usage: Logger.log(message) from anywhere.
 		LogHelper.LOG_FILE_NAME  = SimStarter.logFile;
 
 		//creating an instance that parses the configuration file.
-		MainParser mp = new MainParser(confFile);
+		MainParser mp = new MainParser(SimStarter.confFile);
 
 		//TODO Main - create managers and programmers.
 		InitialThreadHandler initialThreadHandler = new InitialThreadHandler(mp);

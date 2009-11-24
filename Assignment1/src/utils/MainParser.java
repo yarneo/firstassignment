@@ -14,7 +14,7 @@ import resources.ResourceImpl;
 import actors.Board;
 import actors.BoardImpl;
 import actors.Programmer;
-import actors.Programmer;
+import actors.ProjectManager;
 
 /**
  * Parse the main configuration file into a proper lists and vars.
@@ -27,7 +27,7 @@ public class MainParser extends PropertyParser {
 	private List<String> resourcesTypes;
 	private List<Programmer> programmers;
 	private List<Resource> resources;
-	private List<String> projMangers;
+	private List<ProjectManager> projMangers;
 	private Board board;
 	
 	public static double SIMULATION_HOUR;
@@ -37,6 +37,7 @@ public class MainParser extends PropertyParser {
 	 */
 	public MainParser(String name) {
 		super(name);
+		this.parse();
 	}
 
 	/**
@@ -45,8 +46,8 @@ public class MainParser extends PropertyParser {
 	public void parse() {
 		this.parseProjectTypes();
 		this.parseResources();
-		this.parseProjectMangers();
 		this.createBoard();
+		this.parseProjectMangers();
 		this.parseProgrammers();
 		this.parseSimulationHour();
 	}
@@ -69,10 +70,11 @@ public class MainParser extends PropertyParser {
 	}
 
 	private void parseProjectMangers() {
-		this.projMangers = new ArrayList<String>();
+		this.projMangers = new ArrayList<ProjectManager>();
 		int amount = Integer.parseInt(prop.getProperty("numOfProjectManagers"));
 		for(int i=0; i<amount; i++) {
-			this.projMangers.add(prop.getProperty("projectManager"+(i+1)+"Name"));
+			ProjectManager pm = new ProjectManager(prop.getProperty("projectManager"+(i+1)+"Name"), this.board);
+			this.projMangers.add(pm);
 		}
 	}
 	
@@ -141,7 +143,7 @@ public class MainParser extends PropertyParser {
 	/**
 	 * @return the projectManagers
 	 */
-	public List<String> getProjectManagers() {
+	public List<ProjectManager> getProjectManagers() {
 		return this.projMangers;
 	}
 }

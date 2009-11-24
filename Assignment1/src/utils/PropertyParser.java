@@ -25,7 +25,6 @@ public abstract class PropertyParser {
 			//loading file content into data structure prop
 			this.prop.load(new FileInputStream(name));
 		}catch(IOException e){}
-		this.parse();
 	}
 
 	/**

@@ -11,6 +11,7 @@ import actors.ObserverImpl;
 import actors.Programmer;
 import actors.Project;
 import actors.ProjectImpl;
+import actors.ProjectManager;
 
 /**
  * @author Alon Segal
@@ -24,6 +25,7 @@ public class InitialThreadHandler {
 	public InitialThreadHandler(MainParser mp) {
 		this.runObserver();
 		this.runProgrammers(mp.getProgrammers());
+		this.runManagers(mp.getProjectManagers());
 		//TODO InitialThreadHandler - Complete thread running.
 	}
 
@@ -56,6 +58,14 @@ public class InitialThreadHandler {
 		lp.get(1).sendNewProject(p1);
 		lp.get(0).sendNewProject(p1);
 		System.out.print("");
+	}
+	
+	private void runManagers(List<ProjectManager> lm) {
+		for(Iterator<ProjectManager> i = lm.iterator(); i.hasNext(); ) {
+			ProjectManager p = i.next();
+			Thread t = new Thread((Runnable)p);
+			t.start();
+		}
 	}
 
 }

@@ -86,5 +86,11 @@ public interface Project {
 	 * @param p Programmer who's done
 	 */
 	public void done(Programmer p);
+	
+	/**
+	 * Checks if the project is completed.
+	 * @return True if the project is completed, false otherwise.
+	 */
+	public boolean isCompleted();
 
 }

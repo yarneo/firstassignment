@@ -169,4 +169,12 @@ public class ProjectImpl implements Project {
 		if(!this.programmers.remove(p))
 			throw new NotWorkingProgrammerException("Programmer has not commited!");
 	}
+	
+	/**
+	 * Checks if the project is completed.
+	 * @return True if the project is completed, false otherwise.
+	 */
+	public synchronized boolean isCompleted() {
+		return (this.getSize()==0);
+	}
 }

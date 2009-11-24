@@ -3,10 +3,13 @@
  */
 package actors;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
 
 import resources.ProgrammerResourceHandler;
 import resources.Resource;
@@ -61,6 +64,8 @@ public class Programmer implements Runnable {
 		
 		this.logger = new LogHelper(LogHelper.LOG_FILE_NAME);
 		
+		this.addInfoToBoard();
+		
 		this.mailbox = new ArrayBlockingQueue<Project>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/10, true);
 	}
 	
@@ -93,7 +98,11 @@ public class Programmer implements Runnable {
 								this.simulatedSecond);
 					} catch(InterruptedException e) {}
 					
+					//COMPLETED
 					this.checkForNewBudget();
+					
+					if (projectToDo.isCompleted())
+						this.board.doneWithProject(projectToDo);
 					
 					//logging
 					logger.log(this.name+" is done with commitement on project "+
@@ -112,17 +121,24 @@ public class Programmer implements Runnable {
 		logger.log(this.name+" finished working");
 	}
 	
-	/**
-	 * @param type Type of the project
-	 * @return is the programmer capable with this type of work
-	 */
-	public boolean isCapable(String type) {
-		if (!this.specializations.contains(type))
-			return false;
-		return true;
-	}
-	
 	//Private functions
+	
+	private void addInfoToBoard() {
+        ConcurrentHashMap<String,Collection<BlockingQueue<Project>>> temp;
+        temp = this.board.getMyProgrammersLink();
+        Collection<BlockingQueue<Project>> c = new ArrayList<BlockingQueue<Project>>();
+        for(Iterator<String> i = specializations.iterator(); i.hasNext();) {
+            String tempType = i.next();
+            if(!temp.containsKey(tempType)) {
+            temp.putIfAbsent(tempType, c);
+            c.add(this.mailbox);
+            }
+            else {
+                temp.get(tempType).add(this.mailbox);
+            }
+        }
+        this.board.setMyProgrammersLink(temp);    
+    }
 	
 	private void acquireResources(List<String> ls) {
 		List<Resource> listRes = this.prh.parseStringToObjects(ls);

@@ -3,8 +3,6 @@
  */
 package actors;
 
-import java.util.List;
-
 /**
  * @author Alon Segal
  *
