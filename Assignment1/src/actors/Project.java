@@ -73,7 +73,7 @@ public interface Project {
 	 * @param p the programmer who called this method
 	 * @return true if another programmer can commit, false otherwise.
 	 */
-	public boolean isAnotherHandNeeded(Programmer p);
+	public boolean isAnotherHandNeeded(double workPhaseHour, double productivityRate);
 	
 	/**
 	 * Called by a programmer who's commiting for the project

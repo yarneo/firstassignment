@@ -16,25 +16,28 @@ import java.util.logging.Logger;
  */
 public class LogHelper {
 	
-	private static Logger logger;
-	private static FileHandler fh;
-	private static Date date;
+	public static String LOG_FILE_NAME;
+	
+	private Logger logger;
+	private FileHandler fh;
+	private Date date;
 
 	/**
 	 * @param fileName Log file that given as an argument.
 	 */
 	public LogHelper(String fileName) {
-		LogHelper.logger = Logger.getLogger("MainLogger");
-		LogHelper.date = new Date();
+		LogHelper.LOG_FILE_NAME = fileName;
+		this.logger = Logger.getLogger("MainLogger");
+		this.date = new Date();
 	    
 	    try {
 	        // This block configure the logger with handler and formatter
-	    	LogHelper.fh = new FileHandler(fileName, true);
-	    	LogHelper.logger.addHandler(LogHelper.fh);
-	    	LogHelper.logger.setLevel(Level.INFO);
+	    	this.fh = new FileHandler(fileName, true);
+	    	this.logger.addHandler(this.fh);
+	    	this.logger.setLevel(Level.INFO);
 	        //A formatter that made to log a simple text
 	        CustomFormatter formatter = new CustomFormatter();
-	        LogHelper.fh.setFormatter(formatter);
+	        this.fh.setFormatter(formatter);
 	        
 	    } catch (SecurityException e) {
 	        e.printStackTrace();
@@ -48,9 +51,9 @@ public class LogHelper {
 	/**
 	 * @param message String to be logged with "at+TIME"
 	 */
-	public static synchronized void log(String message) {
-		LogHelper.logger.log(Level.INFO, message+" at "+DateFormat.getTimeInstance(
-				DateFormat.MEDIUM).format(LogHelper.date));
+	public  synchronized void log(String message) {
+		this.logger.log(Level.INFO, message+" at "+DateFormat.getTimeInstance(
+				DateFormat.MEDIUM).format(this.date));
 	}
 	
 	/**
@@ -58,11 +61,11 @@ public class LogHelper {
 	 * @param message String to be logged
 	 * @param withDate Indicates whether to put "at+TIME" to the message.
 	 */
-	public static synchronized void log(String message, boolean withDate) {
+	public synchronized void log(String message, boolean withDate) {
 		if (!withDate)
-			LogHelper.logger.log(Level.INFO, message);
+			this.logger.log(Level.INFO, message);
 		else
-			LogHelper.logger.log(Level.INFO, message+" at "+DateFormat.getTimeInstance(
-					DateFormat.MEDIUM).format(LogHelper.date));
+			this.logger.log(Level.INFO, message+" at "+DateFormat.getTimeInstance(
+					DateFormat.MEDIUM).format(this.date));
 	}
 }

@@ -19,7 +19,7 @@ public class SimStarter {
 		logFile = args[1];
 
 		//setting up a static logger which tracks the whole system. Usage: Logger.log(message) from anywhere.
-		new LogHelper(logFile);
+		LogHelper.LOG_FILE_NAME  = SimStarter.logFile;
 
 		//creating an instance that parses the configuration file.
 		MainParser mp = new MainParser(confFile);

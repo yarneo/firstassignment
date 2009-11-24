@@ -141,9 +141,9 @@ public class ProjectImpl implements Project {
 	}
 
 	@Override
-	public synchronized boolean isAnotherHandNeeded(Programmer p) {
+	public synchronized boolean isAnotherHandNeeded(double workPhaseHour, double productivityRate) {
 		if(this._isAnotherHandNeeded) {
-			this.setSize(this.getSize()-(int)(p.getWorkPhaseHours()/p.getProductivityRate()));
+			this.setSize(this.getSize()-(int)(workPhaseHour/productivityRate));
 			if(this.getSize()<0) {
 				this.setSize(0);
 				this._isAnotherHandNeeded = false;

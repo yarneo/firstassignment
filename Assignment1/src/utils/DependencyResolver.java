@@ -10,33 +10,33 @@ import actors.Project;
  * Projects, and to be able to update the projects when a prequesite project is completed.
  */
 public interface DependencyResolver {
-
+	
 	/**
 	 * Given an ID number, goes through all the projects which are held, checks and
 	 * updates if the current ID is a prequesite to one of them.
-	 *
+	 * 
 	 * @param id ID of the finished project.
-	 *
+	 * 
 	 * @pre: none.
 	 * @post: none
 	 */
 	public void updateCompProj(String id);
-
+	
 	/**
 	 * Returns all the projects which are ready for work.
-	 *
+	 * 
 	 * @return List of ready projects.
-	 *
+	 * 
 	 * @pre: none
 	 * @post: none
 	 */
 	public List<Project> getReadyProjects();
-
+	
 	/**
 	 * Gives the queue in which all the projects are held.
-	 *
+	 * 
 	 * @return All the projects in the object
-	 *
+	 * 
 	 * @pre: none
 	 * @post: none
 	 */
@@ -47,5 +47,4 @@ public interface DependencyResolver {
 	 * @return true if there are projects ready and false otherwise.
 	 */
 	public boolean areThereReadyProjects();
-
 }

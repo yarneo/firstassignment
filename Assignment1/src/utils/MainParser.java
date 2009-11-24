@@ -11,8 +11,10 @@ import java.util.List;
 import resources.ProgrammerResourceHandler;
 import resources.Resource;
 import resources.ResourceImpl;
+import actors.Board;
+import actors.BoardImpl;
 import actors.Programmer;
-import actors.ProgrammerImpl;
+import actors.Programmer;
 
 /**
  * Parse the main configuration file into a proper lists and vars.
@@ -26,6 +28,7 @@ public class MainParser extends PropertyParser {
 	private List<Programmer> programmers;
 	private List<Resource> resources;
 	private List<String> projMangers;
+	private Board board;
 	
 	public static double SIMULATION_HOUR;
 
@@ -43,6 +46,7 @@ public class MainParser extends PropertyParser {
 		this.parseProjectTypes();
 		this.parseResources();
 		this.parseProjectMangers();
+		this.createBoard();
 		this.parseProgrammers();
 		this.parseSimulationHour();
 	}
@@ -71,6 +75,10 @@ public class MainParser extends PropertyParser {
 			this.projMangers.add(prop.getProperty("projectManager"+(i+1)+"Name"));
 		}
 	}
+	
+	private void createBoard() {
+		this.board = new BoardImpl();
+	}
 
 	private void parseProgrammers() {
 		ProgrammerResourceHandler prh = new ProgrammerResourceHandler(this.getResources());
@@ -83,7 +91,7 @@ public class MainParser extends PropertyParser {
 			double wPhaseHours = Double.parseDouble(prop.getProperty("programmer"+(i+1)+"WorkPhaseHours"));
 			double budget = Double.parseDouble(prop.getProperty("programmer"+(i+1)+"Budget"));
 			List<String> special = Arrays.asList(prop.getProperty("programmer"+(i+1)+"Specialization").split(","));
-			Programmer p = new ProgrammerImpl(name, special, pRate, wPhaseHours, budget, prh);
+			Programmer p = new Programmer(name, special, pRate, wPhaseHours, budget, prh, this.board);
 			this.programmers.add(p);
 		}
 	}
