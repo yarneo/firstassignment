@@ -37,7 +37,7 @@ public void setMyManagersLink(List<ManagersInfo> myManagersLink);
  * project appears in the list or if it appears in the prerequisite list of 
  * each one of the projects in the list. If it does, then it adds the project
  * into that certain managers inbox, which then wakes him up
- * this method is so that not all managers are woken up instantly 
+ * this method is so that not all of the managers are woken up instantly 
  * by a finished project, but only the managers who are supposed to wake up
  * because waking up a thread is expensive cpu wise.
  *
