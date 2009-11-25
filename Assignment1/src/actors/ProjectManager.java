@@ -46,7 +46,7 @@ public class ProjectManager implements Runnable {
 		this.projectIds = parseIt.getProjectIds();
 		this.myProjects = new DependencyResolverImpl(this.projects);
 		
-		//XXX Depending on the fact that there are ready projects (this.publishProjects()). exception!!!
+		//XXX Depending on the fact that there are ready projects (this.publishProjects()). exception...
 		ManagersInfo tempInfo = new ManagersInfo(this.publishProjects(),this.mailBox);
 		List<ManagersInfo> tempList;
 		tempList = this.b.getMyManagersLink();
