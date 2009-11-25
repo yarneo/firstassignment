@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     25/11/2009 03:12:21                                                        
+
+     Assignment1 - SPL    
+     Thread usage
+                   
+     Alon Segal                                                                
+     ====================================================================== -->
+<project name="Assignment1 - SPL" default="default">
+    <description>
+            Thread usage
+    </description>
+
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="default" depends="depends" description="Thread usage">
+        
+    </target>
+
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: depends                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="depends">
+    </target>
+
+</project>
