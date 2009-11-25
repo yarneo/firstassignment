@@ -27,6 +27,7 @@ public class Programmer implements Runnable {
 	private double workPhaseHours;
 	private double budget;
 	private List<String> specializations;
+	
 	private ProgrammerInfo pInfo;
 	
 	private final int simulatedSecond = 1000;
@@ -50,14 +51,15 @@ public class Programmer implements Runnable {
 	 * @param _prh ProgrammerResourceHandler instance
 	 */
 	public Programmer(String _name, List<String> _specializations, double _productivityRate,
-			double _workPhaseHours, double _budget, ProgrammerResourceHandler _prh, Board _board) {
+			double _workPhaseHours, double _budget, ProgrammerInfo _pi, 
+			ProgrammerResourceHandler _prh, Board _board) {
 		this.name = _name;
 		this.specializations = _specializations;
 		this.productivityRate = _productivityRate;
 		this.workPhaseHours = _workPhaseHours;
 		this.budget = _budget;
 		
-		this.pInfo= new ProgrammerInfo(this.name);
+		this.pInfo= _pi;
 		
 		this.prh = _prh;
 		this.board = _board;

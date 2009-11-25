@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 import resources.ProgrammerResourceHandler;
 
+import utils.MainParser;
 import utils.ObserverInfoGatherer;
 
 /**
@@ -24,8 +25,8 @@ public class ObserverImpl implements Observer, Runnable {
 	/**
 	 * 
 	 */
-	public ObserverImpl() {
-		this.myInfo = new ObserverInfoGatherer();
+	public ObserverImpl(MainParser _mp) {
+		this.myInfo = new ObserverInfoGatherer(_mp);
 		scanner = new java.util.Scanner(System.in);
 		userInput = "";
 	}

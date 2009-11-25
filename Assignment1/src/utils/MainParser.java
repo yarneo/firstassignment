@@ -14,6 +14,7 @@ import resources.ResourceImpl;
 import actors.Board;
 import actors.BoardImpl;
 import actors.Programmer;
+import actors.ProgrammerInfo;
 import actors.ProjectManager;
 
 /**
@@ -28,6 +29,8 @@ public class MainParser extends PropertyParser {
 	private List<Programmer> programmers;
 	private List<Resource> resources;
 	private List<ProjectManager> projMangers;
+	private List<ProgrammerInfo> programmersInfo;
+	
 	private Board board;
 	
 	public static double SIMULATION_HOUR;
@@ -84,6 +87,7 @@ public class MainParser extends PropertyParser {
 
 	private void parseProgrammers() {
 		ProgrammerResourceHandler prh = new ProgrammerResourceHandler(this.getResources());
+		this.programmersInfo = new ArrayList<ProgrammerInfo>();
 
 		this.programmers = new ArrayList<Programmer>();
 		int amount = Integer.parseInt(prop.getProperty("numOfProgrammers"));
@@ -93,9 +97,20 @@ public class MainParser extends PropertyParser {
 			double wPhaseHours = Double.parseDouble(prop.getProperty("programmer"+(i+1)+"WorkPhaseHours"));
 			double budget = Double.parseDouble(prop.getProperty("programmer"+(i+1)+"Budget"));
 			List<String> special = Arrays.asList(prop.getProperty("programmer"+(i+1)+"Specialization").split(","));
-			Programmer p = new Programmer(name, special, pRate, wPhaseHours, budget, prh, this.board);
+			
+			ProgrammerInfo pi = new ProgrammerInfo(name, special, pRate, wPhaseHours, budget);
+			this.programmersInfo.add(pi);
+			Programmer p = new Programmer(name, special, pRate, wPhaseHours, budget, pi, prh, this.board);
+			
 			this.programmers.add(p);
 		}
+	}
+
+	/**
+	 * @return the programmersInfo
+	 */
+	public List<ProgrammerInfo> getProgrammersInfo() {
+		return programmersInfo;
 	}
 
 	private void parseSimulationHour() {

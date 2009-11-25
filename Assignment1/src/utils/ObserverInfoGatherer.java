@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import actors.Programmer;
+import actors.ProgrammerInfo;
 import actors.Project;
 
 
@@ -12,17 +13,17 @@ private List<Project> currentProjects;
 private List<Project> pendingProjects;
 private List<Project> completedProjects;
 private List<String> timeOfCompletedProjects;
-private List<Programmer> programmers;
+private List<ProgrammerInfo> programmersinfo;
 
 /**
  * the constructor that builds the parameters
  */
-public ObserverInfoGatherer() {
+public ObserverInfoGatherer(MainParser _mp) {
 	this.currentProjects = new ArrayList<Project>();
 	this.pendingProjects = new ArrayList<Project>();
 	this.completedProjects = new ArrayList<Project>();
 	this.timeOfCompletedProjects = new ArrayList<String>();
-	this.programmers = new ArrayList<Programmer>();
+	this.programmersinfo = _mp.getProgrammersInfo();
 }
 
 

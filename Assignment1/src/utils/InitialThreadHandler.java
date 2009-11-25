@@ -6,6 +6,8 @@ package utils;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import sun.applet.Main;
 import actors.Observer;
 import actors.ObserverImpl;
 import actors.Programmer;
@@ -23,7 +25,7 @@ public class InitialThreadHandler {
 	 * @param mp Main parser object
 	 */
 	public InitialThreadHandler(MainParser mp) {
-		this.runObserver();
+		this.runObserver(mp);
 		this.runProgrammers(mp.getProgrammers());
 		this.runManagers(mp.getProjectManagers());
 		//TODO InitialThreadHandler - Complete thread running.
@@ -31,8 +33,8 @@ public class InitialThreadHandler {
 
 	//private functions
 
-	private void runObserver() {
-		Observer observ = new ObserverImpl();
+	private void runObserver(MainParser _mp) {
+		Observer observ = new ObserverImpl(_mp);
 		Thread t = new Thread((Runnable)observ);
 		t.start();
 	}

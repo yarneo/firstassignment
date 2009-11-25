@@ -3,6 +3,8 @@
  */
 package actors;
 
+import java.util.List;
+
 /**
  * @author Alon Segal
  *
@@ -12,15 +14,28 @@ public class ProgrammerInfo {
 	private boolean _isThereNewBudget;
 	
 	private String name;
+	private double productivityRate;
+	private double workPhaseHours;
+	private List<String> specializations;
+	
 	private double newBudget;
 	
 	/**
 	 * 
-	 * @param _name name of the programmer
+	 * @param _name
+	 * @param _specializations
+	 * @param _productivityRate
+	 * @param _workPhaseHours
+	 * @param _budget
 	 */
-	public ProgrammerInfo(String _name) {
+	public ProgrammerInfo(String _name, List<String> _specializations, double _productivityRate,
+			double _workPhaseHours, double _budget) {
 		
 		this.name = _name;
+		this.specializations = _specializations;
+		this.productivityRate = _productivityRate;
+		this.workPhaseHours = _workPhaseHours;
+		this.newBudget = _budget;
 		
 		this._isThereNewBudget = false;
 	}
@@ -51,10 +66,37 @@ public class ProgrammerInfo {
 	}
 	
 	/**
+	 * @return the budget
+	 */
+	public double getBudget() {
+		return this.newBudget;
+	}
+	
+	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getProd() {
 		return this.name;
 	}
+	
+	/**
+	 * @return the productivityRate
+	 */
+	public double getProductivityRate() {
+		return this.productivityRate;
+	}
 
+	/**
+	 * @return the workPhaseHours
+	 */
+	public double getWorkPhaseHours() {
+		return this.workPhaseHours;
+	}
+
+	/**
+	 * @return the specializations
+	 */
+	public List<String> getSpecializations() {
+		return this.specializations;
+	}
 }
