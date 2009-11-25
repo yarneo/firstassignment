@@ -172,7 +172,7 @@ public class BoardImpl implements Board {
 	 * @return True if the process is to be terminated, false otherwise.
 	 */
 	public boolean isToTerminate() {
-		return _isToTerminate;
+		return this._isToTerminate;
 	}
 	
 	/**
