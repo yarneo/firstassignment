@@ -26,9 +26,9 @@ public interface Board {
 	/**
 	 * 
 	 */
-	public void setMyProgrammersLink(ConcurrentHashMap<String, Collection<BlockingQueue<Project>>> myProgrammersLink);
+	public void setMyProgrammersLink(ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>> myProgrammersLink);
 	
-	public ConcurrentHashMap<String, Collection<BlockingQueue<Project>>> getMyProgrammersLink();
+	public ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>> getMyProgrammersLink();
 	
 	public List<ManagersInfo> getMyManagersLink();
 	

@@ -3,6 +3,7 @@
  */
 package actors;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -15,27 +16,22 @@ import utils.ManagersInfo;
  */
 public class BoardImpl implements Board {
 	
+	//members
+	
 	private boolean _isToTerminate;
+	private List<Project> projectsBoard;
+	private ConcurrentHashMap<String,Collection<BlockingQueue<ProgrammerMessage>>> myProgrammersLink;
+	private List<ManagersInfo> myManagersLink;
 	
 	/**
 	 * Default constructor
 	 */
 	public BoardImpl() {
 		this._isToTerminate = false;
+		this.myProgrammersLink = new ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>>();
+		this.myManagersLink = new ArrayList<ManagersInfo>();
 	}
 	
-	/**
-	 * fdfs
-	 */
-	private List<Project> projectsBoard;
-	/**
-	 *
-	 */
-	private ConcurrentHashMap<String,Collection<BlockingQueue<Project>>> myProgrammersLink;
-	/**
-	 *
-	 */
-	private List<ManagersInfo> myManagersLink;
 	/* (non-Javadoc)
 	* @see actors.Board#addAnnouncement()
 	* Have received a list of projects from the Program Manager
@@ -74,17 +70,16 @@ public class BoardImpl implements Board {
 	public void doYourMagic(){
 		for(Iterator<Project> j = this.projectsBoard.iterator(); j.hasNext();) {
 			
-			Collection<BlockingQueue<Project>> c;
+			Collection<BlockingQueue<ProgrammerMessage>> c;
 			Project p = j.next();
 			String temp = p.getType();
 				if(this.myProgrammersLink.containsKey(temp)) {
 					c = this.myProgrammersLink.get(temp);
-					for(Iterator<BlockingQueue<Project>> i = c.iterator(); i.hasNext();) {
-						BlockingQueue<Project> tempQueue = i.next();
+					for(Iterator<BlockingQueue<ProgrammerMessage>> i = c.iterator(); i.hasNext();) {
+						BlockingQueue<ProgrammerMessage> tempQueue = i.next();
 						try {
-							tempQueue.put(p);
+							tempQueue.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_PROJECT, p));
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						}
@@ -149,14 +144,14 @@ public class BoardImpl implements Board {
 /**
  * @return my programmers link
  */
-	public ConcurrentHashMap<String, Collection<BlockingQueue<Project>>> getMyProgrammersLink() {
+	public ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>> getMyProgrammersLink() {
 		return this.myProgrammersLink;
 	}
 	/**
 	 * @param _myProgrammersLink my programmers link
 	 */
 	public void setMyProgrammersLink(
-			ConcurrentHashMap<String, Collection<BlockingQueue<Project>>> _myProgrammersLink) {
+			ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>> _myProgrammersLink) {
 		this.myProgrammersLink = _myProgrammersLink;
 	}
 	/**

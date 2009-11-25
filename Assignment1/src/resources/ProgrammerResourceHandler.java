@@ -47,7 +47,6 @@ public class ProgrammerResourceHandler {
 	 * @return a hash sorted list of resources objects.
 	 */
 	public List<Resource> parseStringToObjects(List<String> ls) {
-		//TODO Test this method.
 		List<Resource> res = new ArrayList<Resource>();
 		
 		for(Iterator<String> i = ls.iterator(); i.hasNext();) {

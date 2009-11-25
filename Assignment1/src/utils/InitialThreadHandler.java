@@ -55,8 +55,8 @@ public class InitialThreadHandler {
 			t.start();
 		}
 		
-		//lp.get(1).sendNewProject(p1);
-		//lp.get(0).sendNewProject(p1);
+		lp.get(1).sendNewProject(p1);
+		lp.get(0).sendNewProject(p1);
 		System.out.print("");
 	}
 	

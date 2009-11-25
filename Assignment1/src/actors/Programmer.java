@@ -32,7 +32,7 @@ public class Programmer implements Runnable {
 	private final int simulatedSecond = 1000;
 	
 	private ProgrammerResourceHandler prh;
-	private BlockingQueue<Project> mailbox;
+	private BlockingQueue<ProgrammerMessage> mailbox;
 	private boolean shouldStop;
 	private Board board;
 	
@@ -66,7 +66,7 @@ public class Programmer implements Runnable {
 		
 		this.addInfoToBoard();
 		
-		this.mailbox = new ArrayBlockingQueue<Project>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/10, true);
+		this.mailbox = new ArrayBlockingQueue<ProgrammerMessage>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/10, true);
 	}
 	
 	@Override
@@ -74,42 +74,16 @@ public class Programmer implements Runnable {
 		this.logger.log(this.name+" started working");
 		while(!this.shouldStop) {
 			try {
-				Project projectToDo = this.mailbox.take();
-				this.checkForNewBudget();
-
-				if (this.isBudgetEnough(projectToDo) & projectToDo.isAnotherHandNeeded(this.workPhaseHours, this.productivityRate)) {
-					this.acquireResources(projectToDo.getResources());
-					
-					this.logger.log(this.name+" committed to "+projectToDo.getId()+" for "+
-							(int)this.workPhaseHours);
-					
-					this.budget = this.budget - this.workPhaseHours;
-					
-					projectToDo.commit(this);
-					try {
-						Thread.sleep((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
-								this.simulatedSecond);
-					} catch(InterruptedException e) {}
-					
-					//COMPLETED
-					this.checkForNewBudget();
-					
-					if (projectToDo.isCompleted())
-						this.board.doneWithProject(projectToDo);
-					
-					//logging
-					this.logger.log(this.name+" is done with commitement on project "+
-							projectToDo.getId());
-					if(this.budget<this.workPhaseHours)
-						this.logger.log(this.name+"'s budget run out");
-					
-					this.releaseResources(projectToDo.getResources());
-					projectToDo.done(this);
-					//handles budget
-					this.budget = this.budget - this.workPhaseHours;
-					
-				}
+				ProgrammerMessage message = this.mailbox.take();
+				
+				if (message.getType().equals(ProgrammerMessage.PROGRAMMER_PROJECT)) 
+					this.takeProject(message.getProject());
+			
+				if (message.getType().equals(ProgrammerMessage.PROGRAMMER_BUDGET)) 
+					this.budget += message.getBudget();
+				//Project projectToDo = this.mailbox.take();
 			}	catch(InterruptedException e) {}
+				
 		}
 		this.logger.log(this.name+" finished working");
 	}
@@ -124,12 +98,12 @@ public class Programmer implements Runnable {
 	}
 	
 	private void addInfoToBoard() {
-        ConcurrentHashMap<String,Collection<BlockingQueue<Project>>> temp;
+        ConcurrentHashMap<String,Collection<BlockingQueue<ProgrammerMessage>>> temp;
         temp = this.board.getMyProgrammersLink();
-        Collection<BlockingQueue<Project>> c = new ArrayList<BlockingQueue<Project>>();
+        Collection<BlockingQueue<ProgrammerMessage>> c = new ArrayList<BlockingQueue<ProgrammerMessage>>();
         for(Iterator<String> i = this.specializations.iterator(); i.hasNext();) {
             String tempType = i.next();
-            if(!temp.containsKey(tempType)) {
+            if(temp!=null && !temp.containsKey(tempType)) {
             temp.putIfAbsent(tempType, c);
             c.add(this.mailbox);
             }
@@ -147,8 +121,6 @@ public class Programmer implements Runnable {
 			r.acquire();
 			this.logger.log(this.name+" acquired "+r.getType());
 		}
-		
-		//TODO Finish and test this method.
 	}
 	
 	private void releaseResources(List<String> ls) {
@@ -158,8 +130,6 @@ public class Programmer implements Runnable {
 			this.logger.log(this.name+" released "+r.getType());
 			r.realese();
 		}
-		
-		//TODO Finish and test this method.
 	}
 	
 	private boolean isBudgetEnough(Project p) {
@@ -168,10 +138,43 @@ public class Programmer implements Runnable {
 		return true;
 	}
 	
-	private void checkForNewBudget() {
-		if(this.pInfo.isThereNewBudget()) {
-			this.budget+=this.pInfo.getNewBudget();
+	private void takeProject(Project projectToDo) {
+		if (this.isBudgetEnough(projectToDo) & projectToDo.isAnotherHandNeeded(this.workPhaseHours, this.productivityRate)) {
+			this.acquireResources(projectToDo.getResources());
+			
+			this.logger.log(this.name+" committed to "+projectToDo.getId()+" for "+
+					(int)this.workPhaseHours);
+			
+			this.budget = this.budget - this.workPhaseHours;
+			
+			projectToDo.commit(this);
+			try {
+				Thread.sleep((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
+						this.simulatedSecond);
+			} catch(InterruptedException e) {}
+			
+			//COMPLETED
+			
+			if (projectToDo.isCompleted())
+				this.board.doneWithProject(projectToDo);
+			
+			//logging
+			this.logger.log(this.name+" is done with commitement on project "+
+					projectToDo.getId());
+			if(this.budget<this.workPhaseHours)
+				this.logger.log(this.name+"'s budget run out");
+			
+			this.releaseResources(projectToDo.getResources());
+			projectToDo.done(this);
+			//handles budget
+			this.budget = this.budget - this.workPhaseHours;
+			
 		}
 	}
-
+	
+	public void sendNewProject(Project p) {
+		try {
+			this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_PROJECT, p));
+		} catch(InterruptedException e) {}
+	}
 }

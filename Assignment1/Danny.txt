@@ -6,6 +6,6 @@ resourcesNeeded34=printer,regular_computer
 prerequisiteProjects12=none
 size12=200
 resourcesNeeded12=regular_computer
-prerequisiteProjects21=34,12
+prerequisiteProjects21=none
 size21=100
 resourcesNeeded21=regular_computer,23inch_lcd

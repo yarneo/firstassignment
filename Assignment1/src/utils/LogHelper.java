@@ -20,7 +20,6 @@ public class LogHelper {
 	
 	private Logger logger;
 	private FileHandler fh;
-	private Date date;
 
 	/**
 	 * @param fileName Log file that given as an argument.
@@ -28,7 +27,6 @@ public class LogHelper {
 	public LogHelper(String fileName) {
 		LogHelper.LOG_FILE_NAME = fileName;
 		this.logger = Logger.getLogger("MainLogger");
-		this.date = new Date();
 	    
 	    try {
 	        // This block configure the logger with handler and formatter
@@ -52,8 +50,9 @@ public class LogHelper {
 	 * @param message String to be logged with "at+TIME"
 	 */
 	public  synchronized void log(String message) {
+		Date date = new Date();
 		this.logger.log(Level.INFO, message+" at "+DateFormat.getTimeInstance(
-				DateFormat.MEDIUM).format(this.date));
+				DateFormat.MEDIUM).format(date));
 	}
 	
 	/**
@@ -62,10 +61,11 @@ public class LogHelper {
 	 * @param withDate Indicates whether to put "at+TIME" to the message.
 	 */
 	public synchronized void log(String message, boolean withDate) {
+		Date date = new Date();
 		if (!withDate)
 			this.logger.log(Level.INFO, message);
 		else
 			this.logger.log(Level.INFO, message+" at "+DateFormat.getTimeInstance(
-					DateFormat.MEDIUM).format(this.date));
+					DateFormat.MEDIUM).format(date));
 	}
 }

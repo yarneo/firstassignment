@@ -4,7 +4,6 @@
 package actors;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
@@ -46,6 +45,8 @@ public class ProjectManager implements Runnable {
 		this.projects = parseIt.getProjects();
 		this.projectIds = parseIt.getProjectIds();
 		this.myProjects = new DependencyResolverImpl(this.projects);
+		
+		//XXX Depending on the fact that there are ready projects (this.publishProjects()). exception!!!
 		ManagersInfo tempInfo = new ManagersInfo(this.publishProjects(),this.mailBox);
 		List<ManagersInfo> tempList;
 		tempList = this.b.getMyManagersLink();
@@ -60,7 +61,9 @@ public class ProjectManager implements Runnable {
 		this.logger.log(this.name + "started working at" + DateFormat.getTimeInstance(),false);
 		while(!this.myProjects.getAllProjects().isEmpty()) {
 		Project temp;
-		this.publish();
+		System.out.print(this.myProjects.areThereReadyProjects());
+		if(this.myProjects.areThereReadyProjects())
+			this.publish();
 		temp = this.mailBox.remove();
 		this.updateProjs(temp.getId()); 
 		//what about deleting from manager the done project?
@@ -85,6 +88,7 @@ public class ProjectManager implements Runnable {
 		}
 		return this.mailBox.remove();
 	}
+	
 	private String publishProjectsTemp() {
 		String rdyProj = "";
 		for(int i=0;i<this.projects.size();i++) {
@@ -94,9 +98,11 @@ public class ProjectManager implements Runnable {
 		}
 		return rdyProj;
 	}
+	
 	private List<Project> publishProjects() {
 		return this.myProjects.getReadyProjects();
 	}
+	
 	private String updateProjsTemp(String finishedProject) {
 		String preqRemoved = "";
 		for(int i=0;i<this.projects.size();i++) {
