@@ -26,7 +26,6 @@ public ObserverInfoGatherer(MainParser _mp) {
 	this.programmersinfo = _mp.getProgrammersInfo();
 }
 
-
 /**
  * @param _currentProjects the currentProjects to set
  */

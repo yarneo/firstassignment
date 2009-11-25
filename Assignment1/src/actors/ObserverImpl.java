@@ -106,7 +106,7 @@ public class ObserverImpl implements Observer, Runnable {
 	}
 	private void programmerInfo(String name) {
 		for(Iterator<Programmer> i = this.myInfo.getProgrammers().iterator(); i.hasNext();) {
-			//still need the getter for the field name, as written in the TODO above
+			//still need the getter for the field name, as written in the todo above
 			//and as written above, need to make an object ProgrammerInfo which has all the 
 			//info about the programmers as the info written below:
 			if(i.next().getName() == name) {
