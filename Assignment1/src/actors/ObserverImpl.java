@@ -24,12 +24,12 @@ public class ObserverImpl implements Observer, Runnable {
 	private Board b;
 	private ProgrammerResourceHandler prh;
 	/**
-	 * 
+	 * @param _mp my main parser
 	 */
 	public ObserverImpl(MainParser _mp) {
 		this.myInfo = new ObserverInfoGatherer(_mp);
-		scanner = new java.util.Scanner(System.in);
-		userInput = "";
+		this.scanner = new java.util.Scanner(System.in);
+		this.userInput = "";
 	}
 
 	/* (non-Javadoc)
@@ -37,10 +37,10 @@ public class ObserverImpl implements Observer, Runnable {
 	 */
 	@Override
 	public void run() {
-		while (! userInput.equals("stop")) { 
+		while (! this.userInput.equals("stop")) { 
 			System.out.print("Observer> "); 
-			userInput = scanner.nextLine(); 
-			System.out.println("You entered: " + userInput); 
+			this.userInput = this.scanner.nextLine(); 
+			System.out.println("You entered: " + this.userInput); 
 	     } 
 		System.out.println("Bye");
 	}
@@ -55,16 +55,9 @@ public class ObserverImpl implements Observer, Runnable {
 		//id number
 		System.out.println(tempProject.getId());
 		//a project needs to tell me how much of it has been completed
-		//TODO a project needs to tell me how much of it has been completed
-		System.out.println("");
+		System.out.println(tempProject.getHoursCompleted());
 		//which programmers work on it now
-
-		for(Iterator<ProgrammerInfo> j = tempProject.getProgrammers().iterator(); i.hasNext();) {
-
-		//TODO add getName method to the Programmer	, cant add getter to thread, need to 
-		//change the programmers working on project to list of strings of their names.
-			System.out.println(j.next().getName());
-		//}
+		System.out.println(tempProject.getProgrammers());
 	}
 	}
 	
@@ -90,10 +83,9 @@ public class ObserverImpl implements Observer, Runnable {
 		//id number
 		System.out.println(tempProject.getId());
 		//time taken
-		//TODO add a field to the object Project that has time taken to finish project,
 		//obviously if the project hasent been worked on yet or hasent finished the time there
 		//will be 0, or null. name of field will be time, and getter will be getTime
-		System.out.println(tempProject.getTime());
+		System.out.println(tempProject.getTimeElapsed());
 	}
 	}
 	
@@ -101,9 +93,6 @@ public class ObserverImpl implements Observer, Runnable {
 	for(Iterator<ProgrammerInfo> i = this.myInfo.getProgrammers().iterator(); i.hasNext();) {
 		ProgrammerInfo tempProgrammer = i.next();
 		//name of programmers
-		//TODO add a getter for the field name in the Programmer Object
-		//cant add getter to thread then it needs to take information from the object
-		//ProgrammerInfo
 		System.out.println(tempProgrammer.getName());
 	}
 	}
@@ -122,7 +111,15 @@ public class ObserverImpl implements Observer, Runnable {
 				//need to add a field on the programmer which is the programmers' current 
 				//status which means: is he assigned to a project and if so, what
 				//project id, and what resources does he hold
-				System.out.println(getCurrentStatus);
+				if(tempProgrammer.isCurrentlyWorking()) {
+					//current project he is working on
+					System.out.println(tempProgrammer.getCurrentProject());
+					//current resources he is holding
+					System.out.println(tempProgrammer.getCurrentResources());
+				}
+				else {
+					System.out.println("the programmer isnt currently assigned to any project");
+				}
 			}
 		}
 	}
@@ -136,8 +133,13 @@ public class ObserverImpl implements Observer, Runnable {
 		
 	}
 	
-	private void addBudget(String number) {
-		//TODO addBudget, how do i add it using the ProgrammerInfo you have added?
+	private void addBudget(String programmerName ,Double budget) {
+		for(Iterator<ProgrammerInfo> i = this.myInfo.getProgrammers().iterator(); i.hasNext();) {
+			ProgrammerInfo tempy = i.next();
+			if(tempy.getName()==programmerName) {
+				tempy.addBudget(budget);
+			}
+		}
 	}
 	
 	private void stop() {
