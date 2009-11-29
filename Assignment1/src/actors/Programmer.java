@@ -146,10 +146,10 @@ public class Programmer implements Runnable {
 	
 	private void takeProject(Project projectToDo) {
 		if (this.isBudgetEnough(projectToDo) & projectToDo.isAnotherHandNeeded(this.workPhaseHours, this.productivityRate)) {
-			this.acquireResources(projectToDo.getResources());
-			
 			this.logger.log(this.name+" committed to "+projectToDo.getId()+" for "+
 					(int)this.workPhaseHours);
+			this.acquireResources(projectToDo.getResources());
+			
 			
 			this.budget = this.budget - this.workPhaseHours;
 			
@@ -159,15 +159,20 @@ public class Programmer implements Runnable {
 			this.pInfo.setCurrentResources(this.prh.parseStringToObjects(projectToDo.getResources()));
 			
 			projectToDo.commit(this.pInfo);
+
+			//System.out.println((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
+					//this.simulatedSecond);
+
 			//adding data to the observerinfogatherer about current projects being worked on
 			List<Project> tempList;
 			tempList = this.board.getMyObserver().getCurrentProjects();
 			tempList.add(projectToDo);
 			this.board.getMyObserver().setCurrentProjects(tempList);
+
 			try {
 				Thread.sleep((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
 						this.simulatedSecond);
-			} catch(InterruptedException e) {}
+			} catch(InterruptedException e) {System.out.println("Can't sleep");}
 			
 			//COMPLETED Working
 			this.pInfo.setIsWorking(false);

@@ -98,8 +98,14 @@ public class ProjectManager implements Runnable {
 	
 	
 	private List<Project> publishProjects() {
-		if(this.myProjects.areThereReadyProjects())
-			return this.myProjects.getReadyProjects();
+		if(this.myProjects.areThereReadyProjects()) {
+			List<Project> ls = this.myProjects.getReadyProjects();
+				for(Iterator<Project> i = ls.iterator(); i.hasNext(); ) {
+					Project p =i.next();
+					this.logger.log(this.name+" publishes project "+p.getId());
+				}
+			return ls;
+		}
 		return new ArrayList<Project>();
 	}
 	
