@@ -1,4 +1,4 @@
-type=qa
+type=gui
 projectIds=34,12,21
 prerequisiteProjects34=none
 size34=10
