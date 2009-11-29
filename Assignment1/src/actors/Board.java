@@ -7,6 +7,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
 import utils.ManagersInfo;
+import utils.ObserverInfoGatherer;
 
 public interface Board {
 	/**
@@ -60,4 +61,6 @@ public interface Board {
 	 * Shuts down all the system as soon as possible.
 	 */
 	public void shutdown();
+	public void setMyObserver(ObserverInfoGatherer myObserver);
+	public ObserverInfoGatherer getMyObserver();
 }

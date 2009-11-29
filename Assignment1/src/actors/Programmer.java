@@ -67,6 +67,10 @@ public class Programmer implements Runnable {
 		this.logger = new LogHelper(LogHelper.LOG_FILE_NAME);
 		this.mailbox = new ArrayBlockingQueue<ProgrammerMessage>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/100, true);
 		this.addInfoToBoard();
+		List<ProgrammerInfo> tempList;
+		tempList = this.board.getMyObserver().getProgrammers();
+		tempList.add(this.pInfo);
+		this.board.getMyObserver().setProgrammers(tempList);
 		
 		
 	}
@@ -155,6 +159,11 @@ public class Programmer implements Runnable {
 			this.pInfo.setCurrentResources(this.prh.parseStringToObjects(projectToDo.getResources()));
 			
 			projectToDo.commit(this.pInfo);
+			//adding data to the observerinfogatherer about current projects being worked on
+			List<Project> tempList;
+			tempList = this.board.getMyObserver().getCurrentProjects();
+			tempList.add(projectToDo);
+			this.board.getMyObserver().setCurrentProjects(tempList);
 			try {
 				Thread.sleep((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
 						this.simulatedSecond);
@@ -162,9 +171,19 @@ public class Programmer implements Runnable {
 			
 			//COMPLETED Working
 			this.pInfo.setIsWorking(false);
-			if (projectToDo.isCompleted())
+			if (projectToDo.isCompleted()) {
+				//remove the project from the current projects and move it to the completedprojects
+				//in the observerinfogatherer
+				List<Project> tempList2;
+				tempList2 = this.board.getMyObserver().getCompletedProjects();
+				tempList = this.board.getMyObserver().getCurrentProjects();
+				tempList.remove(projectToDo);
+				this.board.getMyObserver().setCurrentProjects(tempList);
+				tempList2.add(projectToDo);
+				this.board.getMyObserver().setCompletedProjects(tempList2);
 				this.board.doneWithProject(projectToDo);
-			
+				
+			}
 			//logging
 			this.logger.log(this.name+" is done with commitement on project "+
 					projectToDo.getId());

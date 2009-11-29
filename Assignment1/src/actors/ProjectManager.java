@@ -4,6 +4,7 @@
 package actors;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -67,6 +68,13 @@ public class ProjectManager implements Runnable {
 		//System.out.print(this.myProjects.areThereReadyProjects());
 		if(this.myProjects.areThereReadyProjects())
 			this.publish();
+		//add all the pending projects of this manager to the observer info gatherer
+			List<Project> tempList;
+			tempList = this.board.getMyObserver().getPendingProjects();
+			for(Iterator<Project> i = myProjects.getAllProjects().iterator(); i.hasNext();) {
+				tempList.add(i.next());
+			}
+			this.board.getMyObserver().setPendingProjects(tempList);
 		try {
 			temp = this.mailBox.take();
 			this.updateProjs(temp.getId()); 

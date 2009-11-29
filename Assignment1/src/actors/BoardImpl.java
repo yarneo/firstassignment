@@ -10,6 +10,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Iterator;
 import utils.ManagersInfo;
+import utils.ObserverInfoGatherer;
 /**
  * @author Yarneo
  *
@@ -22,15 +23,17 @@ public class BoardImpl implements Board {
 	private List<Project> projectsBoard;
 	private ConcurrentHashMap<String,Collection<BlockingQueue<ProgrammerMessage>>> myProgrammersLink;
 	private List<ManagersInfo> myManagersLink;
+	private ObserverInfoGatherer myObserver;
 	
 	/**
 	 * Default constructor
 	 */
-	public BoardImpl() {
+	public BoardImpl(ObserverInfoGatherer obs) {
 		this._isToTerminate = false;
 		this.myProgrammersLink = new ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>>();
 		this.myManagersLink = new ArrayList<ManagersInfo>();
 		this.projectsBoard = new ArrayList<Project>();
+		this.myObserver = obs;
 	}
 	
 	/* (non-Javadoc)
@@ -176,5 +179,19 @@ public class BoardImpl implements Board {
 	 */
 	public void shutdown() {
 		this._isToTerminate = true;
+	}
+
+	/**
+	 * @param myObserver the myObserver to set
+	 */
+	public void setMyObserver(ObserverInfoGatherer myObserver) {
+		this.myObserver = myObserver;
+	}
+
+	/**
+	 * @return the myObserver
+	 */
+	public ObserverInfoGatherer getMyObserver() {
+		return myObserver;
 	}
 }
