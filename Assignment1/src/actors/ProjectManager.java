@@ -47,7 +47,7 @@ public class ProjectManager implements Runnable {
 		this.projects = parseIt.getProjects();
 		this.projectIds = parseIt.getProjectIds();
 		this.myProjects = new DependencyResolverImpl(this.projects);
-		this.mailBox = new ArrayBlockingQueue<Project>(10);
+		this.mailBox = new ArrayBlockingQueue<Project>(100);
 		
 		ManagersInfo tempInfo = new ManagersInfo(this.projects, this.mailBox);
 		List<ManagersInfo> tempList;
@@ -62,8 +62,7 @@ public class ProjectManager implements Runnable {
 	 */
 	public void run() {
 		this.logger.log(this.name + " started working");
-		System.out.println(this.myProjects.getAllProjects().isEmpty());
-		while(/*!this.myProjects.getAllProjects().isEmpty()*/!this._shouldStop) {
+		while(!this.myProjects.getAllProjects().isEmpty()) {
 		Project temp;
 		//System.out.print(this.myProjects.areThereReadyProjects());
 		if(this.myProjects.areThereReadyProjects())

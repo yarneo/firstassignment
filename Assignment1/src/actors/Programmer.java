@@ -65,7 +65,7 @@ public class Programmer implements Runnable {
 		this.board = _board;
 		
 		this.logger = new LogHelper(LogHelper.LOG_FILE_NAME);
-		this.mailbox = new ArrayBlockingQueue<ProgrammerMessage>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/10, true);
+		this.mailbox = new ArrayBlockingQueue<ProgrammerMessage>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/100, true);
 		this.addInfoToBoard();
 		
 		
@@ -172,7 +172,7 @@ public class Programmer implements Runnable {
 				this.logger.log(this.name+"'s budget run out");
 			
 			this.releaseResources(projectToDo.getResources());
-			projectToDo.done(this);
+			projectToDo.done(this.pInfo);
 			//handles budget
 			this.budget = this.budget - this.workPhaseHours;
 			

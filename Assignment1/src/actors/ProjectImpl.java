@@ -154,7 +154,7 @@ public class ProjectImpl implements Project {
 	 * Called by a programmer who's commiting for the project
 	 * @param pInfo ProgrammerInfo who commits for the project
 	 */
-	public void commit(ProgrammerInfo pInfo) {
+	public synchronized void commit(ProgrammerInfo pInfo) {
 		this.programmers.add(pInfo);
 	}
 	
@@ -163,7 +163,7 @@ public class ProjectImpl implements Project {
 	 * @param p Programmer who's done
 	 * @throws NotWorkingProgrammerException throws exception in case programmer didn't commit.
 	 */
-	public synchronized void done(Programmer p) throws NotWorkingProgrammerException {
+	public synchronized void done(ProgrammerInfo p) throws NotWorkingProgrammerException {
 		if(!this.programmers.remove(p))
 			throw new NotWorkingProgrammerException("Programmer has not commited!");
 	}

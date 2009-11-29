@@ -27,9 +27,11 @@ public class LogHelper {
 	public LogHelper(String fileName) {
 		LogHelper.LOG_FILE_NAME = fileName;
 		this.logger = Logger.getLogger("MainLogger");
+		//this.logger.setUseParentHandlers(false);
 	    
 	    try {
 	    	this.fh = new FileHandler(fileName, true);
+	    	//this.fh.
 	    	this.logger.addHandler(this.fh);
 	    	this.logger.setLevel(Level.INFO);
 	    	//A formatter that made to log a simple text

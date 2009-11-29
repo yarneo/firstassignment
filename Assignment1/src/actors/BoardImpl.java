@@ -44,7 +44,7 @@ public class BoardImpl implements Board {
 	* and then sent to the programmers.
 	*/
 	@Override
-	public void addAnnouncement(List<Project> projects) {
+	public synchronized void addAnnouncement(List<Project> projects) {
 	for(Iterator<Project> i = projects.iterator(); i.hasNext();){
 		Project p = i.next();
 		this.projectsBoard.add(p);
@@ -68,7 +68,7 @@ public class BoardImpl implements Board {
 	 * and check the Project to see if he can work
 	 * on it and/or what to do with it.
 	 */
-	public void doYourMagic(){
+	public synchronized void doYourMagic(){
 		for(Iterator<Project> j = this.projectsBoard.iterator(); j.hasNext();) {
 			
 			Collection<BlockingQueue<ProgrammerMessage>> c;
@@ -83,14 +83,9 @@ public class BoardImpl implements Board {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-						}
+					}
 				}
-	//	for(Iterator<BlockingQueue> i = myProjectsStorage.iterator(); i.hasNext(); ) {
-		//	ProgrammersInfo temp=i.next();
-			//if(temp.types.contains(projectsBoard.peek().getType())) {
-				//sendProject(temp.id);
-		//	}
-	//	}
+				this.hashCode();
 		}	
 	}
 	/**
@@ -127,7 +122,7 @@ public class BoardImpl implements Board {
 	 * @see actors.Board#removeAnouncement()
 	 */
 	@Override
-	public void removeAnouncement(Project p1) {
+	public synchronized void removeAnouncement(Project p1) {
 		this.projectsBoard.remove(p1);
 
 	}

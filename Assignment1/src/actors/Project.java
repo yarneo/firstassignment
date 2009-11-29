@@ -80,7 +80,7 @@ public interface Project {
 	 * Called by a programmer who's work phase is done
 	 * @param p Programmer who's done
 	 */
-	public void done(Programmer p);
+	public void done(ProgrammerInfo p);
 	
 	/**
 	 * Checks if the project is completed.
