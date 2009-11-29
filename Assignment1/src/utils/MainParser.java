@@ -58,7 +58,7 @@ public class MainParser extends PropertyParser {
 	// private functions
 
 	private void parseProjectTypes() {
-		this.projectTypes = Arrays.asList(prop.getProperty("projectTypes").split(", "));
+		this.projectTypes = Arrays.asList(prop.getProperty("projectTypes").split(","));
 	}
 
 	private void parseResources() {
@@ -110,7 +110,7 @@ public class MainParser extends PropertyParser {
 	 * @return the programmersInfo
 	 */
 	public List<ProgrammerInfo> getProgrammersInfo() {
-		return programmersInfo;
+		return this.programmersInfo;
 	}
 
 	private void parseSimulationHour() {

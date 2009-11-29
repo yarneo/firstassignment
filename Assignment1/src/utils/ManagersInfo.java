@@ -6,12 +6,18 @@ import actors.Project;
 
 
 public class ManagersInfo {
-public List<Project> projectList;
-public BlockingQueue<Project> managerInbox;
-
-public ManagersInfo(List<Project> _projectList, BlockingQueue<Project> _managerInbox) {
-	this.projectList = _projectList;
-	this.managerInbox = _managerInbox;
+	//members
+	public List<Project> projectList;
+	public BlockingQueue<Project> managerInbox;
+	
+	/**
+	 * Constructor
+	 * @param _projectList all the projects of the manger
+	 * @param _managerInbox The mailbox of the manager
+	 */
+	public ManagersInfo(List<Project> _projectList, BlockingQueue<Project> _managerInbox) {
+		this.projectList = _projectList;
+		this.managerInbox = _managerInbox;
 }
 
 

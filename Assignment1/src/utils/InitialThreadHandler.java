@@ -9,7 +9,6 @@ import java.util.List;
 import actors.Observer;
 import actors.ObserverImpl;
 import actors.Programmer;
-import actors.ProjectImpl;
 import actors.ProjectManager;
 
 /**

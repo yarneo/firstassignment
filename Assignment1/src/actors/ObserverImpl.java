@@ -40,6 +40,10 @@ public class ObserverImpl implements Observer, Runnable {
 		while (! this.userInput.equals("stop")) { 
 			System.out.print("Observer> "); 
 			this.userInput = this.scanner.nextLine(); 
+			if (this.userInput.equals("completedProjects"))
+				this.completedProjects();
+			if (this.userInput.equals("pendingProjects"))
+				this.pendingProjects();
 			System.out.println("You entered: " + this.userInput); 
 	     } 
 		System.out.println("Bye");
