@@ -149,14 +149,19 @@ public class Programmer implements Runnable {
 			
 			this.budget = this.budget - this.workPhaseHours;
 			
+			this.pInfo.setIsWorking(true);
+			this.pInfo.setCurrentProject(projectToDo);
+			//Parse the string to objects
+			this.pInfo.setCurrentResources(this.prh.parseStringToObjects(projectToDo.getResources()));
+			
 			projectToDo.commit(this.pInfo);
 			try {
 				Thread.sleep((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
 						this.simulatedSecond);
 			} catch(InterruptedException e) {}
 			
-			//COMPLETED
-			
+			//COMPLETED Working
+			this.pInfo.setIsWorking(false);
 			if (projectToDo.isCompleted())
 				this.board.doneWithProject(projectToDo);
 			

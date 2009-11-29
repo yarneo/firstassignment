@@ -5,6 +5,8 @@ package actors;
 
 import java.util.List;
 
+import resources.Resource;
+
 /**
  * @author Alon Segal
  *
@@ -12,6 +14,9 @@ import java.util.List;
 public class ProgrammerInfo {
 	
 	private boolean _isThereNewBudget;
+	private boolean isWorking;
+	private Project currentProject;
+	private List<Resource> _currentResources;
 	
 	private String name;
 	private double productivityRate;
@@ -99,17 +104,63 @@ public class ProgrammerInfo {
 	public List<String> getSpecializations() {
 		return this.specializations;
 	}
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return this.name;
-	}
-
+	
 	/**
 	 * @param _name the name to set
 	 */
 	public void setName(String _name) {
 		this.name = _name;
+	}
+	
+	/**
+	 * 
+	 * @return true if currently working on a project, false otherwise
+	 */
+	public boolean isCurrentlyWorking() {
+		return this.isWorking;
+	}
+	
+	/**
+	 * 
+	 * @return The project that being worked on.
+	 */
+	public Project getCurrentProject() {
+		return this.currentProject;
+	}
+	
+	/**
+	 * 
+	 * @return The current resources that being worked on
+	 */
+	public List<Resource> getCurrentResources() {
+		return this._currentResources;
+	}
+
+	/**
+	 * @param thereNewBudget the _isThereNewBudget to set
+	 */
+	public void setIsThereNewBudget(boolean thereNewBudget) {
+		this._isThereNewBudget = thereNewBudget;
+	}
+
+	/**
+	 * @param project the _currentProject to set
+	 */
+	public void setCurrentProject(Project project) {
+		this.currentProject = project;
+	}
+
+	/**
+	 * @param resources the _currentResources to set
+	 */
+	public void setCurrentResources(List<Resource> resources) {
+		this._currentResources = resources;
+	}
+
+	/**
+	 * @param working the _isWorking to set
+	 */
+	public void setIsWorking(boolean working) {
+		this.isWorking = working;
 	}
 }
