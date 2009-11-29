@@ -56,12 +56,12 @@ public interface Project {
 	/**
 	 * @param programmers the programmers to set
 	 */
-	public void setProgrammers(List<Programmer> programmers);
+	public void setProgrammers(List<ProgrammerInfo> programmers);
 
 	/**
 	 * @return the programmers
 	 */
-	public List<Programmer> getProgrammers();
+	public String getProgrammers();
 	
 	/**
 	 * indicates if another working hand is needed in the project. if needed, updates the project size
@@ -74,7 +74,7 @@ public interface Project {
 	 * Called by a programmer who's commiting for the project
 	 * @param p Programmer who commits for the project
 	 */
-	public void commit(Programmer p);
+	public void commit(ProgrammerInfo pInfo);
 	
 	/**
 	 * Called by a programmer who's work phase is done
@@ -96,7 +96,7 @@ public interface Project {
 	
 	/**
 	 * 
-	 * @return The time that passed since the craetion of the object. returns zero if the project hasn't completed yet.
+	 * @return The time that passed since the craetion of the object. returns zero if the project hasn't been completed yet.
 	 */
 	public long getTimeElapsed();
 	

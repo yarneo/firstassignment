@@ -57,11 +57,11 @@ public class ObserverImpl implements Observer, Runnable {
 		//TODO a project needs to tell me how much of it has been completed
 		System.out.println("");
 		//which programmers work on it now
-		for(Iterator<Programmer> j = tempProject.getProgrammers().iterator(); i.hasNext();) {
+		//for(Iterator<ProgrammerInfo> j = tempProject.getProgrammers().iterator(); i.hasNext();) {
 		//TODO add getName method to the Programmer	, cant add getter to thread, need to 
 		//change the programmers working on project to list of strings of their names.
 			//System.out.println(j.next().getName());
-		}
+		//}
 	}
 	}
 	

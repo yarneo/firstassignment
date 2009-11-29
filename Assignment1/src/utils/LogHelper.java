@@ -29,13 +29,14 @@ public class LogHelper {
 		this.logger = Logger.getLogger("MainLogger");
 	    
 	    try {
-	        // This block configure the logger with handler and formatter
 	    	this.fh = new FileHandler(fileName, true);
 	    	this.logger.addHandler(this.fh);
 	    	this.logger.setLevel(Level.INFO);
-	        //A formatter that made to log a simple text
+	    	//A formatter that made to log a simple text
 	        CustomFormatter formatter = new CustomFormatter();
 	        this.fh.setFormatter(formatter);
+	        // This block configure the logger with handler and formatter
+	    	//this.logger.
 	        
 	    } catch (SecurityException e) {
 	        e.printStackTrace();
@@ -51,7 +52,7 @@ public class LogHelper {
 	 */
 	public  synchronized void log(String message) {
 		Date date = new Date();
-		this.logger.log(Level.INFO, message+" at "+DateFormat.getTimeInstance(
+		this.logger.info(message+" at "+DateFormat.getTimeInstance(
 				DateFormat.MEDIUM).format(date));
 	}
 	
@@ -63,9 +64,9 @@ public class LogHelper {
 	public synchronized void log(String message, boolean withDate) {
 		Date date = new Date();
 		if (!withDate)
-			this.logger.log(Level.INFO, message);
+			this.logger.info(message);
 		else
-			this.logger.log(Level.INFO, message+" at "+DateFormat.getTimeInstance(
+			this.logger.info(message+" at "+DateFormat.getTimeInstance(
 					DateFormat.MEDIUM).format(date));
 	}
 }

@@ -5,6 +5,7 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import actors.ProgrammerInfo;
 import actors.Project;
 import actors.ProjectImpl;
 
@@ -66,6 +68,19 @@ public class ProjectTest {
 			Thread.sleep(100);
 		} catch(InterruptedException e) {}
 		assertNotSame("Time is zero", project.getTimeElapsed(), 0);
+	}
+	
+	/**
+	 * Test method for {@link actors.ProjectImpl#getProgrammers()}.
+	 */
+	@Test
+	public final void testGetProgrammers() {
+		ProgrammerInfo p1 = new ProgrammerInfo("Alon", new ArrayList<String>(), 0.21, 1.4, 2.1);
+		ProgrammerInfo p2 = new ProgrammerInfo("Yarden", new ArrayList<String>(), 0.21, 1.4, 2.1);
+		this.project.commit(p1);
+		this.project.commit(p2);
+		assertEquals("Expected Alon,Yarden and got "+this.project.getProgrammers(), 
+				this.project.getProgrammers(), "Alon,Yarden");
 	}
 
 }

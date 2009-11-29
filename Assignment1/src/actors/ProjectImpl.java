@@ -4,6 +4,7 @@
 package actors;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import exceptions.NotWorkingProgrammerException;
@@ -21,7 +22,7 @@ public class ProjectImpl implements Project {
 	private double size;
 	private List<String> prequesiteProjects;
 	private List<String> resources;
-	private List<Programmer> programmers;
+	private List<ProgrammerInfo> programmers;
 	
 	private boolean _isAnotherHandNeeded;
 	private double hoursCompleted;
@@ -48,7 +49,7 @@ public class ProjectImpl implements Project {
 		this.prequesiteProjects = _prequesiteProjects;
 		this.resources = _resources;
 		
-		this.programmers = new ArrayList<Programmer>();
+		this.programmers = new ArrayList<ProgrammerInfo>();
 		
 		this._isAnotherHandNeeded = true;
 		this.hoursCompleted = 0;
@@ -121,15 +122,15 @@ public class ProjectImpl implements Project {
 	/**
 	 * @param _programmers the programmers to set
 	 */
-	public void setProgrammers(List<Programmer> _programmers) {
+	public void setProgrammers(List<ProgrammerInfo> _programmers) {
 		this.programmers = _programmers;
 	}
 
 	/**
 	 * @return the programmers
 	 */
-	public List<Programmer> getProgrammers() {
-		return this.programmers;
+	public String getProgrammers() {
+		return this.generateStringProgrammers();
 	}
 
 	@Override
@@ -151,10 +152,10 @@ public class ProjectImpl implements Project {
 	
 	/**
 	 * Called by a programmer who's commiting for the project
-	 * @param p Programmer who commits for the project
+	 * @param pInfo ProgrammerInfo who commits for the project
 	 */
-	public void commit(Programmer p) {
-		this.programmers.add(p);
+	public void commit(ProgrammerInfo pInfo) {
+		this.programmers.add(pInfo);
 	}
 	
 	/**
@@ -203,5 +204,16 @@ public class ProjectImpl implements Project {
 		if(this.isCompleted())
 			return this.finalTime - this.startTime;
 		return 0;
+	}
+	
+	//Private functions
+	
+	private String generateStringProgrammers() {
+		String ans = "";
+		for(Iterator<ProgrammerInfo> i = this.programmers.iterator(); i.hasNext();) {
+			ProgrammerInfo p = i.next();
+			ans+=p.getName()+",";
+		}
+		return ans.substring(0, ans.length()-1);
 	}
 }

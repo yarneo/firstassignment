@@ -149,7 +149,7 @@ public class Programmer implements Runnable {
 			
 			this.budget = this.budget - this.workPhaseHours;
 			
-			projectToDo.commit(this);
+			projectToDo.commit(this.pInfo);
 			try {
 				Thread.sleep((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
 						this.simulatedSecond);
