@@ -13,17 +13,20 @@ private List<Project> currentProjects;
 private List<Project> pendingProjects;
 private List<Project> completedProjects;
 private List<String> timeOfCompletedProjects;
-private List<ProgrammerInfo> programmersinfo;
+private List<ProgrammerInfo> programmersInfo;
+private List<Thread> myThreads;
 
 /**
  * the constructor that builds the parameters
+ * @param _mp my main parser
  */
 public ObserverInfoGatherer(MainParser _mp) {
 	this.currentProjects = new ArrayList<Project>();
 	this.pendingProjects = new ArrayList<Project>();
 	this.completedProjects = new ArrayList<Project>();
 	this.timeOfCompletedProjects = new ArrayList<String>();
-	this.programmersinfo = _mp.getProgrammersInfo();
+	this.programmersInfo = _mp.getProgrammersInfo();
+	this.myThreads = new ArrayList<Thread>();
 }
 
 /**
@@ -75,16 +78,30 @@ public List<String> getTimeOfCompletedProjects() {
 	return this.timeOfCompletedProjects;
 }
 /**
- * @param _programmers the programmers to set
+ * @param _programmersInfo the programmers to set
  */
-public void setProgrammers(List<Programmer> _programmers) {
-	this.programmers = _programmers;
+public void setProgrammers(List<ProgrammerInfo> _programmersInfo) {
+	this.programmersInfo = _programmersInfo;
 }
 /**
  * @return the programmers
  */
-public List<Programmer> getProgrammers() {
-	return this.programmers;
+public List<ProgrammerInfo> getProgrammers() {
+	return this.programmersInfo;
+}
+
+/**
+ * @param _myThreads the myThreads to set
+ */
+public void setMyThreads(List<Thread> _myThreads) {
+	this.myThreads = _myThreads;
+}
+
+/**
+ * @return the myThreads
+ */
+public List<Thread> getMyThreads() {
+	return this.myThreads;
 }
 
 

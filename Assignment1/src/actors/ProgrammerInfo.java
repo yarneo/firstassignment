@@ -99,4 +99,17 @@ public class ProgrammerInfo {
 	public List<String> getSpecializations() {
 		return this.specializations;
 	}
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
+	}
+
+	/**
+	 * @param _name the name to set
+	 */
+	public void setName(String _name) {
+		this.name = _name;
+	}
 }
