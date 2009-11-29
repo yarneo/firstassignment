@@ -3,7 +3,6 @@ package utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import actors.Programmer;
 import actors.ProgrammerInfo;
 import actors.Project;
 
@@ -80,12 +79,14 @@ public List<String> getTimeOfCompletedProjects() {
 /**
  * @param _programmersInfo the programmers to set
  */
+
 public void setProgrammers(List<ProgrammerInfo> _programmersInfo) {
 	this.programmersInfo = _programmersInfo;
 }
 /**
  * @return the programmers
  */
+
 public List<ProgrammerInfo> getProgrammers() {
 	return this.programmersInfo;
 }

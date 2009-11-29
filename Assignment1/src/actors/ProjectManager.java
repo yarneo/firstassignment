@@ -3,7 +3,7 @@
  */
 package actors;
 
-import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
@@ -47,7 +47,6 @@ public class ProjectManager implements Runnable {
 		this.projectIds = parseIt.getProjectIds();
 		this.myProjects = new DependencyResolverImpl(this.projects);
 		
-		//XXX Depending on the fact that there are ready projects (this.publishProjects()). exception...
 		ManagersInfo tempInfo = new ManagersInfo(this.publishProjects(), this.mailBox);
 		List<ManagersInfo> tempList;
 		tempList = this.board.getMyManagersLink();
@@ -85,39 +84,15 @@ public class ProjectManager implements Runnable {
 	public synchronized void stop() { this._shouldStop = true; }
 	
 	
-	private synchronized Project getFromMailBox() {
-		while(this.mailBox.isEmpty()) {
-		try {
-		    this.wait();
-			 } catch (InterruptedException ignored) {}	 
-		}
-		return this.mailBox.remove();
-	}
 	
-	private String publishProjectsTemp() {
-		String rdyProj = "";
-		for(int i=0;i<this.projects.size();i++) {
-			if(this.projects.get(i).getPrequesiteProjects().isEmpty()) {
-				rdyProj = rdyProj + "," + this.projects.get(i).getId();
-			}
-		}
-		return rdyProj;
-	}
+	
 	
 	private List<Project> publishProjects() {
-		return this.myProjects.getReadyProjects();
+		if(this.myProjects.areThereReadyProjects())
+			return this.myProjects.getReadyProjects();
+		return new ArrayList<Project>();
 	}
 	
-	private String updateProjsTemp(String finishedProject) {
-		String preqRemoved = "";
-		for(int i=0;i<this.projects.size();i++) {
-			if(this.projects.get(i).getPrequesiteProjects().contains(finishedProject)) {
-				this.projects.get(i).getPrequesiteProjects().remove(finishedProject);
-				preqRemoved = preqRemoved + this.projects.get(i).getId() + ",";
-			}
-		}
-		return preqRemoved;
-	}
 	private void updateProjs(String preqId) {
 		this.myProjects.updateCompProj(preqId);
 	}
