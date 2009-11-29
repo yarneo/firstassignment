@@ -65,10 +65,10 @@ public class Programmer implements Runnable {
 		this.board = _board;
 		
 		this.logger = new LogHelper(LogHelper.LOG_FILE_NAME);
-		
+		this.mailbox = new ArrayBlockingQueue<ProgrammerMessage>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/10, true);
 		this.addInfoToBoard();
 		
-		this.mailbox = new ArrayBlockingQueue<ProgrammerMessage>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/10, true);
+		
 	}
 	
 	@Override
