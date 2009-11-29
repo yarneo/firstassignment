@@ -41,6 +41,13 @@ public class ProgrammerInfo {
 	}
 	
 	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+	
+	/**
 	 * 
 	 * @return True if there is a new budget, false otherwise
 	 */
@@ -70,13 +77,6 @@ public class ProgrammerInfo {
 	 */
 	public double getBudget() {
 		return this.newBudget;
-	}
-	
-	/**
-	 * @return the name
-	 */
-	public String getProd() {
-		return this.name;
 	}
 	
 	/**

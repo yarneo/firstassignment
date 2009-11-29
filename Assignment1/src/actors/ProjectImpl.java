@@ -18,19 +18,16 @@ public class ProjectImpl implements Project {
 	private String id;
 	private String name;
 	private String type;
-	private int size;
+	private double size;
 	private List<String> prequesiteProjects;
 	private List<String> resources;
 	private List<Programmer> programmers;
 	
 	private boolean _isAnotherHandNeeded;
-
-	/**
-	 * 
-	 */
-	public ProjectImpl() {
-		this._isAnotherHandNeeded = true;
-	}
+	private double hoursCompleted;
+	
+	private long startTime;
+	private long finalTime;
 	
 	/**
 	 * 
@@ -53,14 +50,16 @@ public class ProjectImpl implements Project {
 		
 		this.programmers = new ArrayList<Programmer>();
 		
-		this._isAnotherHandNeeded=true;
+		this._isAnotherHandNeeded = true;
+		this.hoursCompleted = 0;
+		
 	}
 
 	/**
 	 * @return the id
 	 */
 	public String getId() {
-		return this.id;
+		return this.id; 
 	}
 
 	/**
@@ -92,16 +91,9 @@ public class ProjectImpl implements Project {
 	}
 
 	/**
-	 * @param _size the size to set
-	 */
-	public synchronized void setSize(int _size) {
-		this.size = _size;
-	}
-
-	/**
 	 * @return the size
 	 */
-	public synchronized int getSize() {
+	public synchronized double getSize() {
 		return this.size;
 	}
 
@@ -143,13 +135,18 @@ public class ProjectImpl implements Project {
 	@Override
 	public synchronized boolean isAnotherHandNeeded(double workPhaseHour, double productivityRate) {
 		if(this._isAnotherHandNeeded) {
-			this.setSize(this.getSize()-(int)(workPhaseHour/productivityRate));
-			if(this.getSize()<0) {
-				this.setSize(0);
-				this._isAnotherHandNeeded = false;
-			}return true;
+			this.setSize(workPhaseHour/productivityRate);
+			this._isAnotherHandNeeded = false;
+			return true;
 		} else return false;
 		
+	}
+	
+	/**
+	 * publish the project on the board
+	 */
+	public void publish() {
+		this.startTime =  System.currentTimeMillis();
 	}
 	
 	/**
@@ -176,5 +173,35 @@ public class ProjectImpl implements Project {
 	 */
 	public synchronized boolean isCompleted() {
 		return (this.getSize()==0);
+	}
+	
+	/**
+	 * 
+	 * @return The Number of hours that has been completed
+	 */
+	public double getHoursCompleted() {
+		return this.hoursCompleted;
+	}
+	
+	/**
+	 * @param _size the size to set
+	 */
+	private synchronized void setSize(double _size) {
+		this.hoursCompleted += _size;
+		this.size -= _size;
+		if(this.getSize()<0) {
+			this.size = 0;
+			this.finalTime = System.currentTimeMillis();
+		}
+	}
+	
+	/**
+	 * 
+	 * @return The time that passed since the craetion of the object. returns zero if the project hasn't completed yet.
+	 */
+	public long getTimeElapsed() {
+		if(this.isCompleted())
+			return this.finalTime - this.startTime;
+		return 0;
 	}
 }

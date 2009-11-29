@@ -3,14 +3,12 @@
  */
 package utils;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import actors.Observer;
 import actors.ObserverImpl;
 import actors.Programmer;
-import actors.Project;
 import actors.ProjectImpl;
 import actors.ProjectManager;
 
@@ -27,14 +25,13 @@ public class InitialThreadHandler {
 		this.runProgrammers(mp.getProgrammers());
 		this.runManagers(mp.getProjectManagers());
 		this.runObserver(mp);
-		//TODO InitialThreadHandler - Complete thread running.
 	}
 
 	//private functions
 
 	private void runProgrammers(List<Programmer> lp) {
 		////////////////////
-		List<String> res = new ArrayList<String>();
+	/*	List<String> res = new ArrayList<String>();
 		res.add("regular_computer");
 		res.add("database1_connection");
 		
@@ -43,16 +40,15 @@ public class InitialThreadHandler {
 		Project p2 = new ProjectImpl("2", "Project2", "qa", 10, new ArrayList<String>(),
 				new ArrayList<String>());
 		/////////////////////
-		
+		*/
 		for(Iterator<Programmer> i = lp.iterator(); i.hasNext(); ) {
 			Programmer p = i.next();
 			Thread t = new Thread((Runnable)p);
 			t.start();
 		}
 		
-		lp.get(1).sendNewProject(p1);
-		lp.get(0).sendNewProject(p1);
-		System.out.print("");
+		//lp.get(1).sendNewProject(p1);
+		//lp.get(0).sendNewProject(p1);
 	}
 	
 	private void runManagers(List<ProjectManager> lm) {

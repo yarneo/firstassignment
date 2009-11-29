@@ -34,14 +34,9 @@ public interface Project {
 	public String getType();
 
 	/**
-	 * @param size the size to set
-	 */
-	public void setSize(int size);
-
-	/**
 	 * @return the size
 	 */
-	public int getSize();
+	public double getSize();
 
 	/**
 	 * @param prequesiteProjects the prequesiteProjects to set
@@ -92,5 +87,22 @@ public interface Project {
 	 * @return True if the project is completed, false otherwise.
 	 */
 	public boolean isCompleted();
+	
+	/**
+	 * 
+	 * @return The Number of hours that has been completed
+	 */
+	public double getHoursCompleted();
+	
+	/**
+	 * 
+	 * @return The time that passed since the craetion of the object. returns zero if the project hasn't completed yet.
+	 */
+	public long getTimeElapsed();
+	
+	/**
+	 * publish the project on the board. call this when publishing!
+	 */
+	public void publish();
 
 }

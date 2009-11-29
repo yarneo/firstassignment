@@ -1,0 +1,23 @@
+[sample configuration]
+projectTypes=database, gui, system, testing
+resourceTypes=34inch_lcd,regular_computer,database1_connection,database2_connection,fast_computer
+amount_34inch_lcd=2
+amount_regular_computer=2
+amount_database1_connection=1
+amount_database2_connection=1
+amount_fast_computer=1
+numOfProjectManagers=2
+projectManager1Name=Yossi
+projectManager2Name=Danny
+numOfProgrammers=2
+programmer1Name=David
+programmer1Specialization=gui,testing
+programmer1ProductivityRate=0.8
+programmer1WorkPhaseHours=2
+programmer1Budget=20
+programmer2Name=Eva
+programmer2Specialization=system, database
+programmer2ProductivityRate=1.5
+programmer2WorkPhaseHours=1
+programmer2Budget=1
+simulationHour=1

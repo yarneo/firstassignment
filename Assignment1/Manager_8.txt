@@ -1,0 +1,7 @@
+#project manager configuration file - Manager_8
+#Sun Nov 29 10:21:37 IST 2009
+prerequisiteProjects8=1,2,6
+projectIds=8
+resourcesNeeded8=Resource_1
+type=Project_Type1
+size8=6

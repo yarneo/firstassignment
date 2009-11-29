@@ -1,0 +1,7 @@
+#project manager configuration file - Manager_1
+#Sun Nov 29 10:21:37 IST 2009
+projectIds=1
+type=Project_Type1
+size1=8
+prerequisiteProjects1=none
+resourcesNeeded1=Resource_1

@@ -24,7 +24,9 @@ public abstract class PropertyParser {
 		try{
 			//loading file content into data structure prop
 			this.prop.load(new FileInputStream(name));
-		}catch(IOException e){}
+		}catch(IOException e){
+			System.out.println("Error reading the configuration file");
+		}
 	}
 
 	/**

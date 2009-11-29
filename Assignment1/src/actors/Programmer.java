@@ -173,10 +173,10 @@ public class Programmer implements Runnable {
 			
 		}
 	}
-	
+	/*
 	public void sendNewProject(Project p) {
 		try {
 			this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_PROJECT, p));
 		} catch(InterruptedException e) {}
-	}
+	}*/
 }
