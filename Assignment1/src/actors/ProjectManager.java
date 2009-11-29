@@ -5,6 +5,7 @@ package actors;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
 import utils.DependencyResolver;
@@ -46,8 +47,9 @@ public class ProjectManager implements Runnable {
 		this.projects = parseIt.getProjects();
 		this.projectIds = parseIt.getProjectIds();
 		this.myProjects = new DependencyResolverImpl(this.projects);
+		this.mailBox = new ArrayBlockingQueue<Project>(10);
 		
-		ManagersInfo tempInfo = new ManagersInfo(this.publishProjects(), this.mailBox);
+		ManagersInfo tempInfo = new ManagersInfo(this.projects, this.mailBox);
 		List<ManagersInfo> tempList;
 		tempList = this.board.getMyManagersLink();
 		tempList.add(tempInfo);
@@ -60,9 +62,10 @@ public class ProjectManager implements Runnable {
 	 */
 	public void run() {
 		this.logger.log(this.name + " started working");
-		while(!this.myProjects.getAllProjects().isEmpty()) {
+		System.out.println(this.myProjects.getAllProjects().isEmpty());
+		while(/*!this.myProjects.getAllProjects().isEmpty()*/!this._shouldStop) {
 		Project temp;
-		System.out.print(this.myProjects.areThereReadyProjects());
+		//System.out.print(this.myProjects.areThereReadyProjects());
 		if(this.myProjects.areThereReadyProjects())
 			this.publish();
 		try {

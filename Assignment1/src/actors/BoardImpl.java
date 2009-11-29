@@ -30,6 +30,7 @@ public class BoardImpl implements Board {
 		this._isToTerminate = false;
 		this.myProgrammersLink = new ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>>();
 		this.myManagersLink = new ArrayList<ManagersInfo>();
+		this.projectsBoard = new ArrayList<Project>();
 	}
 	
 	/* (non-Javadoc)

@@ -87,8 +87,7 @@ public class DependencyResolverImpl implements DependencyResolver {
 	 */
 	@Override
 	public PriorityQueue<Project> getAllProjects() {
-
-		return new PriorityQueue<Project>(this.projects);
+		return this.projects;
 	}
 
 	/**
