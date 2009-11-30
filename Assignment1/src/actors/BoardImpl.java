@@ -88,7 +88,6 @@ public class BoardImpl implements Board {
 						}
 					}
 				}
-				this.hashCode();
 		}	
 	}
 	/**
@@ -139,6 +138,10 @@ public class BoardImpl implements Board {
 			System.out.print(i.next().getId());
 		}
 
+	}
+	
+	public void updateCompletedPhase() {
+		this.doYourMagic();
 	}
 /**
  * @return my programmers link

@@ -145,11 +145,11 @@ public class Programmer implements Runnable {
 	}
 	
 	private void takeProject(Project projectToDo) {
+		//TODO check the threads bug here
 		if (this.isBudgetEnough(projectToDo) & projectToDo.isAnotherHandNeeded(this.workPhaseHours, this.productivityRate)) {
 			this.logger.log(this.name+" committed to "+projectToDo.getId()+" for "+
 					(int)this.workPhaseHours);
 			this.acquireResources(projectToDo.getResources());
-			
 			
 			this.budget = this.budget - this.workPhaseHours;
 			
@@ -177,6 +177,7 @@ public class Programmer implements Runnable {
 			//COMPLETED Working
 			this.pInfo.setIsWorking(false);
 			if (projectToDo.isCompleted()) {
+				this.board.doneWithProject(projectToDo);
 				//remove the project from the current projects and move it to the completedprojects
 				//in the observerinfogatherer
 				List<Project> tempList2;
@@ -186,8 +187,8 @@ public class Programmer implements Runnable {
 				this.board.getMyObserver().setCurrentProjects(tempList);
 				tempList2.add(projectToDo);
 				this.board.getMyObserver().setCompletedProjects(tempList2);
-				this.board.doneWithProject(projectToDo);
-				
+			} else {
+				this.board.updateCompletedPhase();
 			}
 			//logging
 			this.logger.log(this.name+" is done with commitement on project "+

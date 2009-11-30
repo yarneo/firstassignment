@@ -138,7 +138,8 @@ public class ProjectImpl implements Project {
 	public synchronized boolean isAnotherHandNeeded(double workPhaseHour, double productivityRate) {
 		if(this._isAnotherHandNeeded) {
 			this.setSize(workPhaseHour/productivityRate);
-			this._isAnotherHandNeeded = false;
+			if (this.size<=0) 
+				this._isAnotherHandNeeded = false;
 			return true;
 		} else return false;
 		
@@ -174,7 +175,7 @@ public class ProjectImpl implements Project {
 	 * @return True if the project is completed, false otherwise.
 	 */
 	public synchronized boolean isCompleted() {
-		return (this.getSize()==0);
+		return (this.getSize()<=0);
 	}
 	
 	/**

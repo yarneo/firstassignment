@@ -19,12 +19,12 @@ private List<Thread> myThreads;
  * the constructor that builds the parameters
  * @param _mp my main parser
  */
-public ObserverInfoGatherer(MainParser _mp) {
+public ObserverInfoGatherer() {
 	this.currentProjects = new ArrayList<Project>();
 	this.pendingProjects = new ArrayList<Project>();
 	this.completedProjects = new ArrayList<Project>();
 	this.timeOfCompletedProjects = new ArrayList<String>();
-	this.programmersInfo = _mp.getProgrammersInfo();
+	this.programmersInfo = new ArrayList<ProgrammerInfo>();
 	this.myThreads = new ArrayList<Thread>();
 }
 

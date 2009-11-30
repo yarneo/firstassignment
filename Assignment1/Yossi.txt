@@ -1,7 +1,7 @@
 type=gui
 projectIds=34,12,21
 prerequisiteProjects34=none
-size34=10
+size34=2
 resourcesNeeded34=printer,regular_computer
 prerequisiteProjects12=none
 size12=200

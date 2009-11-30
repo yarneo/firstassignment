@@ -30,6 +30,7 @@ public class MainParser extends PropertyParser {
 	private List<Resource> resources;
 	private List<ProjectManager> projMangers;
 	private List<ProgrammerInfo> programmersInfo;
+	private ObserverInfoGatherer observerGatherer;
 	
 	private Board board;
 	
@@ -50,8 +51,8 @@ public class MainParser extends PropertyParser {
 		this.parseProjectTypes();
 		this.parseResources();
 		this.createBoard();
-		this.parseProjectMangers();
 		this.parseProgrammers();
+		this.parseProjectMangers();
 		this.parseSimulationHour();
 	}
 
@@ -82,7 +83,8 @@ public class MainParser extends PropertyParser {
 	}
 	
 	private void createBoard() {
-		this.board = new BoardImpl();
+		this.observerGatherer = new ObserverInfoGatherer();
+		this.board = new BoardImpl(this.observerGatherer);
 	}
 
 	private void parseProgrammers() {
@@ -160,5 +162,12 @@ public class MainParser extends PropertyParser {
 	 */
 	public List<ProjectManager> getProjectManagers() {
 		return this.projMangers;
+	}
+
+	/**
+	 * @return the observerGatherer
+	 */
+	public ObserverInfoGatherer getObserverGatherer() {
+		return observerGatherer;
 	}
 }

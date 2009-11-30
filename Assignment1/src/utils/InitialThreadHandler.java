@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import actors.Observer;
-import actors.ObserverImpl;
 import actors.Programmer;
 import actors.ProjectManager;
 
@@ -59,7 +58,8 @@ public class InitialThreadHandler {
 	}
 	
 	private void runObserver(MainParser _mp) {
-		Observer observ = new ObserverImpl(_mp);
+		
+		Observer observ = new Observer(_mp);
 		Thread t = new Thread((Runnable)observ);
 		t.start();
 	}

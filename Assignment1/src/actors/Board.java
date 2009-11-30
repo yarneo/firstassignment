@@ -63,4 +63,5 @@ public interface Board {
 	public void shutdown();
 	public void setMyObserver(ObserverInfoGatherer myObserver);
 	public ObserverInfoGatherer getMyObserver();
+	public void updateCompletedPhase();
 }
