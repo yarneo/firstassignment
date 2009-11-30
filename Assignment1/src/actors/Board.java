@@ -1,7 +1,6 @@
 package actors;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -71,8 +70,24 @@ public interface Board {
 	 * Shuts down all the system as soon as possible.
 	 */
 	public void shutdown();
+	/**
+	 * 
+	 * @param myObserver the link between the observer and the threads
+	 */
 	public void setMyObserver(ObserverInfoGatherer myObserver);
+	/**
+	 * 
+	 * @return the link between the observer and the threads
+	 */
 	public ObserverInfoGatherer getMyObserver();
+	/**
+	 * 
+	 * @throws InterruptedException throws to manager/programmer
+	 */
 	public void updateCompletedPhase() throws InterruptedException;
+	/**
+	 * 
+	 * @throws InterruptedException throws to manager/programmer
+	 */
 	public void doYourMagic() throws InterruptedException;
 }
