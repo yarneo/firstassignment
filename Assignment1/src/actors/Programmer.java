@@ -89,6 +89,8 @@ public class Programmer implements Runnable {
 					this.budget += message.getBudget();
 				//Project projectToDo = this.mailbox.take();
 			}	catch(InterruptedException e) {
+				//if(!this.pInfo.getCurrentResources().isEmpty())
+					//this.releaseResources(this.pInfo.getStringResources());
 				stop();
 			}
 				
@@ -124,11 +126,13 @@ public class Programmer implements Runnable {
 	
 	private void acquireResources(List<String> ls) {
 		List<Resource> listRes = this.prh.parseStringToObjects(ls);
-		for(Iterator<Resource> i = listRes.iterator(); i.hasNext();) {
-			Resource r = i.next();
-			r.acquire();
-			this.logger.log(this.name+" acquired "+r.getType());
-		}
+		try {
+			for(Iterator<Resource> i = listRes.iterator(); i.hasNext();) {
+				Resource r = i.next();
+				r.acquire();
+				this.logger.log(this.name+" acquired "+r.getType());
+			}
+		} catch(InterruptedException e) { this.stop(); }
 	}
 	
 	private void releaseResources(List<String> ls) {
@@ -147,69 +151,71 @@ public class Programmer implements Runnable {
 	}
 	
 	private void takeProject(Project projectToDo) {
-		//TODO check the threads bug here
-		if (this.isBudgetEnough(projectToDo) & projectToDo.isAnotherHandNeeded(this.workPhaseHours, this.productivityRate)) {
-			this.logger.log(this.name+" committed to "+projectToDo.getId()+" for "+
-					(int)this.workPhaseHours);
-			this.acquireResources(projectToDo.getResources());
+		try {
 			
-			this.budget = this.budget - this.workPhaseHours;
-			
-			this.pInfo.setIsWorking(true);
-			this.pInfo.setCurrentProject(projectToDo);
-			//Parse the string to objects
-			this.pInfo.setCurrentResources(this.prh.parseStringToObjects(projectToDo.getResources()));
-			
-			projectToDo.commit(this.pInfo);
-
-			//System.out.println((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
-					//this.simulatedSecond);
-
-			//adding data to the observerinfogatherer about current projects being worked on
-			List<Project> tempList;
-			tempList = this.board.getMyObserver().getCurrentProjects();
-			if(!tempList.contains(projectToDo)) {
-			tempList.add(projectToDo);
-			this.board.getMyObserver().setCurrentProjects(tempList);
-			}
-			//System.out.println(this.name+" Went to sleep");
-			try {
+			//TODO check the threads bug here
+			if (this.isBudgetEnough(projectToDo) & projectToDo.isAnotherHandNeeded(this.workPhaseHours, this.productivityRate)) {
+				this.logger.log(this.name+" committed to "+projectToDo.getId()+" for "+
+						(int)this.workPhaseHours);
+				this.acquireResources(projectToDo.getResources());
+				
+				this.budget = this.budget - this.workPhaseHours;
+				
+				this.pInfo.setIsWorking(true);
+				this.pInfo.setCurrentProject(projectToDo);
+				//Parse the string to objects
+				this.pInfo.setCurrentResources(this.prh.parseStringToObjects(projectToDo.getResources()));
+				this.pInfo.setStringResources(projectToDo.getResources());
+				
+				projectToDo.commit(this.pInfo);
+				
+				//System.out.println((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
+				//this.simulatedSecond);
+				
+				//adding data to the observerinfogatherer about current projects being worked on
+				List<Project> tempList;
+				tempList = this.board.getMyObserver().getCurrentProjects();
+				if(!tempList.contains(projectToDo)) {
+					tempList.add(projectToDo);
+					this.board.getMyObserver().setCurrentProjects(tempList);
+				}
+				//System.out.println(this.name+" Went to sleep");
 				Thread.sleep((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
 						this.simulatedSecond);
-			} catch(InterruptedException e) {System.out.println("Can't sleep");}
-			
-			//COMPLETED Working
-			this.pInfo.setIsWorking(false);
-			if (projectToDo.isCompleted()) {
-				this.board.doneWithProject(projectToDo);
-				//remove the project from the current projects and move it to the completedprojects
-				//in the observerinfogatherer
-				List<Project> tempList2;
-				tempList2 = this.board.getMyObserver().getCompletedProjects();
-				tempList = this.board.getMyObserver().getCurrentProjects();
-				if(tempList.contains(projectToDo)) {
-				tempList.remove(projectToDo);
-				this.board.getMyObserver().setCurrentProjects(tempList);
+				
+				//COMPLETED Working
+				this.pInfo.setIsWorking(false);
+				if (projectToDo.isCompleted()) {
+					this.board.doneWithProject(projectToDo);
+					//remove the project from the current projects and move it to the completedprojects
+					//in the observerinfogatherer
+					List<Project> tempList2;
+					tempList2 = this.board.getMyObserver().getCompletedProjects();
+					tempList = this.board.getMyObserver().getCurrentProjects();
+					if(tempList.contains(projectToDo)) {
+						tempList.remove(projectToDo);
+						this.board.getMyObserver().setCurrentProjects(tempList);
+					}
+					if(!tempList2.contains(projectToDo)) {
+						tempList2.add(projectToDo);
+						this.board.getMyObserver().setCompletedProjects(tempList2);
+					}
+				} else {
+					this.board.updateCompletedPhase();
 				}
-				if(!tempList2.contains(projectToDo)) {
-				tempList2.add(projectToDo);
-				this.board.getMyObserver().setCompletedProjects(tempList2);
-				}
-			} else {
-				this.board.updateCompletedPhase();
+				//logging
+				this.logger.log(this.name+" is done with commitement on project "+
+						projectToDo.getId());
+				if(this.budget<this.workPhaseHours)
+					this.logger.log(this.name+"'s budget run out");
+				
+				this.releaseResources(projectToDo.getResources());
+				projectToDo.done(this.pInfo);
+				//handles budget
+				this.budget = this.budget - this.workPhaseHours;
+				
 			}
-			//logging
-			this.logger.log(this.name+" is done with commitement on project "+
-					projectToDo.getId());
-			if(this.budget<this.workPhaseHours)
-				this.logger.log(this.name+"'s budget run out");
-			
-			this.releaseResources(projectToDo.getResources());
-			projectToDo.done(this.pInfo);
-			//handles budget
-			this.budget = this.budget - this.workPhaseHours;
-			
-		}
+		} catch(InterruptedException e) { this.stop(); }
 	}
 	/*
 	public void sendNewProject(Project p) {

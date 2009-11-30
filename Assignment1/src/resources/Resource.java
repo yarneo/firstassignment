@@ -12,7 +12,7 @@ public interface Resource {
 	/**
 	 * Acquire resource, wait if not available.
 	 */
-	public void acquire();
+	public void acquire() throws InterruptedException;
 	
 	/**
 	 * Releases resource.

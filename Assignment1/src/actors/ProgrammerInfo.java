@@ -22,7 +22,22 @@ public class ProgrammerInfo {
 	private double productivityRate;
 	private double workPhaseHours;
 	private List<String> specializations;
+	private List<String> stringResources;
 	
+	/**
+	 * @return the stringResources
+	 */
+	public List<String> getStringResources() {
+		return this.stringResources;
+	}
+
+	/**
+	 * @param _stringResources the stringResources to set
+	 */
+	public void setStringResources(List<String> _stringResources) {
+		this.stringResources = _stringResources;
+	}
+
 	private double newBudget;
 	
 	/**

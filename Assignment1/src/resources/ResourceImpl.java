@@ -29,11 +29,14 @@ public class ResourceImpl implements Resource {
 	
 	/**
 	 * Acquire resource, wait if not available.
+	 * @throws InterruptedException in case there's an exception and pass it up
 	 */
-	public void acquire() {
+	public void acquire() throws InterruptedException {
 		try {
 			this.sem.acquire();
-		} catch(InterruptedException e) {}
+		} catch(InterruptedException e) {
+			throw new InterruptedException("waiting for resource");
+		}
 	}
 	
 	/**
