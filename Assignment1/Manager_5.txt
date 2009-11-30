@@ -1,7 +1,0 @@
-#project manager configuration file - Manager_5
-#Sun Nov 29 10:21:37 IST 2009
-projectIds=5
-size5=15
-prerequisiteProjects5=none
-type=Project_Type1
-resourcesNeeded5=Resource_1

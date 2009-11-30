@@ -7,7 +7,7 @@
 
 	<path id="classpath">
 		<pathelement path="${java.class.path}"/>
-		<pathelement location="../junit-4.5.jar"/>
+		<pathelement location="junit-4.5.jar"/>
 	</path>
 
 	<target name="clean">
@@ -35,7 +35,7 @@
 			<classpath refid="classpath" />
 		</java>
 	</target>
-
+	
 	<target name="test" depends="jar">
 		<junit>
 			<classpath>
