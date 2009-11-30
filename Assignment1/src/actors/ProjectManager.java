@@ -31,6 +31,7 @@ public class ProjectManager implements Runnable {
 	private boolean _shouldStop;
 	private Board board;
 	private LogHelper logger;
+	private final int hundred=100;
 	
 	
 	
@@ -48,14 +49,14 @@ public class ProjectManager implements Runnable {
 		this.projects = parseIt.getProjects();
 		this.projectIds = parseIt.getProjectIds();
 		this.myProjects = new DependencyResolverImpl(this.projects);
-		this.mailBox = new ArrayBlockingQueue<Project>(100);
+		this.mailBox = new ArrayBlockingQueue<Project>(this.hundred);
 		
 		ManagersInfo tempInfo = new ManagersInfo(this.projects, this.mailBox);
 		List<ManagersInfo> tempList;
 		tempList = this.board.getMyManagersLink();
 		tempList.add(tempInfo);
 		this.board.setMyManagersLink(tempList);
-		logger = new LogHelper(LogHelper.LOG_FILE_NAME);
+		this.logger = new LogHelper(LogHelper.LOG_FILE_NAME);
 		
 		//add all the pending projects of this manager to the observer info gatherer
 		List<Project> tempList2;

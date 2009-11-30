@@ -6,7 +6,8 @@ package actors;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import utils.ObserverInfoGatherer;
+
+import actorobjects.projectObject;
 
 import exceptions.NotWorkingProgrammerException;
 
@@ -32,24 +33,18 @@ public class ProjectImpl implements Project {
 	private long startTime;
 	private long finalTime;
 	
-	/**
-	 * 
-	 * @param _id ID of the project
-	 * @param _name Name of the prject
-	 * @param _type Type of the project
-	 * @param _size Size of the project (in hours)
-	 * @param _prequesiteProjects The prerequisite projects
-	 * @param _resources The resources needed for the project
-	 */
-	public ProjectImpl(String _id, String _name, String _type, int _size, 
-			List<String> _prequesiteProjects, List<String> _resources) {
+/**
+ * 
+ * @param po the object of the project that holds of all the projects information
+ */
+	public ProjectImpl(projectObject po) {
 
-		this.id = _id;
-		this.name = _name;
-		this.type = _type;
-		this.size = _size;
-		this.prequesiteProjects = _prequesiteProjects;
-		this.resources = _resources;
+		this.id = po.getId();
+		this.name = po.getName();
+		this.type = po.getType();
+		this.size = po.getSize();
+		this.prequesiteProjects = po.getPrequesiteProjects();
+		this.resources = po.getResources();
 		
 		this.programmers = new ArrayList<ProgrammerInfo>();
 		

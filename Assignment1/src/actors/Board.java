@@ -1,7 +1,6 @@
 package actors;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,25 +14,34 @@ public interface Board {
 	 */
 	public void showBoardAnouncements();
 	/**
-	 * 
+	 * adds anouncements to the board from the program manager
 	 * @param projects list of projects
-	 * @throws InterruptedException 
+	 * @throws InterruptedException throws the exception to the projectmanager
 	 */
 	public void addAnnouncement(List<Project> projects) throws InterruptedException;
 	/**
-	 * 
+	 * remove anouncements from the board
 	 * @param p1 project to remove
 	 */
 	public void removeAnouncement(Project p1);
 	/**
-	 * 
+	 * @param myProgrammersLink the concurrenthashmap which links the programmers to the board
 	 */
 	public void setMyProgrammersLink(ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>> myProgrammersLink);
-	
+	/**
+	 * 
+	 * @return return the concurrenthashmap which links the programmers to the board
+	 */
 	public ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>> getMyProgrammersLink();
-	
+	/**
+	 * 
+	 * @return the list which links the managers to the board
+	 */
 	public List<ManagersInfo> getMyManagersLink();
-	
+	/**
+	 * 
+	 * @param myManagersLink the list which links the managers to the board
+	 */
 	public void setMyManagersLink(List<ManagersInfo> myManagersLink);
 	
 	/**
@@ -62,7 +70,19 @@ public interface Board {
 	 * Shuts down all the system as soon as possible.
 	 */
 	public void shutdown();
+	/**
+	 * 
+	 * @param myObserver the link of the observer to the rest of the threads
+	 */
 	public void setMyObserver(ObserverInfoGatherer myObserver);
+	/**
+	 * 
+	 * @return the link of the observer to the rest of the threads
+	 */
 	public ObserverInfoGatherer getMyObserver();
+	/**
+	 * 
+	 * @throws InterruptedException throws the exception to the programmer
+	 */
 	public void updateCompletedPhase() throws InterruptedException;
 }

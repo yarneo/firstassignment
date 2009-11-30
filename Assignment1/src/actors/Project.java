@@ -3,14 +3,16 @@
  */
 package actors;
 
-import java.util.ArrayList;
 import java.util.List;
 /**
  * @author Alon Segal
  *
  */
 public interface Project {
-	
+	/**
+	 * gets the id of the project
+	 * @return the id of the project
+	 */
 	public String getId();
 
 	/**
@@ -65,14 +67,15 @@ public interface Project {
 	
 	/**
 	 * indicates if another working hand is needed in the project. if needed, updates the project size
-	 * @param p the programmer who called this method
+	 * @param workPhaseHour checks the workPhasehours
+	 * @param productivityRate checks the productivity rate
 	 * @return true if another programmer can commit, false otherwise.
 	 */
 	public boolean isAnotherHandNeeded(double workPhaseHour, double productivityRate);
 	
 	/**
 	 * Called by a programmer who's commiting for the project
-	 * @param p Programmer who commits for the project
+	 * @param pInfo Programmer who commits for the project
 	 */
 	public void commit(ProgrammerInfo pInfo);
 	

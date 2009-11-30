@@ -27,6 +27,7 @@ public class BoardImpl implements Board {
 	
 	/**
 	 * Default constructor
+	 * @param obs the link between the observer and everyone else
 	 */
 	public BoardImpl(ObserverInfoGatherer obs) {
 		this._isToTerminate = false;
@@ -70,6 +71,7 @@ public class BoardImpl implements Board {
 	 * of the programmer so the thread can wake up
 	 * and check the Project to see if he can work
 	 * on it and/or what to do with it.
+	 * @throws InterruptedException throws the exception to the manager
 	 */
 	public synchronized void doYourMagic() throws InterruptedException{
 		for(Iterator<Project> j = this.projectsBoard.iterator(); j.hasNext();) {
@@ -137,7 +139,11 @@ public class BoardImpl implements Board {
 		}
 
 	}
-	
+	/**
+	 * update the completed phase, meaning to tell the programmer to get the project
+	 * again until it is finished
+	 * @throws InterruptedException throws the exception to the manager/programmer
+	 */
 	public void updateCompletedPhase() throws InterruptedException {
 		this.doYourMagic();
 	}
@@ -183,16 +189,16 @@ public class BoardImpl implements Board {
 	}
 
 	/**
-	 * @param myObserver the myObserver to set
+	 * @param _myObserver the myObserver to set
 	 */
-	public void setMyObserver(ObserverInfoGatherer myObserver) {
-		this.myObserver = myObserver;
+	public void setMyObserver(ObserverInfoGatherer _myObserver) {
+		this.myObserver = _myObserver;
 	}
 
 	/**
 	 * @return the myObserver
 	 */
 	public ObserverInfoGatherer getMyObserver() {
-		return myObserver;
+		return this.myObserver;
 	}
 }
