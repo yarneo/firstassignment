@@ -61,3 +61,5 @@ projectManager9Name=Manager_9
 programmer3ProductivityRate=3.0
 programmer1Specialization=Project_Type1
 programmer4WorkPhaseHours=3
+
+
