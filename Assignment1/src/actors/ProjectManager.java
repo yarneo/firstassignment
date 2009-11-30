@@ -63,7 +63,8 @@ public class ProjectManager implements Runnable {
 	 */
 	public void run() {
 		this.logger.log(this.name + " started working");
-		while(!this.myProjects.getAllProjects().isEmpty()) {
+		while(!this.myProjects.getAllProjects().isEmpty() &!this._shouldStop) {
+			try {
 		Project temp;
 		//System.out.print(this.myProjects.areThereReadyProjects());
 		if(this.myProjects.areThereReadyProjects())
@@ -75,23 +76,18 @@ public class ProjectManager implements Runnable {
 				tempList.add(i.next());
 			}
 			this.board.getMyObserver().setPendingProjects(tempList);
-		try {
+
 			temp = this.mailBox.take();
 			this.updateProjs(temp.getId()); 
-		} catch(InterruptedException e) {}
-		
-		//what about deleting from manager the done project?
-		synchronized(this){
-			if (this._shouldStop)
-			break;
-			 }
+		} catch(InterruptedException e) {
+			this._shouldStop=true;
+		}
 		}
 		
 	}
 	/**
 	 * 
 	 */
-	public synchronized void stop() { this._shouldStop = true; }
 	
 	
 	

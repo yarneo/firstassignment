@@ -15,7 +15,9 @@ import actors.ProjectManager;
  *
  */
 public class InitialThreadHandler {
-
+	
+	
+	private MainParser mp3;
 	/**
 	 * @param mp Main parser object
 	 */
@@ -23,6 +25,7 @@ public class InitialThreadHandler {
 		this.runProgrammers(mp.getProgrammers());
 		this.runManagers(mp.getProjectManagers());
 		this.runObserver(mp);
+		this.mp3 = mp;
 	}
 
 	//private functions
@@ -42,6 +45,10 @@ public class InitialThreadHandler {
 		for(Iterator<Programmer> i = lp.iterator(); i.hasNext(); ) {
 			Programmer p = i.next();
 			Thread t = new Thread((Runnable)p);
+			List<Thread> tempList;
+			tempList = mp3.getObserverGatherer().getMyThreads();
+			tempList.add(t);
+			mp3.getObserverGatherer().setMyThreads(tempList);
 			t.start();
 		}
 		
@@ -53,6 +60,10 @@ public class InitialThreadHandler {
 		for(Iterator<ProjectManager> i = lm.iterator(); i.hasNext(); ) {
 			ProjectManager p = i.next();
 			Thread t = new Thread((Runnable)p);
+			List<Thread> tempList;
+			tempList = mp3.getObserverGatherer().getMyThreads();
+			tempList.add(t);
+			mp3.getObserverGatherer().setMyThreads(tempList);
 			t.start();
 		}
 	}

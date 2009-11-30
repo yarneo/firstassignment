@@ -88,7 +88,9 @@ public class Programmer implements Runnable {
 				if (message.getType().equals(ProgrammerMessage.PROGRAMMER_BUDGET)) 
 					this.budget += message.getBudget();
 				//Project projectToDo = this.mailbox.take();
-			}	catch(InterruptedException e) {}
+			}	catch(InterruptedException e) {
+				stop();
+			}
 				
 		}
 		this.logger.log(this.name+" finished working");
