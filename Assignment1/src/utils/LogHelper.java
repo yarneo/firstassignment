@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package utils;
 
@@ -15,9 +15,9 @@ import java.util.logging.Logger;
  *
  */
 public class LogHelper {
-	
+
 	public static String LOG_FILE_NAME;
-	
+
 	private Logger logger;
 	private FileHandler fh;
 
@@ -27,8 +27,8 @@ public class LogHelper {
 	public LogHelper(String fileName) {
 		LogHelper.LOG_FILE_NAME = fileName;
 		this.logger = Logger.getLogger("MainLogger");
-		//this.logger.setUseParentHandlers(false);
-	    
+		this.logger.setUseParentHandlers(false);
+
 	    try {
 	    	this.fh = new FileHandler(fileName, true);
 	    	//this.fh.
@@ -39,16 +39,16 @@ public class LogHelper {
 	        this.fh.setFormatter(formatter);
 	        // This block configure the logger with handler and formatter
 	    	//this.logger.
-	        
+
 	    } catch (SecurityException e) {
 	        e.printStackTrace();
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
 	}
-	
+
 	//Overloading the log function
-	
+
 	/**
 	 * @param message String to be logged with "at+TIME"
 	 */
@@ -57,9 +57,9 @@ public class LogHelper {
 		this.logger.info(message+" at "+DateFormat.getTimeInstance(
 				DateFormat.MEDIUM).format(date));
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param message String to be logged
 	 * @param withDate Indicates whether to put "at+TIME" to the message.
 	 */
