@@ -51,7 +51,8 @@ public class Observer implements Runnable {
 				this.programmer();
 			if (this.userInput.startsWith("programmer ")) {
 				String str;
-				str = this.userInput.substring(11);
+				final int temp = 11;
+				str = this.userInput.substring(temp);
 				this.programmerInfo(str);
 			}
 			if (this.userInput.startsWith("addProgrammer ")) {
@@ -169,7 +170,7 @@ public class Observer implements Runnable {
 			//and as written above, need to make an object ProgrammerInfo which has all the 
 			//info about the programmers as the info written below:
 			ProgrammerInfo tempProgrammer = i.next();
-			if(tempProgrammer.getName() == name) {
+			if(tempProgrammer.getName().equals(name)) {
 				System.out.println(tempProgrammer.getName());
 				System.out.println(tempProgrammer.getProductivityRate());
 				System.out.println(tempProgrammer.getWorkPhaseHours());

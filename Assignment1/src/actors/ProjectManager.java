@@ -56,6 +56,18 @@ public class ProjectManager implements Runnable {
 		tempList.add(tempInfo);
 		this.board.setMyManagersLink(tempList);
 		logger = new LogHelper(LogHelper.LOG_FILE_NAME);
+		
+		//add all the pending projects of this manager to the observer info gatherer
+		List<Project> tempList2;
+		synchronized (this.board.getMyObserver()) {
+
+		tempList2 = this.board.getMyObserver().getPendingProjects();
+		for(Iterator<Project> i = this.myProjects.getAllProjects().iterator(); i.hasNext();) {
+			tempList2.add(i.next());
+		}
+		this.board.getMyObserver().setPendingProjects(tempList2);
+		
+		}
 	}
 	
 	/**
@@ -67,16 +79,26 @@ public class ProjectManager implements Runnable {
 			try {
 		Project temp;
 		//System.out.print(this.myProjects.areThereReadyProjects());
-		if(this.myProjects.areThereReadyProjects())
-			this.publish();
-		//add all the pending projects of this manager to the observer info gatherer
-			List<Project> tempList;
-			tempList = this.board.getMyObserver().getPendingProjects();
-			for(Iterator<Project> i = this.myProjects.getAllProjects().iterator(); i.hasNext();) {
-				tempList.add(i.next());
+		synchronized (this.board.getMyObserver().getPendingProjects()) {
+		if(this.myProjects.areThereReadyProjects()) {
+			List<Project> tempyListy;
+			tempyListy = this.board.getMyObserver().getPendingProjects();
+			for(Iterator<Project> i = this.myProjects.getAllProjects().iterator(); i.hasNext(); ) {
+				Project p = i.next();
+				if(p.getPrequesiteProjects().size()==0) {
+					if(tempyListy.contains(p)) {
+						tempyListy.remove(p);
+					}
+				}
 			}
-			this.board.getMyObserver().setPendingProjects(tempList);
-
+			this.board.getMyObserver().setPendingProjects(tempyListy);
+		}
+			this.publish();
+			
+		}
+		
+		
+		
 			temp = this.mailBox.take();
 			this.updateProjs(temp.getId()); 
 		} catch(InterruptedException e) {
