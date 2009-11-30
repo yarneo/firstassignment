@@ -5,9 +5,6 @@ package utils;
 
 import java.util.Iterator;
 import java.util.List;
-
-import resources.ProgrammerResourceHandler;
-
 import actors.Observer;
 import actors.Programmer;
 import actors.ProjectManager;

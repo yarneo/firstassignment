@@ -17,7 +17,6 @@ private List<Thread> myThreads;
 
 /**
  * the constructor that builds the parameters
- * @param _mp my main parser
  */
 public ObserverInfoGatherer() {
 	this.currentProjects = new ArrayList<Project>();
