@@ -23,13 +23,18 @@ public class InitialThreadHandler {
 	 */
 	public InitialThreadHandler(MainParser mp) {
 		this.mp3 = mp;
-		this.runProgrammers(mp.getProgrammers());
-		this.runManagers(mp.getProjectManagers());
-		this.runObserver(mp);
-
 	}
 
 	//private functions
+	
+	/**
+	 * Running all the threads in the system
+	 */
+	public void runThreads() {
+		this.runProgrammers(this.mp3.getProgrammers());
+		this.runManagers(this.mp3.getProjectManagers());
+		this.runObserver(this.mp3);
+	}
 
 	private void runProgrammers(List<Programmer> lp) {
 		////////////////////
@@ -47,9 +52,9 @@ public class InitialThreadHandler {
 			Programmer p = i.next();
 			Thread t = new Thread((Runnable)p);
 			List<Thread> tempList;
-			tempList = mp3.getObserverGatherer().getMyThreads();
+			tempList = this.mp3.getObserverGatherer().getMyThreads();
 			tempList.add(t);
-			mp3.getObserverGatherer().setMyThreads(tempList);
+			this.mp3.getObserverGatherer().setMyThreads(tempList);
 			t.start();
 		}
 		
@@ -62,9 +67,9 @@ public class InitialThreadHandler {
 			ProjectManager p = i.next();
 			Thread t = new Thread((Runnable)p);
 			List<Thread> tempList;
-			tempList = mp3.getObserverGatherer().getMyThreads();
+			tempList = this.mp3.getObserverGatherer().getMyThreads();
 			tempList.add(t);
-			mp3.getObserverGatherer().setMyThreads(tempList);
+			this.mp3.getObserverGatherer().setMyThreads(tempList);
 			t.start();
 		}
 	}

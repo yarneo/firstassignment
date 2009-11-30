@@ -23,6 +23,7 @@ public class ProjectImpl implements Project {
 	private double size;
 	private List<String> prequesiteProjects;
 	private List<String> resources;
+	
 	private List<ProgrammerInfo> programmers;
 	
 	private boolean _isAnotherHandNeeded;

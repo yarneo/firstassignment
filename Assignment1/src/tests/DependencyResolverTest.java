@@ -104,6 +104,7 @@ public class DependencyResolverTest {
             dependencyResolver.getReadyProjects();
             fail("Exception expected!");
         } catch (NoProjectsException e) {
+        	System.out.print("");
         }
 
 		dependencyResolver.updateCompProj("23");

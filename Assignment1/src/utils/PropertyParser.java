@@ -12,7 +12,7 @@ import java.util.Properties;
  * @author Alon Segal
  *
  */
-public abstract class PropertyParser {
+public class PropertyParser {
 
 	protected Properties prop;
 
@@ -28,10 +28,4 @@ public abstract class PropertyParser {
 			System.out.println("Error reading the configuration file");
 		}
 	}
-
-	/**
-	 * Parse the config file given.
-	 */
-	public abstract void parse();
-
 }

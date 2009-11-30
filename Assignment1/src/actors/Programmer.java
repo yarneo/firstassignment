@@ -11,6 +11,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
+import actorobjects.ProgrammerObject;
+
 import resources.ProgrammerResourceHandler;
 import resources.Resource;
 import utils.LogHelper;
@@ -21,6 +23,8 @@ import utils.MainParser;
  *
  */
 public class Programmer implements Runnable {
+	
+	private final int numOfSlots=100;
 	
 	private String name;
 	private double productivityRate;
@@ -43,21 +47,17 @@ public class Programmer implements Runnable {
 	
 	/**
 	 * 
-	 * @param _name name of the programmer
-	 * @param _specializations list of specializations
-	 * @param _productivityRate productivity rate of working per hour
-	 * @param _workPhaseHours number of hours in which the programmer commits to his work
-	 * @param _budget programmer's initial budget
+	 * @param po programmer's object filled with its data
+	 * @param _pi an instance of the suitable ProgrammerResourceHandler
 	 * @param _prh ProgrammerResourceHandler instance
+	 * @param _board reference to the main board object
 	 */
-	public Programmer(String _name, List<String> _specializations, double _productivityRate,
-			double _workPhaseHours, double _budget, ProgrammerInfo _pi, 
-			ProgrammerResourceHandler _prh, Board _board) {
-		this.name = _name;
-		this.specializations = _specializations;
-		this.productivityRate = _productivityRate;
-		this.workPhaseHours = _workPhaseHours;
-		this.budget = _budget;
+	public Programmer(ProgrammerObject po, ProgrammerInfo _pi, ProgrammerResourceHandler _prh, Board _board) {
+		this.name = po.getName();
+		this.specializations = po.getSpecializations();
+		this.productivityRate = po.getProductivityRate();
+		this.workPhaseHours = po.getWorkPhaseHours();
+		this.budget = po.getBudget();
 		
 		this.pInfo= _pi;
 		
@@ -65,7 +65,7 @@ public class Programmer implements Runnable {
 		this.board = _board;
 		
 		this.logger = new LogHelper(LogHelper.LOG_FILE_NAME);
-		this.mailbox = new ArrayBlockingQueue<ProgrammerMessage>(/*ManagerPropertyParser.NUM_OF_PROJECTS*/100, true);
+		this.mailbox = new ArrayBlockingQueue<ProgrammerMessage>(this.numOfSlots, true);
 		this.addInfoToBoard();
 		List<ProgrammerInfo> tempList;
 		tempList = this.board.getMyObserver().getProgrammers();
@@ -91,7 +91,7 @@ public class Programmer implements Runnable {
 			}	catch(InterruptedException e) {
 				//if(!this.pInfo.getCurrentResources().isEmpty())
 					//this.releaseResources(this.pInfo.getStringResources());
-				stop();
+				this.stop();
 			}
 				
 		}
@@ -168,9 +168,6 @@ public class Programmer implements Runnable {
 				this.pInfo.setStringResources(projectToDo.getResources());
 				
 				projectToDo.commit(this.pInfo);
-				
-				//System.out.println((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
-				//this.simulatedSecond);
 				
 				//adding data to the observerinfogatherer about current projects being worked on
 				List<Project> tempList;

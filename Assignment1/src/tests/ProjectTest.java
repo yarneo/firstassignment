@@ -13,6 +13,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import actorobjects.ProgrammerObject;
 import actors.ProgrammerInfo;
 import actors.Project;
 import actors.ProjectImpl;
@@ -75,8 +76,22 @@ public class ProjectTest {
 	 */
 	@Test
 	public final void testGetProgrammers() {
-		ProgrammerInfo p1 = new ProgrammerInfo("Alon", new ArrayList<String>(), 0.21, 1.4, 2.1);
-		ProgrammerInfo p2 = new ProgrammerInfo("Yarden", new ArrayList<String>(), 0.21, 1.4, 2.1);
+		ProgrammerObject po1 = new ProgrammerObject();
+		po1.setName("Alon");
+		po1.setProductivityRate(0.21);
+		po1.setWorkPhaseHours(1.4);
+		po1.setSpecializations(new ArrayList<String>());
+		po1.setBudget(100);
+		
+		ProgrammerObject po2 = new ProgrammerObject();
+		po2.setName("Yarden");
+		po2.setProductivityRate(0.45);
+		po2.setWorkPhaseHours(3.4);
+		po2.setSpecializations(new ArrayList<String>());
+		po2.setBudget(45);
+		
+		ProgrammerInfo p1 = new ProgrammerInfo(po1);
+		ProgrammerInfo p2 = new ProgrammerInfo(po2);
 		this.project.commit(p1);
 		this.project.commit(p2);
 		assertEquals("Expected Alon,Yarden and got "+this.project.getProgrammers(), 

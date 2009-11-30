@@ -4,13 +4,10 @@
 package utils;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
-
 import actors.Project;
 import actors.ProjectImpl;
-import resources.Resource;
 
 /**
  * @author Alon Segal
@@ -23,6 +20,7 @@ public class ManagerPropertyParser extends PropertyParser {
 	private List<String> projectIds;
 	private List<Project> projects;
 	private String nameOfManager;
+	private final int numOfDigitsToCut = 4;
 	
 	/**
 	 * @param name the name of the manager
@@ -30,17 +28,17 @@ public class ManagerPropertyParser extends PropertyParser {
 	public ManagerPropertyParser(String name) {
 		super(name);
 		this.projects = new ArrayList<Project>();
-		this.projectIds = new ArrayList<String>();
-		this.nameOfManager = name.substring(0, name.length()-4);
-		this.parse();
+		this.nameOfManager = name.substring(0, name.length()-this.numOfDigitsToCut);
 		ManagerPropertyParser.NUM_OF_PROJECTS+=this.projects.size();
+		this.projectIds = new ArrayList<String>();
+		this.nameOfManager = name.substring(0, name.length()-this.numOfDigitsToCut);
+		this.parse();
 	}
-
-	/* (non-Javadoc)
-	 * @see utils.PropertyParser#parse()
+	
+	/**
+	 * Parsing all the info
 	 */
-	@Override
-	public void parse() {
+	private void parse() {
 		this.parseManager();
 	}
 	

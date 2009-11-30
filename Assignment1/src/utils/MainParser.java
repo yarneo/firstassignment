@@ -11,6 +11,7 @@ import java.util.List;
 import resources.ProgrammerResourceHandler;
 import resources.Resource;
 import resources.ResourceImpl;
+import actorobjects.ProgrammerObject;
 import actors.Board;
 import actors.BoardImpl;
 import actors.Programmer;
@@ -47,7 +48,7 @@ public class MainParser extends PropertyParser {
 	/**
 	 * Parse the file into workable vars.
 	 */
-	public void parse() {
+	private void parse() {
 		this.parseProjectTypes();
 		this.parseResources();
 		this.createBoard();
@@ -88,7 +89,7 @@ public class MainParser extends PropertyParser {
 	}
 
 	private void parseProgrammers() {
-		ProgrammerResourceHandler prh = new ProgrammerResourceHandler(this.getResources());
+		ProgrammerResourceHandler prh = new ProgrammerResourceHandler(this.resources);
 		this.programmersInfo = new ArrayList<ProgrammerInfo>();
 
 		this.programmers = new ArrayList<Programmer>();
@@ -100,9 +101,17 @@ public class MainParser extends PropertyParser {
 			double budget = Double.parseDouble(prop.getProperty("programmer"+(i+1)+"Budget"));
 			List<String> special = Arrays.asList(prop.getProperty("programmer"+(i+1)+"Specialization").split(","));
 			
-			ProgrammerInfo pi = new ProgrammerInfo(name, special, pRate, wPhaseHours, budget);
+			ProgrammerObject po = new ProgrammerObject();
+			
+			po.setName(name);
+			po.setSpecializations(special);
+			po.setProductivityRate(pRate);
+			po.setWorkPhaseHours(wPhaseHours);
+			po.setBudget(budget);
+			
+			ProgrammerInfo pi = new ProgrammerInfo(po);
 			this.programmersInfo.add(pi);
-			Programmer p = new Programmer(name, special, pRate, wPhaseHours, budget, pi, prh, this.board);
+			Programmer p = new Programmer(po, pi, prh, this.board);
 			
 			this.programmers.add(p);
 		}
@@ -168,6 +177,6 @@ public class MainParser extends PropertyParser {
 	 * @return the observerGatherer
 	 */
 	public ObserverInfoGatherer getObserverGatherer() {
-		return observerGatherer;
+		return this.observerGatherer;
 	}
 }

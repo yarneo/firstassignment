@@ -1,0 +1,70 @@
+Yossi started working at 21:53:47
+David started working at 21:53:47
+Shlomo started working at 21:53:47
+Eva started working at 21:53:47
+Shlomo publishes project 34 at 21:53:47
+Yossi publishes project 74 at 21:53:47
+David committed to 34 for 2 at 21:53:47
+Yossi publishes project 47 at 21:53:47
+David acquired regular_computer at 21:53:47
+Eva committed to 34 for 1 at 21:53:47
+David is done with commitement on project 34 at 21:53:49
+David released regular_computer at 21:53:49
+Eva acquired regular_computer at 21:53:49
+David committed to 34 for 2 at 21:53:49
+Eva is done with commitement on project 34 at 21:53:50
+Eva released regular_computer at 21:53:50
+David acquired regular_computer at 21:53:50
+Eva committed to 34 for 1 at 21:53:50
+David finished working at 21:53:52
+Eva is done with commitement on project 34 at 21:53:53
+Eva released regular_computer at 21:53:53
+Eva finished working at 21:53:53
+Shlomo started working at 22:19:21
+David started working at 22:19:21
+Eva started working at 22:19:21
+Yossi started working at 22:19:21
+Shlomo publishes project 34 at 22:19:21
+Yossi publishes project 74 at 22:19:21
+David committed to 34 for 2 at 22:19:21
+David acquired regular_computer at 22:19:21
+Yossi publishes project 47 at 22:19:21
+Eva committed to 34 for 1 at 22:19:21
+David is done with commitement on project 34 at 22:19:23
+David released regular_computer at 22:19:23
+Eva acquired regular_computer at 22:19:23
+David committed to 34 for 2 at 22:19:23
+Eva is done with commitement on project 34 at 22:19:24
+Eva released regular_computer at 22:19:24
+Eva committed to 34 for 1 at 22:19:24
+David acquired regular_computer at 22:19:24
+David is done with commitement on project 34 at 22:19:26
+David released regular_computer at 22:19:26
+David committed to 34 for 2 at 22:19:26
+Eva acquired regular_computer at 22:19:26
+Eva is done with commitement on project 34 at 22:19:27
+Eva released regular_computer at 22:19:27
+David acquired regular_computer at 22:19:27
+Eva committed to 74 for 1 at 22:19:27
+David is done with commitement on project 34 at 22:19:29
+David released regular_computer at 22:19:29
+Eva acquired regular_computer at 22:19:29
+David committed to 34 for 2 at 22:19:29
+Eva is done with commitement on project 74 at 22:19:30
+Eva released regular_computer at 22:19:30
+David acquired regular_computer at 22:19:30
+Eva committed to 47 for 1 at 22:19:30
+Shlomo publishes project 12 at 22:19:32
+David is done with commitement on project 34 at 22:19:32
+David released regular_computer at 22:19:32
+David committed to 74 for 2 at 22:19:32
+Eva acquired regular_computer at 22:19:32
+Eva is done with commitement on project 47 at 22:19:33
+Eva released regular_computer at 22:19:33
+David acquired regular_computer at 22:19:33
+Eva committed to 47 for 1 at 22:19:33
+David is done with commitement on project 74 at 22:19:35
+David released regular_computer at 22:19:35
+Eva acquired regular_computer at 22:19:35
+Eva is done with commitement on project 47 at 22:19:36
+Eva released regular_computer at 22:19:36

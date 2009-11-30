@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+import actorobjects.ProgrammerObject;
+
 import resources.ProgrammerResourceHandler;
 
 import utils.MainParser;
@@ -51,8 +53,7 @@ public class Observer implements Runnable {
 				this.programmer();
 			if (this.userInput.startsWith("programmer ")) {
 				String str;
-				final int temp = 11;
-				str = this.userInput.substring(temp);
+				str = this.userInput.substring(11);
 				this.programmerInfo(str);
 			}
 			if (this.userInput.startsWith("addProgrammer ")) {
@@ -72,14 +73,14 @@ public class Observer implements Runnable {
 					name = strArr[0];
 					types = Arrays.asList(strArr[1].split(","));
 					try {
-					rate = Double.parseDouble(strArr[2]);
-					budget = Double.parseDouble(strArr[3]);
-					workHours = Double.parseDouble(strArr[4]);
-					this.addProgrammer(name, types, rate, budget, workHours);
+						rate = Double.parseDouble(strArr[2]);
+						budget = Double.parseDouble(strArr[3]);
+						workHours = Double.parseDouble(strArr[4]);
+						this.addProgrammer(name, types, rate, budget, workHours);
 					} 
 					catch(NumberFormatException e) {  
 						e.printStackTrace();
-					};
+					}
 
 				}
 			}
@@ -170,7 +171,7 @@ public class Observer implements Runnable {
 			//and as written above, need to make an object ProgrammerInfo which has all the 
 			//info about the programmers as the info written below:
 			ProgrammerInfo tempProgrammer = i.next();
-			if(tempProgrammer.getName().equals(name)) {
+			if(tempProgrammer.getName() == name) {
 				System.out.println(tempProgrammer.getName());
 				System.out.println(tempProgrammer.getProductivityRate());
 				System.out.println(tempProgrammer.getWorkPhaseHours());
@@ -195,9 +196,13 @@ public class Observer implements Runnable {
 	private void addProgrammer(String name, List<String> types, double rate, double budget, double workHours) {
 		//TODO what do i do with the board and the programresourcehandler
 		//also, how do i activate the thread using the initialthreadhandler?
-		ProgrammerInfo newprog = new ProgrammerInfo(name,types,rate,workHours,budget);
-		Programmer progy = new Programmer(name,types,rate,budget,workHours,newprog,
-				this.prh,this.b );
+		ProgrammerObject po = new ProgrammerObject();
+		po.setName(name);
+		po.setProductivityRate(rate);
+		po.setWorkPhaseHours(workHours);
+		po.setSpecializations(types);
+		ProgrammerInfo newprog = new ProgrammerInfo(po);
+		Programmer progy = new Programmer(po,newprog,this.prh,this.b );
 		
 	}
 	

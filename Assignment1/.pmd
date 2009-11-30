@@ -1,2 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pmd><useProjectRuleSet>false</useProjectRuleSet><rules><rule><name>AbstractClassWithoutAbstractMethod</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>AvoidProtectedFieldInFinalClass</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>AvoidReassigningParameters</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>BrokenNullCheck</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>CompareObjectsWithEquals</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>ConstructorCallsOverridableMethod</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>DefaultLabelNotLastInSwitchStmt</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>EmptyCatchBlock</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>EmptyFinallyBlock</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>EmptyStatementNotInLoop</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>EmptySynchronizedBlock</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>EmptyTryBlock</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>EmptyWhileStmt</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>EqualsNull</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>IdempotentOperations</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>MisplacedNullCheck</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>MissingBreakInSwitch</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>ReturnFromFinallyBlock</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>SwitchStmtsShouldHaveDefault</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>UnconditionalIfStatement</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>UselessOperationOnImmutable</name><ruleset>pmd-eclipse</ruleset></rule><rule><name>UselessOverridingMethod</name><ruleset>pmd-eclipse</ruleset></rule></rules><includeDerivedFiles>false</includeDerivedFiles></pmd>
+<pmd>
+    <useProjectRuleSet>false</useProjectRuleSet>
+    <ruleSetFile>.ruleset</ruleSetFile>
+    <rules>
+        <rule>
+            <name>BrokenNullCheck</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>EmptyCatchBlock</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>EmptyFinallyBlock</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>EmptyStatementNotInLoop</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>EmptySynchronizedBlock</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>EmptyTryBlock</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>EmptyWhileStmt</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>MisplacedNullCheck</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>ReturnFromFinallyBlock</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>UnconditionalIfStatement</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>UselessOperationOnImmutable</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>UselessOverridingMethod</name>
+            <ruleset>Basic Rules</ruleset>
+        </rule>
+        <rule>
+            <name>AbstractClassWithoutAbstractMethod</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+        <rule>
+            <name>AvoidProtectedFieldInFinalClass</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+        <rule>
+            <name>AvoidReassigningParameters</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+        <rule>
+            <name>CompareObjectsWithEquals</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+        <rule>
+            <name>ConstructorCallsOverridableMethod</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+        <rule>
+            <name>DefaultLabelNotLastInSwitchStmt</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+        <rule>
+            <name>EqualsNull</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+        <rule>
+            <name>IdempotentOperations</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+        <rule>
+            <name>MissingBreakInSwitch</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+        <rule>
+            <name>SwitchStmtsShouldHaveDefault</name>
+            <ruleset>Design Rules</ruleset>
+        </rule>
+    </rules>
+    <includeDerivedFiles>false</includeDerivedFiles>
+    <violationsAsErrors>true</violationsAsErrors>
+</pmd>

@@ -5,6 +5,8 @@ package actors;
 
 import java.util.List;
 
+import actorobjects.ProgrammerObject;
+
 import resources.Resource;
 
 /**
@@ -42,20 +44,17 @@ public class ProgrammerInfo {
 	
 	/**
 	 * 
-	 * @param _name
-	 * @param _specializations
-	 * @param _productivityRate
-	 * @param _workPhaseHours
-	 * @param _budget
+	 * @param po Programmer's object filled with it's data
 	 */
-	public ProgrammerInfo(String _name, List<String> _specializations, double _productivityRate,
-			double _workPhaseHours, double _budget) {
+	public ProgrammerInfo(ProgrammerObject po) {
 		
-		this.name = _name;
-		this.specializations = _specializations;
-		this.productivityRate = _productivityRate;
-		this.workPhaseHours = _workPhaseHours;
-		this.newBudget = _budget;
+		
+		
+		this.name = po.getName();
+		this.specializations = po.getSpecializations();
+		this.productivityRate = po.getProductivityRate();
+		this.workPhaseHours = po.getWorkPhaseHours();
+		this.newBudget = po.getBudget();
 		
 		this._isThereNewBudget = false;
 	}
@@ -64,7 +63,7 @@ public class ProgrammerInfo {
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return this.name;
 	}
 	
 	/**
