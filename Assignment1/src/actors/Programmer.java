@@ -66,6 +66,7 @@ public class Programmer implements Runnable {
 		
 		this.logger = new LogHelper(LogHelper.LOG_FILE_NAME);
 		this.mailbox = new ArrayBlockingQueue<ProgrammerMessage>(this.numOfSlots, true);
+		this.pInfo.setMailbox(this.mailbox);
 		this.addInfoToBoard();
 		List<ProgrammerInfo> tempList;
 		tempList = this.board.getMyObserver().getProgrammers();
@@ -85,8 +86,9 @@ public class Programmer implements Runnable {
 				if (message.getType().equals(ProgrammerMessage.PROGRAMMER_PROJECT)) 
 					this.takeProject(message.getProject());
 			
-				if (message.getType().equals(ProgrammerMessage.PROGRAMMER_BUDGET)) 
+				if (message.getType().equals(ProgrammerMessage.PROGRAMMER_BUDGET)) {
 					this.budget += message.getBudget();
+				}
 				//Project projectToDo = this.mailbox.take();
 			}	catch(InterruptedException e) {
 				//if(!this.pInfo.getCurrentResources().isEmpty())
@@ -212,6 +214,8 @@ public class Programmer implements Runnable {
 				this.budget = this.budget - this.workPhaseHours;
 				
 			}
+			if(!this.isBudgetEnough(projectToDo))
+				this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_PROJECT,projectToDo));
 		} catch(InterruptedException e) { this.stop(); }
 	}
 	/*

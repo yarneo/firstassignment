@@ -4,6 +4,7 @@
 package actors;
 
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 
 import actorobjects.ProgrammerObject;
 
@@ -26,6 +27,10 @@ public class ProgrammerInfo {
 	private List<String> specializations;
 	private List<String> stringResources;
 	
+	private BlockingQueue<ProgrammerMessage> mailbox;
+	
+	private double newBudget;
+	
 	/**
 	 * @return the stringResources
 	 */
@@ -40,7 +45,6 @@ public class ProgrammerInfo {
 		this.stringResources = _stringResources;
 	}
 
-	private double newBudget;
 	
 	/**
 	 * 
@@ -79,7 +83,10 @@ public class ProgrammerInfo {
 	 * @param _budget Budget to add
 	 */
 	public void addBudget(double _budget) {
-		this.newBudget += _budget;
+		this.newBudget = _budget;
+		try {
+			this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_BUDGET, this.newBudget));
+		} catch(InterruptedException e) { System.out.print(""); }
 		this._isThereNewBudget = true;
 	}
 	
@@ -176,5 +183,12 @@ public class ProgrammerInfo {
 	 */
 	public void setIsWorking(boolean working) {
 		this.isWorking = working;
+	}
+
+	/**
+	 * @param _mailbox the mailbox to set
+	 */
+	public void setMailbox(BlockingQueue<ProgrammerMessage> _mailbox) {
+		this.mailbox = _mailbox;
 	}
 }

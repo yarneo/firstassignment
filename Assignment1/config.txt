@@ -21,4 +21,4 @@ programmer2Specialization=system,database
 programmer2ProductivityRate=1.5
 programmer2WorkPhaseHours=1
 programmer2Budget=20
-simulationHour=1
+simulationHour=0

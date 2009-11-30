@@ -24,8 +24,16 @@ public class Observer implements Runnable {
 	private Scanner scanner;
 	private String userInput;
 	private ObserverInfoGatherer myInfo;
-	private Board b;
+	private Board board;
 	private ProgrammerResourceHandler prh;
+	
+	private final int const1 = 11;
+	private final int const2 = 14;
+	private final int const3 = 5;
+	private final int const4 = 10;
+	private final int const5 = 3;
+	private final int const6 = 4;
+	private final double timeUnit = 1000;
 	/**
 	 * @param _mp my main parser
 	 */
@@ -33,6 +41,8 @@ public class Observer implements Runnable {
 		this.myInfo = _mp.getObserverGatherer();
 		this.scanner = new java.util.Scanner(System.in);
 		this.userInput = "";
+		this.prh = _mp.getPRH();
+		this.board = _mp.getBoard();
 	}
 
 	/* (non-Javadoc)
@@ -53,15 +63,15 @@ public class Observer implements Runnable {
 				this.programmer();
 			if (this.userInput.startsWith("programmer ")) {
 				String str;
-				str = this.userInput.substring(11);
+				str = this.userInput.substring(this.const1);
 				this.programmerInfo(str);
 			}
 			if (this.userInput.startsWith("addProgrammer ")) {
 				String str;
-				str = this.userInput.substring(14);
+				str = this.userInput.substring(this.const2);
 				String[] strArr;
 				strArr = str.split(" ");
-				if(strArr.length != 5) {
+				if(strArr.length != this.const3) {
 					System.out.println("are you trying to fool me? try again.");
 				}
 				else {
@@ -74,19 +84,18 @@ public class Observer implements Runnable {
 					types = Arrays.asList(strArr[1].split(","));
 					try {
 						rate = Double.parseDouble(strArr[2]);
-						budget = Double.parseDouble(strArr[3]);
-						workHours = Double.parseDouble(strArr[4]);
+						budget = Double.parseDouble(strArr[this.const5]);
+						workHours = Double.parseDouble(strArr[this.const6]);
 						this.addProgrammer(name, types, rate, budget, workHours);
 					} 
 					catch(NumberFormatException e) {  
 						e.printStackTrace();
 					}
-
 				}
 			}
 			if (this.userInput.startsWith("addBudget ")) {
 				String str;
-				str = this.userInput.substring(10);
+				str = this.userInput.substring(this.const4);
 				String[] strArr;
 				strArr = str.split(" ");
 				if(strArr.length != 2) {
@@ -108,8 +117,6 @@ public class Observer implements Runnable {
 			if (this.userInput.equals("stop")) {
 				this.stop();
 			}
-			//TODO continue the programmer methods
-			System.out.println("You entered: " + this.userInput); 
 	     } 
 		System.out.println("Bye");
 	}
@@ -154,7 +161,7 @@ public class Observer implements Runnable {
 		//time taken
 		//obviously if the project hasent been worked on yet or hasent finished the time there
 		//will be 0, or null. name of field will be time, and getter will be getTime
-		System.out.println((double)(tempProject.getTimeElapsed()/1000.0)+" seconds");
+		System.out.println((double)(tempProject.getTimeElapsed()/this.timeUnit)+" seconds");
 	}
 	}
 	
@@ -201,15 +208,24 @@ public class Observer implements Runnable {
 		po.setProductivityRate(rate);
 		po.setWorkPhaseHours(workHours);
 		po.setSpecializations(types);
+		po.setBudget(budget);
 		ProgrammerInfo newprog = new ProgrammerInfo(po);
-		Programmer progy = new Programmer(po,newprog,this.prh,this.b );
+		Programmer progy = new Programmer(po,newprog,this.prh,this.board);
 		
+		Thread t = new Thread((Runnable)progy);
+		List<Thread> ls = this.myInfo.getMyThreads();
+		t.start();
+		ls.add(t);
+		this.myInfo.setMyThreads(ls);
+		try {
+			this.board.doYourMagic();
+		} catch (InterruptedException e) { System.out.print(""); }
 	}
 	
 	private void addBudget(String programmerName ,Double budget) {
 		for(Iterator<ProgrammerInfo> i = this.myInfo.getProgrammers().iterator(); i.hasNext();) {
 			ProgrammerInfo tempy = i.next();
-			if(tempy.getName()==programmerName) {
+			if(tempy.getName().equals(programmerName)) {
 				tempy.addBudget(budget);
 			}
 		}
