@@ -71,7 +71,7 @@ public class ProjectManager implements Runnable {
 		//add all the pending projects of this manager to the observer info gatherer
 			List<Project> tempList;
 			tempList = this.board.getMyObserver().getPendingProjects();
-			for(Iterator<Project> i = myProjects.getAllProjects().iterator(); i.hasNext();) {
+			for(Iterator<Project> i = this.myProjects.getAllProjects().iterator(); i.hasNext();) {
 				tempList.add(i.next());
 			}
 			this.board.getMyObserver().setPendingProjects(tempList);

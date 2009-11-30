@@ -166,9 +166,10 @@ public class Programmer implements Runnable {
 			//adding data to the observerinfogatherer about current projects being worked on
 			List<Project> tempList;
 			tempList = this.board.getMyObserver().getCurrentProjects();
+			if(!tempList.contains(projectToDo)) {
 			tempList.add(projectToDo);
 			this.board.getMyObserver().setCurrentProjects(tempList);
-
+			}
 			try {
 				Thread.sleep((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
 						this.simulatedSecond);
@@ -183,10 +184,14 @@ public class Programmer implements Runnable {
 				List<Project> tempList2;
 				tempList2 = this.board.getMyObserver().getCompletedProjects();
 				tempList = this.board.getMyObserver().getCurrentProjects();
+				if(tempList.contains(projectToDo)) {
 				tempList.remove(projectToDo);
 				this.board.getMyObserver().setCurrentProjects(tempList);
+				}
+				if(!tempList2.contains(projectToDo)) {
 				tempList2.add(projectToDo);
 				this.board.getMyObserver().setCompletedProjects(tempList2);
+				}
 			} else {
 				this.board.updateCompletedPhase();
 			}

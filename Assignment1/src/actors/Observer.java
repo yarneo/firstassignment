@@ -44,6 +44,8 @@ public class Observer implements Runnable {
 				this.completedProjects();
 			if (this.userInput.equals("pendingProjects"))
 				this.pendingProjects();
+			if (this.userInput.equals("currentProjects"))
+				this.currentProjects();
 			//TODO continue the programmer methods
 			System.out.println("You entered: " + this.userInput); 
 	     } 
