@@ -47,7 +47,7 @@ public class BoardImpl implements Board {
 	* and then sent to the programmers.
 	*/
 	@Override
-	public synchronized void addAnnouncement(List<Project> projects) {
+	public synchronized void addAnnouncement(List<Project> projects) throws InterruptedException {
 	for(Iterator<Project> i = projects.iterator(); i.hasNext();){
 		Project p = i.next();
 		this.projectsBoard.add(p);
@@ -71,7 +71,7 @@ public class BoardImpl implements Board {
 	 * and check the Project to see if he can work
 	 * on it and/or what to do with it.
 	 */
-	public synchronized void doYourMagic(){
+	public synchronized void doYourMagic() throws InterruptedException{
 		for(Iterator<Project> j = this.projectsBoard.iterator(); j.hasNext();) {
 			
 			Collection<BlockingQueue<ProgrammerMessage>> c;
@@ -81,11 +81,9 @@ public class BoardImpl implements Board {
 					c = this.myProgrammersLink.get(temp);
 					for(Iterator<BlockingQueue<ProgrammerMessage>> i = c.iterator(); i.hasNext();) {
 						BlockingQueue<ProgrammerMessage> tempQueue = i.next();
-						try {
+					
 							tempQueue.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_PROJECT, p));
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+			
 					}
 				}
 		}	
@@ -140,7 +138,7 @@ public class BoardImpl implements Board {
 
 	}
 	
-	public void updateCompletedPhase() {
+	public void updateCompletedPhase() throws InterruptedException {
 		this.doYourMagic();
 	}
 /**

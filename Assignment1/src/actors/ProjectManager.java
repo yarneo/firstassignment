@@ -108,7 +108,7 @@ public class ProjectManager implements Runnable {
 	private void updateProjs(String preqId) {
 		this.myProjects.updateCompProj(preqId);
 	}
-	private void publish() {
+	private void publish() throws InterruptedException{
 		//board will be used although it hasn't been implemented yet
 		this.board.addAnnouncement(this.publishProjects());
 		

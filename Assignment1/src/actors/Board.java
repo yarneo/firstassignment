@@ -17,8 +17,9 @@ public interface Board {
 	/**
 	 * 
 	 * @param projects list of projects
+	 * @throws InterruptedException 
 	 */
-	public void addAnnouncement(List<Project> projects);
+	public void addAnnouncement(List<Project> projects) throws InterruptedException;
 	/**
 	 * 
 	 * @param p1 project to remove
@@ -63,5 +64,5 @@ public interface Board {
 	public void shutdown();
 	public void setMyObserver(ObserverInfoGatherer myObserver);
 	public ObserverInfoGatherer getMyObserver();
-	public void updateCompletedPhase();
+	public void updateCompletedPhase() throws InterruptedException;
 }
