@@ -12,6 +12,7 @@ import comparators.NumOfPreqComparator;
 
 import exceptions.NoProjectsException;
 
+import actorobjects.projectObject;
 import actors.Project;
 import actors.ProjectImpl;
 
@@ -73,8 +74,14 @@ public class DependencyResolverImpl implements DependencyResolver {
 			this.removePrequesite(p, id);
 		}
 		//Add a fiction project to update the queue
-		Project a = new ProjectImpl("", "", "", 0, new ArrayList<String>(),
-				new ArrayList<String>());
+		projectObject tush = new projectObject();
+		tush.setId("");
+		tush.setName("");
+		tush.setType("");
+		tush.setSize(0);
+		tush.setPrequesiteProjects(new ArrayList<String>());
+		tush.setResources(new ArrayList<String>());
+		Project a = new ProjectImpl(tush);
 		this.projects.add(a);
 		this.projects.remove(a);
 	}

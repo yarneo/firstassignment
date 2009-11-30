@@ -6,6 +6,8 @@ package utils;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+
+import actorobjects.projectObject;
 import actors.Project;
 import actors.ProjectImpl;
 
@@ -62,10 +64,14 @@ public class ManagerPropertyParser extends PropertyParser {
 					prerequisite.add(temp[j]);
 				}
 			}
-			Project projy = new ProjectImpl(this.projectIds.get(i),
-			this.nameOfManager,this.type,size.intValue(),
-			prerequisite,
-			Arrays.asList(prop.getProperty("resourcesNeeded" + name1).split(",")));
+			projectObject tush = new projectObject();
+			tush.setId(this.projectIds.get(i));
+			tush.setName(this.nameOfManager);
+			tush.setType(this.type);
+			tush.setSize(size.intValue());
+			tush.setPrequesiteProjects(prerequisite);
+			tush.setResources(Arrays.asList(prop.getProperty("resourcesNeeded" + name1).split(",")));
+			Project projy = new ProjectImpl(tush);
 			this.projects.add(projy);
 		}
 			
