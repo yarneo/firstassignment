@@ -22,10 +22,11 @@ public class InitialThreadHandler {
 	 * @param mp Main parser object
 	 */
 	public InitialThreadHandler(MainParser mp) {
+		this.mp3 = mp;
 		this.runProgrammers(mp.getProgrammers());
 		this.runManagers(mp.getProjectManagers());
 		this.runObserver(mp);
-		this.mp3 = mp;
+
 	}
 
 	//private functions
