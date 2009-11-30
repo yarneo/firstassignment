@@ -170,6 +170,7 @@ public class Programmer implements Runnable {
 			tempList.add(projectToDo);
 			this.board.getMyObserver().setCurrentProjects(tempList);
 			}
+			//System.out.println(this.name+" Went to sleep");
 			try {
 				Thread.sleep((int)(this.workPhaseHours*MainParser.SIMULATION_HOUR)*
 						this.simulatedSecond);

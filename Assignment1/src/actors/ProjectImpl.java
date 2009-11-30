@@ -192,7 +192,7 @@ public class ProjectImpl implements Project {
 	private synchronized void setSize(double _size) {
 		this.hoursCompleted += _size;
 		this.size -= _size;
-		if(this.getSize()<0) {
+		if(this.getSize()<=0) {
 			this.size = 0;
 			this.finalTime = System.currentTimeMillis();
 		}

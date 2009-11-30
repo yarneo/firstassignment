@@ -118,15 +118,6 @@ public class DependencyResolverImpl implements DependencyResolver {
 		if (l.contains(id)) {
 			l.remove(id);
 		}
-		if (l.isEmpty()) {
-			System.out.println("lol");
-		}
-		//for(Iterator<String> i = l.iterator(); i.hasNext(); ) {
-			//String pTemp = i.next();
-			//if (id.equals(pTemp)) {
-				
-		//	}
-	//	}
 	}
 
 }
