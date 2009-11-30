@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import exceptions.NoProjectsException;
 
+import actorobjects.projectObject;
 import actors.Project;
 import actors.ProjectImpl;
 
@@ -45,12 +46,31 @@ public class DependencyResolverTest {
     protected DependencyResolver createDependencyResolver() {
     	//Creating dummy data for the tested instance
     	List<Project> l = new ArrayList<Project>();
-		Project p1 = new ProjectImpl("1", "Project1", "gui", 3, new ArrayList<String>(),
-				new ArrayList<String>());
-		Project p2 = new ProjectImpl("2", "Project2", "qa", 10, new ArrayList<String>(),
-				new ArrayList<String>());
-		Project p3 = new ProjectImpl("3", "Project3", "qa", 44, new ArrayList<String>(),
-				new ArrayList<String>());
+    	
+    	projectObject po1 = new projectObject();
+    	po1.setId("1");
+    	po1.setName("project1");
+    	po1.setType("gui");
+    	po1.setPrequesiteProjects(new ArrayList<String>());
+    	po1.setResources(new ArrayList<String>());
+    	
+    	projectObject po2 = new projectObject();
+    	po1.setId("2");
+    	po1.setName("project2");
+    	po1.setType("qa");
+    	po1.setPrequesiteProjects(new ArrayList<String>());
+    	po1.setResources(new ArrayList<String>());
+    	
+    	projectObject po3 = new projectObject();
+    	po1.setId("3");
+    	po1.setName("project3");
+    	po1.setType("qa");
+    	po1.setPrequesiteProjects(new ArrayList<String>());
+    	po1.setResources(new ArrayList<String>());
+    	
+		Project p1 = new ProjectImpl(po1);
+		Project p2 = new ProjectImpl(po2);
+		Project p3 = new ProjectImpl(po3);
 		List<String> pp1 = new ArrayList<String>();
 		List<String> pp2 = new ArrayList<String>();
 		List<String> pp3 = new ArrayList<String>();

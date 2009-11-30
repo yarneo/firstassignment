@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import actorobjects.ProgrammerObject;
+import actorobjects.projectObject;
 import actors.ProgrammerInfo;
 import actors.Project;
 import actors.ProjectImpl;
@@ -37,8 +38,15 @@ public class ProjectTest {
 	private Project createNewProject() {
 		//Creating dummy data for the tested instance
     	List<Project> l = new ArrayList<Project>();
-		Project p1 = new ProjectImpl("1", "Project1", "gui", 3, new ArrayList<String>(),
-				new ArrayList<String>());
+    	
+    	projectObject po1 = new projectObject();
+    	po1.setId("1");
+    	po1.setName("project1");
+    	po1.setType("gui");
+    	po1.setPrequesiteProjects(new ArrayList<String>());
+    	po1.setResources(new ArrayList<String>());
+    	
+		Project p1 = new ProjectImpl(po1);
 		List<String> pp1 = new ArrayList<String>();
 
 		pp1.add("11");
