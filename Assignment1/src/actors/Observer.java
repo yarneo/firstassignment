@@ -3,6 +3,7 @@
  */
 package actors;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -46,6 +47,65 @@ public class Observer implements Runnable {
 				this.pendingProjects();
 			if (this.userInput.equals("currentProjects"))
 				this.currentProjects();
+			if (this.userInput.equals("programmers"))
+				this.programmer();
+			if (this.userInput.startsWith("programmer ")) {
+				String str;
+				str = this.userInput.substring(11);
+				this.programmerInfo(str);
+			}
+			if (this.userInput.startsWith("addProgrammer ")) {
+				String str;
+				str = this.userInput.substring(14);
+				String[] strArr;
+				strArr = str.split(" ");
+				if(strArr.length != 5) {
+					System.out.println("are you trying to fool me? try again.");
+				}
+				else {
+					String name;
+					List<String> types;
+					double rate;
+					double budget;
+					double workHours;
+					name = strArr[0];
+					types = Arrays.asList(strArr[1].split(","));
+					try {
+					rate = Double.parseDouble(strArr[2]);
+					budget = Double.parseDouble(strArr[3]);
+					workHours = Double.parseDouble(strArr[4]);
+					this.addProgrammer(name, types, rate, budget, workHours);
+					} 
+					catch(NumberFormatException e) {  
+						e.printStackTrace();
+					};
+
+				}
+			}
+			if (this.userInput.startsWith("addBudget ")) {
+				String str;
+				str = this.userInput.substring(10);
+				String[] strArr;
+				strArr = str.split(" ");
+				if(strArr.length != 2) {
+					System.out.println("are you trying to fool me? try again.");
+				}
+				else {
+					String name;
+					try {
+					double budget;
+					name = strArr[0];
+					budget = Double.parseDouble(strArr[1]);
+					this.addBudget(name, budget);
+					} 
+					catch(NumberFormatException e) {  
+						e.printStackTrace();
+					}
+				}
+			}
+			if (this.userInput.equals("stop")) {
+				this.stop();
+			}
 			//TODO continue the programmer methods
 			System.out.println("You entered: " + this.userInput); 
 	     } 
