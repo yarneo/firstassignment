@@ -54,9 +54,11 @@ public class ManagerPropertyParser extends PropertyParser {
 			
 			List<String> prerequisite = new ArrayList<String>();
 			if (!prop.getProperty("prerequisiteProjects" + name1).equals("none")) {
-				Arrays.asList(prop.getProperty("prerequisiteProjects" + name1).split(","));
+				String[] temp = prop.getProperty("prerequisiteProjects" + name1).split(",");
+				for(int j = 0; j<temp.length;j++) {
+					prerequisite.add(temp[j]);
+				}
 			}
-			
 			Project projy = new ProjectImpl(this.projectIds.get(i),
 			this.nameOfManager,this.type,size.intValue(),
 			prerequisite,

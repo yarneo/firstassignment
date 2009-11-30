@@ -115,12 +115,18 @@ public class DependencyResolverImpl implements DependencyResolver {
 	 */
 	private void removePrequesite(Project p, String id) {
 		List<String> l = p.getPrequesiteProjects();
-		for(Iterator<String> i = l.iterator(); i.hasNext(); ) {
-			String pTemp = i.next();
-			if (id.equals(pTemp)) {
-				i.remove();
-			}
+		if (l.contains(id)) {
+			l.remove(id);
 		}
+		if (l.isEmpty()) {
+			System.out.println("lol");
+		}
+		//for(Iterator<String> i = l.iterator(); i.hasNext(); ) {
+			//String pTemp = i.next();
+			//if (id.equals(pTemp)) {
+				
+		//	}
+	//	}
 	}
 
 }
