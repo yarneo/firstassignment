@@ -30,13 +30,13 @@ public ObserverInfoGatherer() {
 /**
  * @param _currentProjects the currentProjects to set
  */
-public void setCurrentProjects(List<Project> _currentProjects) {
+public synchronized void setCurrentProjects(List<Project> _currentProjects) {
 	this.currentProjects = _currentProjects;
 }
 /**
  * @return the currentProjects
  */
-public List<Project> getCurrentProjects() {
+public synchronized List<Project> getCurrentProjects() {
 	return this.currentProjects;
 }
 /**
@@ -54,13 +54,13 @@ public List<Project> getPendingProjects() {
 /**
  * @param _completedProjects the completedProjects to set
  */
-public void setCompletedProjects(List<Project> _completedProjects) {
+public synchronized void setCompletedProjects(List<Project> _completedProjects) {
 	this.completedProjects = _completedProjects;
 }
 /**
  * @return the completedProjects
  */
-public List<Project> getCompletedProjects() {
+public synchronized List<Project> getCompletedProjects() {
 	return this.completedProjects;
 }
 /**

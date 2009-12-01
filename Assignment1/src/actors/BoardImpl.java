@@ -54,7 +54,7 @@ public class BoardImpl implements Board {
 		p.publish();
 		this.projectsBoard.add(p);
 		}
-		this.doYourMagic();
+		this.updateProgrammersMailbox();
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class BoardImpl implements Board {
 	 * on it and/or what to do with it.
 	 * @throws InterruptedException throws the exception to the manager
 	 */
-	public synchronized void doYourMagic() throws InterruptedException{
+	public synchronized void updateProgrammersMailbox() throws InterruptedException{
 		for(Iterator<Project> j = this.projectsBoard.iterator(); j.hasNext();) {
 			
 			Collection<BlockingQueue<ProgrammerMessage>> c;
@@ -105,7 +105,7 @@ public class BoardImpl implements Board {
 	*
 	 * @param p1 project that is finished
 	 */
-	public void doneWithProject(Project p1) {
+	public synchronized void doneWithProject(Project p1) {
 		for(Iterator<ManagersInfo> i = this.myManagersLink.iterator(); i.hasNext();) {
 			ManagersInfo tempInfo =   i.next();
 			for(Iterator<Project> j = tempInfo.projectList.iterator(); j.hasNext();) {
@@ -126,7 +126,8 @@ public class BoardImpl implements Board {
 	 */
 	@Override
 	public synchronized void removeAnouncement(Project p1) {
-		this.projectsBoard.remove(p1);
+		if(this.projectsBoard.contains(p1))
+			this.projectsBoard.remove(p1);
 
 	}
 
@@ -145,8 +146,8 @@ public class BoardImpl implements Board {
 	 * again until it is finished
 	 * @throws InterruptedException throws the exception to the manager/programmer
 	 */
-	public void updateCompletedPhase() throws InterruptedException {
-		this.doYourMagic();
+	public synchronized void updateCompletedPhase() throws InterruptedException {
+		this.updateProgrammersMailbox();
 	}
 /**
  * @return my programmers link
@@ -161,7 +162,7 @@ public class BoardImpl implements Board {
 		ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>> _myProgrammersLink) {
 		this.myProgrammersLink = _myProgrammersLink;
 		try {
-			this.doYourMagic();
+			this.updateProgrammersMailbox();
 		} catch (InterruptedException e) {}
 	}
 	/**
@@ -195,14 +196,14 @@ public class BoardImpl implements Board {
 	/**
 	 * @param _myObserver the myObserver to set
 	 */
-	public void setMyObserver(ObserverInfoGatherer _myObserver) {
+	public synchronized void setMyObserver(ObserverInfoGatherer _myObserver) {
 		this.myObserver = _myObserver;
 	}
 
 	/**
 	 * @return the myObserver
 	 */
-	public ObserverInfoGatherer getMyObserver() {
+	public synchronized ObserverInfoGatherer getMyObserver() {
 		return this.myObserver;
 	}
 }

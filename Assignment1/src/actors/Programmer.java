@@ -73,7 +73,7 @@ public class Programmer implements Runnable {
 		tempList.add(this.pInfo);
 		this.board.getMyObserver().setProgrammers(tempList);
 		try {
-			this.board.doYourMagic();
+			this.board.updateProgrammersMailbox();
 		}catch (InterruptedException e) {System.out.print(""); }
 	}
 	
@@ -90,7 +90,7 @@ public class Programmer implements Runnable {
 				if (message.getType().equals(ProgrammerMessage.PROGRAMMER_BUDGET)) {
 					this.budget = message.getBudget();
 					try {
-						this.board.doYourMagic();
+						this.board.updateProgrammersMailbox();
 					} catch (InterruptedException e) {}
 				}
 				//Project projectToDo = this.mailbox.take();
@@ -225,14 +225,6 @@ public class Programmer implements Runnable {
 				this.releaseResources(projectToDo.getResources());
 				projectToDo.done(this.pInfo);
 			}
-			//if(!this.isBudgetEnough(projectToDo))
-				//this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_PROJECT,projectToDo));
 		} catch(InterruptedException e) { this.stop(); }
 	}
-	/*
-	public void sendNewProject(Project p) {
-		try {
-			this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_PROJECT, p));
-		} catch(InterruptedException e) {}
-	}*/
 }

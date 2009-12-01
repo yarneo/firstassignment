@@ -219,7 +219,7 @@ public class Observer implements Runnable {
 		ls.add(t);
 		this.myInfo.setMyThreads(ls);
 		try {
-			this.board.doYourMagic();
+			this.board.updateProgrammersMailbox();
 		} catch (InterruptedException e) { System.out.print(""); }
 	}
 	

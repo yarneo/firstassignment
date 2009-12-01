@@ -89,5 +89,5 @@ public interface Board {
 	 * 
 	 * @throws InterruptedException throws to manager/programmer
 	 */
-	public void doYourMagic() throws InterruptedException;
+	public void updateProgrammersMailbox() throws InterruptedException;
 }
