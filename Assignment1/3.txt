@@ -1,0 +1,12 @@
+type=gui
+projectIds=7,8,9
+prerequisiteProjects7=none
+size7=8
+resourcesNeeded7=printer,regular_computer
+prerequisiteProjects8=7,3,15
+size8=1
+resourcesNeeded8=regular_computer
+prerequisiteProjects9=1,6,12
+size9=1
+resourcesNeeded9=regular_computer,23inch_lcd
+

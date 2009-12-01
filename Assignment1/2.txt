@@ -1,0 +1,12 @@
+type=system
+projectIds=4,5,6
+prerequisiteProjects4=18
+size4=8
+resourcesNeeded4=printer,regular_computer
+prerequisiteProjects5=16
+size5=1
+resourcesNeeded5=regular_computer
+prerequisiteProjects6=12
+size6=1
+resourcesNeeded6=regular_computer,23inch_lcd
+

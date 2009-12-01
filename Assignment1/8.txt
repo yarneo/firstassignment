@@ -1,0 +1,6 @@
+type=gui
+projectIds=14
+prerequisiteProjects14=none
+size14=8
+resourcesNeeded14=database1_connection
+מr

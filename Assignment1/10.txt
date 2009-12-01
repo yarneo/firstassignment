@@ -1,0 +1,6 @@
+type=system
+projectIds=16
+prerequisiteProjects16=none
+size16=8
+resourcesNeeded16=printer,regular_computer
+מr

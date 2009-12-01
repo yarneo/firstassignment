@@ -1,0 +1,6 @@
+type=gui
+projectIds=15
+prerequisiteProjects15=none
+size15=8
+resourcesNeeded15=printer,database1_connection
+מr

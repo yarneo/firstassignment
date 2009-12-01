@@ -1,0 +1,6 @@
+type=testing
+projectIds=12
+prerequisiteProjects12=11
+size12=8
+resourcesNeeded12=fast_computer
+מr

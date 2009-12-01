@@ -1,0 +1,6 @@
+type=system
+projectIds=10
+prerequisiteProjects10=none
+size10=8
+resourcesNeeded10=fast_computer
+מr

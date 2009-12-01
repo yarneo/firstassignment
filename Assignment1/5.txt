@@ -1,0 +1,6 @@
+type=gui
+projectIds=11
+prerequisiteProjects11=none
+size11=8
+resourcesNeeded11=printer,regular_computer
+מr
