@@ -16,8 +16,6 @@ public class SimStarter {
 		//getting the arguments
 		SimStarter.confFile = args[0];
 		SimStarter.logFile = args[1];
-		//ConfCreator conf = new ConfCreator();
-		//conf.createConf();
 
 		//setting up a static logger which tracks the whole system. Usage: Logger.log(message) from anywhere.
 		LogHelper.LOG_FILE_NAME  = SimStarter.logFile;
