@@ -13,7 +13,6 @@ public class SimStarter {
 	 * @param args main arguments
 	 */
 	public static void main(String[] args) {
-		//TODO VERY IMPORTANT!!! Count the total projects.
 		//getting the arguments
 		SimStarter.confFile = args[0];
 		SimStarter.logFile = args[1];

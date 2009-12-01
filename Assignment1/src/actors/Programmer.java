@@ -72,8 +72,9 @@ public class Programmer implements Runnable {
 		tempList = this.board.getMyObserver().getProgrammers();
 		tempList.add(this.pInfo);
 		this.board.getMyObserver().setProgrammers(tempList);
-		
-		
+		try {
+			this.board.doYourMagic();
+		}catch (InterruptedException e) {System.out.print(""); }
 	}
 	
 	@Override
@@ -87,7 +88,10 @@ public class Programmer implements Runnable {
 					this.takeProject(message.getProject());
 			
 				if (message.getType().equals(ProgrammerMessage.PROGRAMMER_BUDGET)) {
-					this.budget += message.getBudget();
+					this.budget = message.getBudget();
+					try {
+						this.board.doYourMagic();
+					} catch (InterruptedException e) {}
 				}
 				//Project projectToDo = this.mailbox.take();
 			}	catch(InterruptedException e) {
@@ -112,12 +116,12 @@ public class Programmer implements Runnable {
 	private void addInfoToBoard() {
         ConcurrentHashMap<String,Collection<BlockingQueue<ProgrammerMessage>>> temp;
         temp = this.board.getMyProgrammersLink();
-        Collection<BlockingQueue<ProgrammerMessage>> c = new ArrayList<BlockingQueue<ProgrammerMessage>>();
         for(Iterator<String> i = this.specializations.iterator(); i.hasNext();) {
+        	Collection<BlockingQueue<ProgrammerMessage>> c = new ArrayList<BlockingQueue<ProgrammerMessage>>();
             String tempType = i.next();
             if(temp!=null && !temp.containsKey(tempType)) {
-            temp.putIfAbsent(tempType, c);
             c.add(this.mailbox);
+            temp.putIfAbsent(tempType, c);
             }
             else {
                 temp.get(tempType).add(this.mailbox);
@@ -147,7 +151,7 @@ public class Programmer implements Runnable {
 	}
 	
 	private boolean isBudgetEnough(Project p) {
-		if (this.budget<p.getSize())
+		if (this.budget<this.workPhaseHours)
 			return false;
 		return true;
 	}
@@ -156,7 +160,7 @@ public class Programmer implements Runnable {
 		try {
 			
 			//TODO check the threads bug here
-			if (this.isBudgetEnough(projectToDo) & projectToDo.isAnotherHandNeeded(this.workPhaseHours, this.productivityRate)) {
+			if (this.isBudgetEnough(projectToDo) && projectToDo.isAnotherHandNeeded(this.workPhaseHours, this.productivityRate)) {
 				this.logger.log(this.name+" committed to "+projectToDo.getId()+" for "+
 						(int)this.workPhaseHours);
 				this.acquireResources(projectToDo.getResources());
@@ -184,17 +188,21 @@ public class Programmer implements Runnable {
 				
 				//COMPLETED Working
 				this.pInfo.setIsWorking(false);
+				
+				//remove the project from the current projects and move it to the completedprojects
+				//in the observerinfogatherer
+				List<Project> tempList2;
+				tempList2 = this.board.getMyObserver().getCompletedProjects();
+				tempList = this.board.getMyObserver().getCurrentProjects();
+				
+				if(tempList.contains(projectToDo)) {
+					tempList.remove(projectToDo);
+					this.board.getMyObserver().setCurrentProjects(tempList);
+				}
+				
 				if (projectToDo.isCompleted()) {
 					this.board.doneWithProject(projectToDo);
-					//remove the project from the current projects and move it to the completedprojects
-					//in the observerinfogatherer
-					List<Project> tempList2;
-					tempList2 = this.board.getMyObserver().getCompletedProjects();
-					tempList = this.board.getMyObserver().getCurrentProjects();
-					if(tempList.contains(projectToDo)) {
-						tempList.remove(projectToDo);
-						this.board.getMyObserver().setCurrentProjects(tempList);
-					}
+					this.board.removeAnouncement(projectToDo);
 					if(!tempList2.contains(projectToDo)) {
 						tempList2.add(projectToDo);
 						this.board.getMyObserver().setCompletedProjects(tempList2);
@@ -202,6 +210,12 @@ public class Programmer implements Runnable {
 				} else {
 					this.board.updateCompletedPhase();
 				}
+				
+				//handles budget
+				this.budget = this.budget - this.workPhaseHours;
+				if (this.budget<0) this.budget=0;
+				this.pInfo.setBudget(this.budget);
+				
 				//logging
 				this.logger.log(this.name+" is done with commitement on project "+
 						projectToDo.getId());
@@ -210,12 +224,9 @@ public class Programmer implements Runnable {
 				
 				this.releaseResources(projectToDo.getResources());
 				projectToDo.done(this.pInfo);
-				//handles budget
-				this.budget = this.budget - this.workPhaseHours;
-				
 			}
-			if(!this.isBudgetEnough(projectToDo))
-				this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_PROJECT,projectToDo));
+			//if(!this.isBudgetEnough(projectToDo))
+				//this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_PROJECT,projectToDo));
 		} catch(InterruptedException e) { this.stop(); }
 	}
 	/*

@@ -25,4 +25,10 @@ public interface Resource {
 	 * @return type of the resource.
 	 */
 	public String getType();
+	
+	/**
+	 * 
+	 * @return String with values
+	 */
+	public String toString();
 }

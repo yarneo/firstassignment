@@ -1,11 +1,13 @@
 type=gui
 projectIds=47,74,24
 prerequisiteProjects47=none
-size47=2
+size47=8
 resourcesNeeded47=printer,regular_computer
 prerequisiteProjects74=none
 size74=1
 resourcesNeeded74=regular_computer
-prerequisiteProjects24=34,12
+prerequisiteProjects24=74,47
 size24=1
 resourcesNeeded24=regular_computer,23inch_lcd
+
+prerequisiteProjects24=none

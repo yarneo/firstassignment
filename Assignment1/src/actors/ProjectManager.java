@@ -24,14 +24,14 @@ public class ProjectManager implements Runnable {
 	//members
 	private String name;
 	private List<Project> projects;
-	private String type;
-	private List<String> projectIds;
 	private DependencyResolver myProjects;
 	private BlockingQueue<Project> mailBox;
 	private boolean _shouldStop;
 	private Board board;
 	private LogHelper logger;
 	private final int hundred=100;
+	
+	private List<Project> readyProjects;
 	
 	
 	
@@ -41,13 +41,12 @@ public class ProjectManager implements Runnable {
 	 * @param _board gets the message board
 	 */
 	public ProjectManager(String _name, Board _board) {
+		this.readyProjects = new ArrayList<Project>();
 		this._shouldStop = false;
 		this.board = _board;
 		this.name = _name;
 		ManagerPropertyParser parseIt = new ManagerPropertyParser(this.name + ".txt");
-		this.type = parseIt.getType();
 		this.projects = parseIt.getProjects();
-		this.projectIds = parseIt.getProjectIds();
 		this.myProjects = new DependencyResolverImpl(this.projects);
 		this.mailBox = new ArrayBlockingQueue<Project>(this.hundred);
 		
@@ -95,12 +94,15 @@ public class ProjectManager implements Runnable {
 			this.board.getMyObserver().setPendingProjects(tempyListy);
 		}
 			this.publish();
-			
 		}
 		
 		
 		
 			temp = this.mailBox.take();
+			if (this.readyProjects.contains(temp)) {
+				this.readyProjects.remove(temp);
+				this.logger.log(this.name+" completed project "+temp.getId());
+			}
 			this.updateProjs(temp.getId()); 
 		} catch(InterruptedException e) {
 			this._shouldStop=true;
@@ -119,10 +121,11 @@ public class ProjectManager implements Runnable {
 	private List<Project> publishProjects() {
 		if(this.myProjects.areThereReadyProjects()) {
 			List<Project> ls = this.myProjects.getReadyProjects();
-				for(Iterator<Project> i = ls.iterator(); i.hasNext(); ) {
-					Project p =i.next();
-					this.logger.log(this.name+" publishes project "+p.getId());
-				}
+			for(Iterator<Project> i = ls.iterator(); i.hasNext(); ) {
+				Project p =i.next();
+				this.logger.log(this.name+" publishes project "+p.getId());
+			}
+			this.readyProjects.addAll(ls);
 			return ls;
 		}
 		return new ArrayList<Project>();

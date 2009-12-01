@@ -4,6 +4,7 @@
 package actors;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -30,15 +31,15 @@ public class ProjectImpl implements Project {
 	private boolean _isAnotherHandNeeded;
 	private double hoursCompleted;
 	
-	private long startTime;
-	private long finalTime;
+	private Date startTime;
+	private Date finalTime;
 	
 /**
  * 
  * @param po the object of the project that holds of all the projects information
  */
 	public ProjectImpl(projectObject po) {
-
+		
 		this.id = po.getId();
 		this.name = po.getName();
 		this.type = po.getType();
@@ -145,7 +146,7 @@ public class ProjectImpl implements Project {
 	 * publish the project on the board
 	 */
 	public void publish() {
-		this.startTime =  System.currentTimeMillis();
+		this.startTime =  new Date();
 	}
 	
 	/**
@@ -190,7 +191,7 @@ public class ProjectImpl implements Project {
 		this.size -= _size;
 		if(this.getSize()<=0) {
 			this.size = 0;
-			this.finalTime = System.currentTimeMillis();
+			this.finalTime = new Date();
 		}
 	}
 	
@@ -200,7 +201,7 @@ public class ProjectImpl implements Project {
 	 */
 	public long getTimeElapsed() {
 		if(this.isCompleted())
-			return this.finalTime - this.startTime;
+			return this.finalTime.getTime() - this.startTime.getTime();
 		return 0;
 	}
 	
@@ -212,6 +213,8 @@ public class ProjectImpl implements Project {
 			ProgrammerInfo p = i.next();
 			ans+=p.getName()+",";
 		}
-		return ans.substring(0, ans.length()-1);
+		if (ans.length()>0) 
+			return ans.substring(0, ans.length()-1);
+		return "";
 	}
 }

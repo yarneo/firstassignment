@@ -51,6 +51,7 @@ public class BoardImpl implements Board {
 	public synchronized void addAnnouncement(List<Project> projects) throws InterruptedException {
 	for(Iterator<Project> i = projects.iterator(); i.hasNext();){
 		Project p = i.next();
+		p.publish();
 		this.projectsBoard.add(p);
 		}
 		this.doYourMagic();
@@ -109,7 +110,7 @@ public class BoardImpl implements Board {
 			ManagersInfo tempInfo =   i.next();
 			for(Iterator<Project> j = tempInfo.projectList.iterator(); j.hasNext();) {
 				Project tempProj = j.next();
-				if(tempProj.getId() == p1.getId()) {
+				if(tempProj.getId().equals(p1.getId())) {
 					tempInfo.managerInbox.add(p1);
 				}
 				else if(tempProj.getPrequesiteProjects().contains(p1.getId())) {
@@ -157,8 +158,11 @@ public class BoardImpl implements Board {
 	 * @param _myProgrammersLink my programmers link
 	 */
 	public void setMyProgrammersLink(
-			ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>> _myProgrammersLink) {
+		ConcurrentHashMap<String, Collection<BlockingQueue<ProgrammerMessage>>> _myProgrammersLink) {
 		this.myProgrammersLink = _myProgrammersLink;
+		try {
+			this.doYourMagic();
+		} catch (InterruptedException e) {}
 	}
 	/**
 	 * @return my managers link

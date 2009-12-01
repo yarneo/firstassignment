@@ -29,7 +29,7 @@ public class ProgrammerInfo {
 	
 	private BlockingQueue<ProgrammerMessage> mailbox;
 	
-	private double newBudget;
+	private double budget;
 	
 	/**
 	 * @return the stringResources
@@ -52,15 +52,11 @@ public class ProgrammerInfo {
 	 */
 	public ProgrammerInfo(ProgrammerObject po) {
 		
-		
-		
 		this.name = po.getName();
 		this.specializations = po.getSpecializations();
 		this.productivityRate = po.getProductivityRate();
 		this.workPhaseHours = po.getWorkPhaseHours();
-		this.newBudget = po.getBudget();
-		
-		this._isThereNewBudget = false;
+		this.budget = po.getBudget();
 	}
 	
 	/**
@@ -83,26 +79,10 @@ public class ProgrammerInfo {
 	 * @param _budget Budget to add
 	 */
 	public void addBudget(double _budget) {
-		this.newBudget = _budget;
+		this.budget += _budget;
 		try {
-			this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_BUDGET, this.newBudget));
+			this.mailbox.put(new ProgrammerMessage(ProgrammerMessage.PROGRAMMER_BUDGET, this.budget));
 		} catch(InterruptedException e) { System.out.print(""); }
-		this._isThereNewBudget = true;
-	}
-	
-	/**
-	 * @return the newBudget
-	 */
-	public double getNewBudget() {
-		this._isThereNewBudget = false;
-		return this.newBudget;
-	}
-	
-	/**
-	 * @return the budget
-	 */
-	public double getBudget() {
-		return this.newBudget;
 	}
 	
 	/**
@@ -190,5 +170,20 @@ public class ProgrammerInfo {
 	 */
 	public void setMailbox(BlockingQueue<ProgrammerMessage> _mailbox) {
 		this.mailbox = _mailbox;
+	}
+
+	/**
+	 * @param _budget the budget to set
+	 */
+	public void setBudget(double _budget) {
+		this.budget = _budget;
+	}
+
+	/**
+	 * Only the programmer allowed to call this method
+	 * @return the budget
+	 */
+	public double getBudget() {
+		return this.budget;
 	}
 }

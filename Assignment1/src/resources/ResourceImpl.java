@@ -52,4 +52,13 @@ public class ResourceImpl implements Resource {
 	public String getType() {
 		return this.type;
 	}
+	
+	/**
+	 * 
+	 * @return String with values
+	 */
+	@Override
+	public String toString() {
+		return this.type;
+	}
 }

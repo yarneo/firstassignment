@@ -33,7 +33,6 @@ public class Observer implements Runnable {
 	private final int const4 = 10;
 	private final int const5 = 3;
 	private final int const6 = 4;
-	private final double timeUnit = 1000;
 	/**
 	 * @param _mp my main parser
 	 */
@@ -126,42 +125,43 @@ public class Observer implements Runnable {
 	private void currentProjects() {
 	for(Iterator<Project> i = this.myInfo.getCurrentProjects().iterator(); i.hasNext(); ) {
 		Project tempProject = i.next();
-		//type
-		System.out.println(tempProject.getType());
 		//id number
-		System.out.println(tempProject.getId());
+		System.out.println("Project ID: "+tempProject.getId());
+		//type
+		System.out.println("Type: "+tempProject.getType());
 		//a project needs to tell me how much of it has been completed
-		System.out.println(tempProject.getHoursCompleted());
+		System.out.println("Hours completed: "+tempProject.getHoursCompleted());
 		//which programmers work on it now
-		System.out.println(tempProject.getProgrammers());
+		System.out.println("Programmers that are working: "+tempProject.getProgrammers().toString());
 	}
 	}
 	
 	private void pendingProjects() {
 	for(Iterator<Project> i = this.myInfo.getPendingProjects().iterator(); i.hasNext();) {
 		Project tempProject = i.next();
-		//type
-		System.out.println(tempProject.getType());
 		//id number
-		System.out.println(tempProject.getId());
+		System.out.println("Pending Project ID: "+tempProject.getId());
+		//type
+		System.out.println("Type: "+tempProject.getType());
 		//dependancies
-		for(Iterator<String> j = tempProject.getPrequesiteProjects().iterator(); i.hasNext();) {
+		System.out.println("Prerequisite projects: "+tempProject.getPrequesiteProjects().toString());
+		/*for(Iterator<String> j = tempProject.getPrequesiteProjects().iterator(); i.hasNext();) {
 			System.out.println(j.next());
-		}
+		}*/
 	}
 	}
 	
 	private void completedProjects() {
 	for(Iterator<Project> i = this.myInfo.getCompletedProjects().iterator(); i.hasNext();) {
 		Project tempProject = i.next();
-		//type
-		System.out.println(tempProject.getType());
 		//id number
-		System.out.println(tempProject.getId());
+		System.out.println("Info about project with ID "+tempProject.getId());
+		//type
+		System.out.println("Type: "+tempProject.getType());
 		//time taken
 		//obviously if the project hasent been worked on yet or hasent finished the time there
 		//will be 0, or null. name of field will be time, and getter will be getTime
-		System.out.println((double)(tempProject.getTimeElapsed()/this.timeUnit)+" seconds");
+		System.out.println("Time elapsed: "+tempProject.getTimeElapsed()+" milliseconds");
 	}
 	}
 	
@@ -178,20 +178,21 @@ public class Observer implements Runnable {
 			//and as written above, need to make an object ProgrammerInfo which has all the 
 			//info about the programmers as the info written below:
 			ProgrammerInfo tempProgrammer = i.next();
-			if(tempProgrammer.getName() == name) {
-				System.out.println(tempProgrammer.getName());
-				System.out.println(tempProgrammer.getProductivityRate());
-				System.out.println(tempProgrammer.getWorkPhaseHours());
-				System.out.println(tempProgrammer.getBudget());
-				System.out.println(tempProgrammer.getSpecializations());
+			if(tempProgrammer.getName().equals(name)) {
+				System.out.println("Info about the programmer: "+tempProgrammer.getName());
+				System.out.println("Productivity rate - "+tempProgrammer.getProductivityRate());
+				System.out.println("Work phase hours - "+tempProgrammer.getWorkPhaseHours());
+				System.out.println("Budget - "+tempProgrammer.getBudget());
+				System.out.println("Specializations - "+tempProgrammer.getSpecializations().toString());
 				//need to add a field on the programmer which is the programmers' current 
 				//status which means: is he assigned to a project and if so, what
 				//project id, and what resources does he hold
 				if(tempProgrammer.isCurrentlyWorking()) {
 					//current project he is working on
-					System.out.println(tempProgrammer.getCurrentProject());
+					System.out.println("Currently working on project ID: "+
+							tempProgrammer.getCurrentProject().getId());
 					//current resources he is holding
-					System.out.println(tempProgrammer.getCurrentResources());
+					System.out.println("Using resources: "+tempProgrammer.getCurrentResources().toString());
 				}
 				else {
 					System.out.println("the programmer isnt currently assigned to any project");
