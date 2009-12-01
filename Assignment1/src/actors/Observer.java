@@ -166,11 +166,13 @@ public class Observer implements Runnable {
 	}
 	
 	private void programmer() {
-	for(Iterator<ProgrammerInfo> i = this.myInfo.getProgrammers().iterator(); i.hasNext();) {
-		ProgrammerInfo tempProgrammer = i.next();
-		//name of programmers
-		System.out.println(tempProgrammer.getName());
-	}
+		System.out.print("The programmers in the system are: ");
+		for(Iterator<ProgrammerInfo> i = this.myInfo.getProgrammers().iterator(); i.hasNext();) {
+			ProgrammerInfo tempProgrammer = i.next();
+			//name of programmers
+			System.out.print(tempProgrammer.getName()+" ");
+		}
+		System.out.println("");
 	}
 	private void programmerInfo(String name) {
 		for(Iterator<ProgrammerInfo> i = this.myInfo.getProgrammers().iterator(); i.hasNext();) {
@@ -202,8 +204,6 @@ public class Observer implements Runnable {
 	}
 	
 	private void addProgrammer(String name, List<String> types, double rate, double budget, double workHours) {
-		//TODO what do i do with the board and the programresourcehandler
-		//also, how do i activate the thread using the initialthreadhandler?
 		ProgrammerObject po = new ProgrammerObject();
 		po.setName(name);
 		po.setProductivityRate(rate);
